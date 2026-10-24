@@ -1,0 +1,350 @@
+@import "tailwindcss";
+
+/*
+ * Bodoni Moda's "+" is a hairline at display sizes. Borrow a sturdier plus sign from common
+ * system serifs for that one character only; everything else stays Bodoni.
+ */
+@font-face {
+  font-family: "Signiorina Plus";
+  src: local("Georgia"), local("Times New Roman"), local("Noto Serif"), local("DejaVu Serif"), local("Droid Serif");
+  unicode-range: U+002B;
+  size-adjust: 88%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Signiorina design tokens                                            */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Brand palette (from the vision board). No reds. */
+  --color-olive: #41483a; /* Olive Ink — signature */
+  --color-olive-deep: #343a2e;
+  --color-olive-soft: #5a6150;
+  --color-cream: #f2e8d5; /* Parmigiano Cream — primary light */
+  --color-paper: #f8f2e7;
+  --color-linen: #ebdfc8;
+  --color-fig: #49323c; /* Fig Skin — selective accent */
+  --color-fig-soft: #6b4d59;
+  --color-pistachio: #b8be9b; /* Pistachio Dust — supporting */
+  --color-pistachio-soft: #dcdec8;
+  --color-espresso: #24231f; /* Espresso — type + grounding */
+  --color-muted: #5c584e;
+  --color-prosecco: #d8c5a1; /* Prosecco — champagne accent, used subtly */
+  --color-line: rgb(36 35 31 / 0.14);
+  --color-line-strong: rgb(36 35 31 / 0.28);
+  --color-alert: #6b4d59;
+
+  --font-display: "Signiorina Plus", var(--font-bodoni), "Bodoni Moda", "Didot", Georgia, serif;
+  --font-sans: var(--font-jost), "Jost", "Futura", "Helvetica Neue", Arial, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 0.7, 0.18, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --shadow-card: 0 1px 0 rgb(36 35 31 / 0.04), 0 18px 40px -28px rgb(36 35 31 / 0.35);
+  --shadow-lift: 0 2px 0 rgb(36 35 31 / 0.04), 0 28px 60px -30px rgb(36 35 31 / 0.45);
+
+  --breakpoint-xs: 26rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-espresso);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Paper grain — subtle, never louder than the photography. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.14  0 0 0 0 0.13  0 0 0 0 0.11  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    font-optical-sizing: auto;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-pistachio);
+    color: var(--color-espresso);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-fig);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--color-prosecco);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Typography utilities                                                */
+/* ------------------------------------------------------------------ */
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+@utility label-caps {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.9rem, 7.2vw, 6.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 5vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+@utility display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.4vw, 3rem);
+  line-height: 1.06;
+}
+
+@utility display-sm {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+  line-height: 1.12;
+}
+
+@utility lede {
+  font-size: clamp(1.08rem, 1.4vw, 1.28rem);
+  line-height: 1.6;
+}
+
+@utility accent {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+@utility price {
+  font-family: var(--font-display);
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ------------------------------------------------------------------ */
+/* Brand geometry                                                      */
+/* ------------------------------------------------------------------ */
+
+/* Oval: the shared-platter shape. */
+@utility oval {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* Arch: an oval cut at the base — used for tall photography. */
+@utility arch {
+  border-radius: 999px 999px 0.75rem 0.75rem;
+  overflow: hidden;
+}
+
+/* Platter rim: a shallow elliptical top edge for section transitions. */
+@utility platter-top {
+  border-top-left-radius: 50% clamp(2.5rem, 6vw, 5.5rem);
+  border-top-right-radius: 50% clamp(2.5rem, 6vw, 5.5rem);
+}
+
+@utility platter-bottom {
+  border-bottom-left-radius: 50% clamp(2.5rem, 6vw, 5.5rem);
+  border-bottom-right-radius: 50% clamp(2.5rem, 6vw, 5.5rem);
+}
+
+/* Deckle-edged menu card. */
+@utility menu-card {
+  background-color: var(--color-paper);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+@utility hairline {
+  border-color: var(--color-line);
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+@utility container-narrow {
+  width: 100%;
+  max-width: 48rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion — tasteful, and fully disabled for reduced motion.           */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 0.9s var(--ease-soft),
+      transform 0.9s var(--ease-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js [data-reveal="fade"] {
+    transform: none;
+  }
+
+  .js [data-reveal][data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js [data-reveal="oval"] {
+    opacity: 1;
+    transform: none;
+    clip-path: ellipse(18% 14% at 50% 55%);
+    transition: clip-path 1.25s var(--ease-soft);
+  }
+
+  .js [data-reveal="oval"][data-visible="true"] {
+    clip-path: ellipse(80% 80% at 50% 50%);
+  }
+
+  .img-zoom img {
+    transition: transform 1.2s var(--ease-soft);
+  }
+
+  .group:hover .img-zoom img,
+  .img-zoom:hover img {
+    transform: scale(1.035);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-soft);
+    padding-bottom: 2px;
+  }
+
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .animate-rise {
+    animation: rise-in 0.6s var(--ease-soft) both;
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.18);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-pop {
+    animation: pop 0.45s var(--ease-soft);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js [data-reveal],
+  .js [data-reveal="oval"] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
