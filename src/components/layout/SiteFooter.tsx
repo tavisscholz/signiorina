@@ -40,13 +40,11 @@ const classicColumns = [
 /** threeJourneyArchitectureV2: one column per journey, then the information pages. */
 const journeyColumns = [
   {
-    title: "Everyday",
+    title: "Weddings",
     links: [
-      { href: "/everyday", label: "Shop Everyday" },
-      { href: "/order/cabin-welcome-box", label: "Cabin Welcome Box" },
-      { href: "/order/box-for-two", label: "Box for Two" },
-      { href: "/order/pranzo-lunch-box", label: "Pranzo Lunch Box" },
-      { href: "/order/signiorina-gift-box", label: "Gift Box" },
+      { href: "/weddings", label: "Weddings" },
+      { href: "/weddings/build", label: "Build Your Table" },
+      { href: "/everyday?category=wedding-weekend", label: "Wedding weekend extras" },
     ],
   },
   {
@@ -58,11 +56,13 @@ const journeyColumns = [
     ],
   },
   {
-    title: "Weddings",
+    title: "Everyday",
     links: [
-      { href: "/weddings", label: "Weddings" },
-      { href: "/weddings/build", label: "Build Your Table" },
-      { href: "/everyday?category=wedding-weekend", label: "Wedding weekend extras" },
+      { href: "/everyday", label: "Shop Everyday" },
+      { href: "/order/cabin-welcome-box", label: "Cabin Welcome Box" },
+      { href: "/order/box-for-two", label: "Box for Two" },
+      { href: "/order/pranzo-lunch-box", label: "Pranzo Lunch Box" },
+      { href: "/order/signiorina-gift-box", label: "Gift Box" },
     ],
   },
   {

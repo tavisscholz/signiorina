@@ -20,18 +20,19 @@ export interface Journey {
   steps: Array<{ title: string; body: string }>;
 }
 
+/** Weddings, Events, Everyday: the homepage, navigation and footer follow this order. */
 export const journeys: Journey[] = [
   {
-    id: "everyday",
-    name: "Everyday",
-    description: "Boxes, boards & little indulgences.",
-    cta: "Shop Everyday",
-    href: "/everyday",
-    media: "aperitivoBox",
+    id: "weddings",
+    name: "Weddings",
+    description: "An unforgettable grazing experience made for your special day.",
+    cta: "Build Your Table",
+    href: "/weddings/build",
+    media: "weddingTable",
     steps: [
-      { title: "Choose", body: "Boxes and boards at fixed prices, for one to fifteen." },
-      { title: "Schedule", body: "Pick a date and a delivery window. Every fee shows before you pay." },
-      { title: "Enjoy", body: "We deliver it fresh, in the window you chose." },
+      { title: "Build your table", body: "Start from a favorite or from scratch, and watch the estimate update." },
+      { title: "Request your proposal", body: "Send us the whole configuration — no blank form to fill in." },
+      { title: "We set the table", body: "A written proposal, then we style it on the day." },
     ],
   },
   {
@@ -48,16 +49,16 @@ export const journeys: Journey[] = [
     ],
   },
   {
-    id: "weddings",
-    name: "Weddings",
-    description: "An unforgettable grazing experience made for your special day.",
-    cta: "Build Your Table",
-    href: "/weddings/build",
-    media: "weddingTable",
+    id: "everyday",
+    name: "Everyday",
+    description: "Boxes, boards & little indulgences.",
+    cta: "Shop Everyday",
+    href: "/everyday",
+    media: "aperitivoBox",
     steps: [
-      { title: "Build your table", body: "Start from a favorite or from scratch, and watch the estimate update." },
-      { title: "Request your proposal", body: "Send us the whole configuration — no blank form to fill in." },
-      { title: "We set the table", body: "A written proposal, then we style it on the day." },
+      { title: "Choose", body: "Boxes and boards at fixed prices, for one to fifteen." },
+      { title: "Schedule", body: "Pick a date and a delivery window. Every fee shows before you pay." },
+      { title: "Enjoy", body: "We deliver it fresh, in the window you chose." },
     ],
   },
 ];

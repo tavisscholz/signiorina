@@ -104,12 +104,12 @@ const classicNavigation: Navigation = {
   secondary: [],
 };
 
-/** threeJourneyArchitectureV2: Everyday | Events | Weddings | About. */
+/** threeJourneyArchitectureV2: Weddings | Events | Everyday | About. */
 const journeyNavigation: Navigation = {
   primary: [
-    { href: "/everyday", label: "Everyday", match: ["/order", "/cart"] },
-    { href: "/events", label: "Events" },
     { href: "/weddings", label: "Weddings" },
+    { href: "/events", label: "Events" },
+    { href: "/everyday", label: "Everyday", match: ["/order", "/cart"] },
     { href: "/about", label: "About" },
   ],
   actions: null,

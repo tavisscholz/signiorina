@@ -6,8 +6,8 @@ import { eventPackageViews } from "@/lib/event-packages";
 
 describe("three journeys", () => {
   it("use the three customer-facing names, in order", () => {
-    expect(journeys.map((j) => j.name)).toEqual(["Everyday", "Events", "Weddings"]);
-    expect(journeys.map((j) => j.cta)).toEqual(["Shop Everyday", "Explore Packages", "Build Your Table"]);
+    expect(journeys.map((j) => j.name)).toEqual(["Weddings", "Events", "Everyday"]);
+    expect(journeys.map((j) => j.cta)).toEqual(["Build Your Table", "Explore Packages", "Shop Everyday"]);
   });
 
   it("redirect old URLs into the journeys when on, and new URLs back when off", () => {

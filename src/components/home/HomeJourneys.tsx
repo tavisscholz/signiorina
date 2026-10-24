@@ -29,8 +29,8 @@ const homeFaq = ["notice", "where", "cabins", "allergies"]
 
 /**
  * Homepage for threeJourneyArchitectureV2: one brand, three entrances. The first screen
- * answers what Signiorina is and offers Everyday, Events and Weddings; the rest sells the
- * brand and points back into a journey rather than repeating each journey's own page.
+ * answers what Signiorina is and offers Weddings, Events and Everyday; the sections below
+ * follow the same order, then sell the brand and point back into a journey.
  */
 export function HomeJourneys() {
   const packages = eventPackageViews();
@@ -49,13 +49,12 @@ export function HomeJourneys() {
               </p>
               <h1
                 id="home-title"
-                className="font-display text-[clamp(2.3rem,5.6vw,4.6rem)] leading-[0.98] tracking-[-0.02em] text-olive sm:mt-5"
+                className="font-display text-[min(8.6vw,2.3rem)] uppercase leading-[0.96] tracking-[0.01em] text-olive sm:mt-5 sm:text-[clamp(2.3rem,5vw,4.6rem)]"
               >
-                Good things, <span className="accent">generously</span> served.
+                Charcuterie <span className="accent block">Beautifully done</span>
               </h1>
               <p className="mt-3 max-w-xl text-[0.95rem] leading-normal text-muted sm:mt-5 sm:text-[1.15rem] sm:leading-relaxed">
-                Italian-style meats, cheeses, breads and sweets, beautifully arranged and delivered — a box for tonight, a table
-                for your party, the spread at your wedding.
+                Italian-inspired, delivered for everyday enjoyment, celebrations and weddings.
               </p>
             </div>
             <div className="hero-enter relative hidden h-[17rem] lg:col-span-5 lg:block" style={{ ["--hero-delay" as string]: "150ms" }}>
@@ -128,83 +127,83 @@ export function HomeJourneys() {
         </div>
       </section>
 
-      {/* EVERYDAY: FEATURED PRODUCTS -------------------------------- */}
-      <section className="container-page py-20 md:py-28" aria-labelledby="everyday-feature">
+      {/* EVENTS: PACKAGE PREVIEWS ----------------------------------- */}
+      <section className="container-page py-20 md:py-28" aria-labelledby="events-feature">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <Reveal>
             <SectionHeading
-              eyebrow="Everyday"
+              eyebrow="Events"
               title={
-                <span id="everyday-feature">
-                  Little lunches. Long tables. <span className="accent">Everything between.</span>
+                <span id="events-feature">
+                  Three ways to <span className="accent">host a crowd.</span>
                 </span>
               }
-              lede="Boxes and boards at fixed prices, delivered in a window you choose. No form to fill in first."
+              lede={`Styled grazing tables for birthdays, showers, graduations and office gatherings of ${grazingTables.minimumGuests} or more — priced per guest and set up on site.`}
             />
           </Reveal>
           <Reveal delay={120}>
-            <ButtonLink href="/everyday" variant="secondary">
-              Shop Everyday
+            <ButtonLink href="/events" variant="secondary">
+              Explore Packages
             </ButtonLink>
           </Reveal>
         </div>
-        <div className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 xl:grid-cols-4">
-          {featured.map((p, i) => (
-            <Reveal key={p.id} delay={i * 90}>
-              <ProductCard product={p} />
+        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+          {packages.map((pkg, i) => (
+            <Reveal as="li" key={pkg.tierId} delay={i * 110}>
+              <Link
+                href={`/events#package-${pkg.tierId}`}
+                className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-paper transition-shadow hover:shadow-[var(--shadow-card)]"
+              >
+                <Photo media={pkg.image} className="aspect-[3/2] w-full" sizes="(min-width: 768px) 30vw, 92vw" zoom alt="" />
+                <div className="flex flex-1 flex-col gap-2 p-6">
+                  {pkg.proposed ? (
+                    <Badge tone="fig" className="self-start">
+                      Proposed name
+                    </Badge>
+                  ) : null}
+                  <h3 className="display-sm text-olive">{pkg.name}</h3>
+                  <p className="text-[0.95rem] text-muted">{pkg.subline}</p>
+                  <p className="mt-auto flex items-baseline gap-2 border-t border-line pt-4">
+                    <span className="price text-[1.9rem] leading-none text-olive">{formatDollars(pkg.tier.pricePerPerson)}</span>
+                    <span className="text-[0.88rem] text-muted">
+                      per guest · {formatDollars(grazingTables.minimumFood)} minimum
+                    </span>
+                  </p>
+                </div>
+              </Link>
             </Reveal>
           ))}
-        </div>
+        </ul>
       </section>
 
-      {/* EVENTS: PACKAGE PREVIEWS ----------------------------------- */}
-      <section className="border-y border-line bg-paper" aria-labelledby="events-feature">
+      {/* EVERYDAY: FEATURED PRODUCTS -------------------------------- */}
+      <section className="border-y border-line bg-paper" aria-labelledby="everyday-feature">
         <div className="container-page py-20 md:py-28">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <Reveal>
               <SectionHeading
-                eyebrow="Events"
+                eyebrow="Everyday"
                 title={
-                  <span id="events-feature">
-                    Three ways to <span className="accent">host a crowd.</span>
+                  <span id="everyday-feature">
+                    Little lunches. Long tables. <span className="accent">Everything between.</span>
                   </span>
                 }
-                lede={`Styled grazing tables for birthdays, showers, graduations and office gatherings of ${grazingTables.minimumGuests} or more — priced per guest and set up on site.`}
+                lede="Boxes and boards at fixed prices, delivered in a window you choose. No form to fill in first."
               />
             </Reveal>
             <Reveal delay={120}>
-              <ButtonLink href="/events" variant="secondary">
-                Explore Packages
+              <ButtonLink href="/everyday" variant="secondary">
+                Shop Everyday
               </ButtonLink>
             </Reveal>
           </div>
-          <ul className="mt-14 grid gap-6 md:grid-cols-3">
-            {packages.map((pkg, i) => (
-              <Reveal as="li" key={pkg.tierId} delay={i * 110}>
-                <Link
-                  href={`/events#package-${pkg.tierId}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-cream transition-shadow hover:shadow-[var(--shadow-card)]"
-                >
-                  <Photo media={pkg.image} className="aspect-[3/2] w-full" sizes="(min-width: 768px) 30vw, 92vw" zoom alt="" />
-                  <div className="flex flex-1 flex-col gap-2 p-6">
-                    {pkg.proposed ? (
-                      <Badge tone="fig" className="self-start">
-                        Proposed name
-                      </Badge>
-                    ) : null}
-                    <h3 className="display-sm text-olive">{pkg.name}</h3>
-                    <p className="text-[0.95rem] text-muted">{pkg.subline}</p>
-                    <p className="mt-auto flex items-baseline gap-2 border-t border-line pt-4">
-                      <span className="price text-[1.9rem] leading-none text-olive">{formatDollars(pkg.tier.pricePerPerson)}</span>
-                      <span className="text-[0.88rem] text-muted">
-                        per guest · {formatDollars(grazingTables.minimumFood)} minimum
-                      </span>
-                    </p>
-                  </div>
-                </Link>
+          <div className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 xl:grid-cols-4">
+            {featured.map((p, i) => (
+              <Reveal key={p.id} delay={i * 90}>
+                <ProductCard product={p} />
               </Reveal>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 

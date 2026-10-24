@@ -49,7 +49,8 @@ Every journey redirect is temporary (307), so turning the flag off never fights 
 permanent redirect, and links created while the flag was on keep working after it is off.
 The sitemap lists only routes that answer 200 for the current flag state.
 
-Navigation with the flag on: **Everyday · Events · Weddings · About** and the cart. The
+Navigation with the flag on: **Weddings · Events · Everyday · About** and the cart (the
+homepage cards, homepage sections and footer columns use the same order). The
 mobile menu adds Corporate, Cabin delivery, Delivery areas + fees and FAQ. The header
 buttons and the sticky mobile action bar are not shown: the journeys are the way in.
 
