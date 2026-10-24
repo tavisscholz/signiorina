@@ -12,7 +12,7 @@ import { IconCheck, IconPlus } from "@/components/ui/Icons";
 import { Badge } from "@/components/ui/Notice";
 import { getAddOn } from "@/config/catalog";
 import { zones } from "@/config/delivery";
-import { eventFees, eventOccasions, eventPackages, grazingTables } from "@/config/events";
+import { eventFees, eventPackages, grazingTables } from "@/config/events";
 import { flags } from "@/config/flags";
 import { eventPackageViews } from "@/lib/event-packages";
 import { formatDollars } from "@/lib/money";
@@ -67,27 +67,9 @@ export default function EventsPage() {
             Pick one, tell us about your event, and see the estimate before you ask for a proposal.
           </p>
         </div>
-        <div className="hero-enter mt-8" style={{ ["--hero-delay" as string]: "120ms" }}>
-          <p className="text-[0.92rem] text-muted">What are you celebrating?</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {eventOccasions.map((o) => (
-              <li key={o.id}>
-                <Link
-                  href={`/events/plan?occasion=${o.id}`}
-                  className="inline-block rounded-full border border-olive/30 bg-paper px-4 py-2 text-[0.92rem] text-olive transition-colors hover:border-olive"
-                >
-                  {o.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
       </section>
 
-      <section id="packages" className="container-page scroll-mt-28" aria-labelledby="packages-title">
-        <h2 id="packages-title" className="sr-only">
-          Event packages
-        </h2>
+      <section id="packages" className="container-page scroll-mt-28">
         <ul className="grid gap-6 lg:grid-cols-3">
           {packages.map((pkg, i) => (
             <Reveal as="li" key={pkg.tierId} delay={i * 110}>
@@ -102,7 +84,7 @@ export default function EventsPage() {
                       Proposed name — pending approval
                     </Badge>
                   ) : null}
-                  <h3 className="display-sm mt-3 text-olive">{pkg.name}</h3>
+                  <h2 className="display-sm mt-3 text-olive">{pkg.name}</h2>
                   <p className="mt-1 text-[0.98rem] text-muted">{pkg.subline}</p>
                   <p className="mt-5 flex items-baseline gap-2">
                     <span className="price text-[2.4rem] leading-none text-olive">{formatDollars(pkg.tier.pricePerPerson)}</span>
@@ -113,7 +95,7 @@ export default function EventsPage() {
                     minimum
                   </p>
 
-                  <h4 className="label-caps mt-6 text-[0.68rem] text-olive">Included</h4>
+                  <h3 className="label-caps mt-6 text-[0.68rem] text-olive">Included</h3>
                   <ul className="mt-2 flex flex-col gap-1.5 text-[0.9rem]">
                     {eventPackages.includes.map((x) => (
                       <li key={x} className="flex gap-2">
@@ -121,7 +103,7 @@ export default function EventsPage() {
                       </li>
                     ))}
                   </ul>
-                  <h4 className="label-caps mt-5 text-[0.68rem] text-olive">Added to every table</h4>
+                  <h3 className="label-caps mt-5 text-[0.68rem] text-olive">Added to every table</h3>
                   <ul className="mt-2 flex flex-col gap-1.5 text-[0.9rem] text-muted">
                     <li className="flex gap-2">
                       <IconPlus size={16} className="mt-0.5 shrink-0" /> Setup + styling {formatDollars(grazingTables.setupFee.A)}{" "}
