@@ -98,17 +98,15 @@ export function WeddingPlanner() {
         planner={planner}
         summary={summary}
         hideNav={state.step === 1 && !state.optionId}
+        // The page header already introduces the first step.
+        hideTitle={state.step === 1}
         nextHint={state.step === 1 ? "Choose a starting point to continue." : state.step === 2 ? "Add your guest count to continue." : undefined}
       >
         {state.step === 1 ? (
           <div className="flex flex-col gap-12">
-            <p className="max-w-2xl text-[1.02rem] text-muted">
-              Start from one of our favorites, or build your own from the three wedding packages. Either way you can change
-              everything as you go.
-            </p>
             <section aria-labelledby="favorites-title">
               <h3 id="favorites-title" className="display-sm text-olive">
-                Start with a favorite
+                Popular Favorites
               </h3>
               <ul className="mt-5 grid gap-4 md:grid-cols-3">
                 {weddingPresets.map((p) => {
@@ -141,7 +139,7 @@ export function WeddingPlanner() {
             </section>
             <section aria-labelledby="custom-title">
               <h3 id="custom-title" className="display-sm text-olive">
-                Build my own
+                Build Your Own
               </h3>
               <p className="mt-2 text-[0.95rem] text-muted">Pick a package and make every decision yourself.</p>
               <ul className="mt-5 grid gap-4 md:grid-cols-3">

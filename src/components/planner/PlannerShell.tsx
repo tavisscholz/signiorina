@@ -19,6 +19,7 @@ export function PlannerShell({
   children,
   nextHint,
   hideNav = false,
+  hideTitle = false,
 }: {
   planner: PlannerApi;
   /** The estimate panel (selections + itemized estimate). */
@@ -27,6 +28,8 @@ export function PlannerShell({
   /** Why Next is unavailable, when it is. */
   nextHint?: string;
   hideNav?: boolean;
+  /** Keep the step title for screen readers and focus, but don't show it. */
+  hideTitle?: boolean;
 }) {
   const { state, estimate, go } = planner;
   const steps = plannerSteps[state.journey];
@@ -100,11 +103,11 @@ export function PlannerShell({
             id="planner-step-title"
             ref={headingRef}
             tabIndex={-1}
-            className="display-md scroll-mt-32 text-olive outline-none"
+            className={clsx("display-md scroll-mt-32 text-olive outline-none", hideTitle && "sr-only")}
           >
             {current.title}
           </h2>
-          <div className="mt-8">{children}</div>
+          <div className={clsx(!hideTitle && "mt-8")}>{children}</div>
 
           {!hideNav ? (
             <nav aria-label="Step navigation" className="mt-12 flex flex-col-reverse gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">

@@ -12,7 +12,7 @@ export function BuildYourTableInvite() {
   return (
     <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
       <div className="lg:col-span-8">
-        <h3 className="display-sm text-olive">Start with a favorite</h3>
+        <h3 className="display-sm text-olive">Popular Favorites</h3>
         <ul className="mt-5 grid gap-4 md:grid-cols-3">
           {weddingPresets.map((p) => {
             const base = getWeddingPackage(p.packageId)!;

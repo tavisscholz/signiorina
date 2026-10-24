@@ -28,12 +28,10 @@ export default function BuildYourTablePage() {
             <span aria-hidden="true" className="h-px w-8 bg-olive/40" />
             Weddings
           </p>
-          <h1 className="display-lg mt-4 text-olive">
-            Build <span className="accent">your table.</span>
-          </h1>
+          <h1 className="display-lg mt-4 text-olive">Build your table.</h1>
           <p className="lede mt-4 text-muted">
-            Choose how to begin, tell us about the day, make it yours — and see the estimate update as you go. Then send it to
-            us for a written proposal.
+            Choose between <span className="accent whitespace-nowrap">Popular Favorites</span> and{" "}
+            <span className="accent whitespace-nowrap">Build Your Own</span>.
           </p>
         </header>
         <div className="mt-10">
