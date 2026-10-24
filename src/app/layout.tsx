@@ -13,10 +13,11 @@ import { localBusinessJsonLd, organizationJsonLd } from "@/lib/seo";
 
 import "./globals.css";
 
+// Loaded without the optical-size axis on purpose: the default instance is Bodoni's sturdy
+// text cut (opsz 11). The display cuts' hairlines disappear on screens and dark backgrounds.
 const display = Bodoni_Moda({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz"],
   variable: "--font-bodoni",
   display: "swap",
 });

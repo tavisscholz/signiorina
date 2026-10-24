@@ -130,7 +130,7 @@ Defined in `src/app/globals.css` (`@theme`) and the brand components.
 | Espresso | `#24231F` | Body type, grounding neutral |
 | Prosecco | `#D8C5A1` | Champagne accent on dark, used sparingly |
 
-- **Type:** Bodoni Moda (high-contrast editorial display, with italic accents) + Jost (clean sans for UI and body).
+- **Type:** Bodoni Moda in its sturdy text cut (loaded without the optical-size axis — the display cuts' hairlines vanish on screen), medium weight for headings and semibold for the wordmark, with italic accents; Jost for UI and body.
 - **Geometry:** ovals and arches from shared platters — photo crops, price ovals, the platter-rim section edges, the oval CTA card, oval calendar days. Used deliberately, not everywhere.
 - **Materials:** subtle paper grain, deckle-style menu cards, hand-drawn olive sprig used sparingly.
 - **Motion:** fade/rise and oval-mask reveals, cart drawer slide, add-to-cart confirmation. Everything is disabled under `prefers-reduced-motion`, and content is visible without JavaScript. Above-the-fold hero content uses a CSS-only, transform-only entrance (`.hero-enter` / `.hero-settle`), so it's fully visible from the first frame; scroll reveals are reserved for content below the fold.

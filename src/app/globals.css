@@ -83,10 +83,9 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: -0.01em;
     line-height: 1.05;
-    font-optical-sizing: auto;
     text-wrap: balance;
   }
 
@@ -178,7 +177,8 @@
 @utility accent {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 400;
+  /* Match the surrounding heading's weight so the italic word doesn't read lighter. */
+  font-weight: inherit;
 }
 
 @utility price {
