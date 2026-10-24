@@ -15,10 +15,10 @@ Built with Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tail
 
 ## Three-journey architecture (feature flag)
 
-`NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2=true` switches on the Everyday · Events ·
-Weddings homepage and navigation, the `/everyday` store, the `/events` packages and planner and
-the `/weddings/build` Build Your Table planner. It is off by default, and with it off the site is
-unchanged. Activation, route map, test results, names awaiting approval and rollback:
+The Everyday · Events · Weddings homepage and navigation, the `/everyday` store, the `/events`
+packages and planner and the `/weddings/build` Build Your Table planner are live by default.
+`NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2=false` (then redeploy) restores the original site.
+Route map, test results, names awaiting approval and rollback:
 [docs/three-journeys-v2](docs/three-journeys-v2/README.md).
 
 ## Quick start

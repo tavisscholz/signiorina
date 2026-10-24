@@ -5,9 +5,9 @@ undo and no blanket data rollback is ever needed.
 
 ## 1. Turn the flag off (minutes, no code change)
 
-1. Vercel → Project → Settings → Environment Variables: delete
-   `NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2` for the affected environment (or set it to
-   anything other than `true`).
+1. Vercel → Project → Settings → Environment Variables: set
+   `NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2` to `false` for the affected environment.
+   (Since launch the flag defaults to on, so deleting the variable is not enough.)
 2. Deployments → the latest deployment for that environment → **Redeploy** (the flag is read
    at build time).
 3. Verify:
@@ -25,15 +25,17 @@ closest original page), and submissions made through the planners stay in the in
 
 ## 2. Remove the code (only if the flag-off build itself must go)
 
-The work lives on `feature/signiorina-three-journeys-v2`. If it was never merged, there is
-nothing to remove. If it was merged into the production branch:
+The work was fast-forwarded into the production branch `claude/confident-keller-fnabw9`
+(no merge commit). To remove it, revert the range after the baseline as new commits:
 
 ```bash
 git checkout claude/confident-keller-fnabw9
-git log --oneline --first-parent    # find the merge commit
-git revert -m 1 <merge-commit>      # a new commit; history is not rewritten
+git revert --no-edit 6424d4bae4db0826bfe946b4812d9aa91020e174..HEAD   # new commits; history is not rewritten
 git push origin claude/confident-keller-fnabw9
 ```
+
+Or, quicker and keeping the code: revert only the launch commit ("default the flag on"), which
+returns the flag to default-off.
 
 The pre-change state is commit `6424d4bae4db0826bfe946b4812d9aa91020e174` (local tag
 `pre-three-journeys-v2`). After reverting, check the same items as in step 1.

@@ -1,8 +1,9 @@
 # Everyday · Events · Weddings — implementation record (v2)
 
 One homepage, three entrances, three ways to buy — behind the feature flag
-`threeJourneyArchitectureV2`, **off by default**. With the flag off the site is unchanged
-(verified pixel-for-pixel, see *Tests*). See [BASELINE.md](./BASELINE.md) for the
+`threeJourneyArchitectureV2`. **Launched:** approved by the owner and merged into the production
+branch; the flag now defaults to on. Setting it to `false` serves the original site, verified
+pixel-for-pixel (see *Tests*). See [BASELINE.md](./BASELINE.md) for the
 pre-change audit and [ROLLBACK.md](./ROLLBACK.md) for turning it off or reverting it.
 
 ## Git references
@@ -15,23 +16,19 @@ pre-change audit and [ROLLBACK.md](./ROLLBACK.md) for turning it off or revertin
 
 The production branch was not touched. Vercel builds the work branch as a **preview** only.
 
-## Turning it on
+## The flag
 
 The flag is read at build time, so every change needs a redeploy.
 
 | Variable | Value | Effect |
 | --- | --- | --- |
-| `NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2` | `true` | New homepage, navigation, `/everyday`, `/events`, `/events/plan`, `/weddings/build`, journey redirects |
+| `NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2` | unset or `true` (default since launch) | New homepage, navigation, `/everyday`, `/events`, `/events/plan`, `/weddings/build`, journey redirects |
+| | `false` | The original site, exactly as before |
 | `NEXT_PUBLIC_SHOW_PLACEHOLDERS` | `true` (previews only) | Shows the *proposed* event package names (labelled) and the labelled placeholders for Irina's story and testimonials |
 
-**Review on a Vercel preview:** Project → Settings → Environment Variables → add both
-variables with value `true`, environment **Preview**, branch `feature/signiorina-three-journeys-v2`
-→ redeploy that branch's latest deployment. Production is unaffected.
-
-**Launch (after approval):** merge the branch into the production branch, set
-`NEXT_PUBLIC_FLAG_THREE_JOURNEY_ARCHITECTURE_V2=true` for **Production** (leave
-`NEXT_PUBLIC_SHOW_PLACEHOLDERS` unset there) and redeploy. Merging with the flag unset
-changes nothing visible.
+**Launch:** the branch was fast-forwarded into the production branch with the flag defaulting
+to on, so the next production deployment serves the journeys with no Vercel setting needed.
+Leave `NEXT_PUBLIC_SHOW_PLACEHOLDERS` unset in Production.
 
 ## Route map
 
