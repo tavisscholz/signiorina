@@ -9,7 +9,6 @@ import { EventEstimator, EventEstimatorFromUrl } from "@/components/events/Event
 import { WeddingPackageCard } from "@/components/events/WeddingPackageCard";
 import { TrackView } from "@/components/journeys/Tracking";
 import { Reveal } from "@/components/motion/Reveal";
-import { BuildYourTableInvite } from "@/components/planner/BuildYourTableInvite";
 import { FaqList } from "@/components/sections/FaqList";
 import { CTABand, PageHero, ProcessSteps } from "@/components/sections/Sections";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -82,26 +81,6 @@ export default function WeddingsPage() {
         mediaSecondary="weddingTable"
       />
 
-      {/* Positioning */}
-      <section className="border-y border-line bg-paper">
-        <div className="container-page grid gap-10 py-16 md:py-24 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
-            <SectionHeading eyebrow="Where we fit" title={<>Made for the middle of the <span className="accent">celebration.</span></>} size="md" />
-          </Reveal>
-          <Reveal delay={120} className="flex flex-col gap-5 text-[1.05rem] text-muted lg:col-span-7">
-            <p>
-              Destination weddings, micro-weddings and cabin weddings don&apos;t need a banquet hall&apos;s worth of catering. They
-              need a table people actually gather around — generous, beautiful and easy to love.
-            </p>
-            <p>
-              That&apos;s what we do: Italian-inspired grazing for cocktail hours, welcome parties, rehearsals and intimate
-              receptions, set up and styled on site. You&apos;ll know the price per guest, the minimum and every fee before you
-              ever fill in a form.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
       {/* Moments */}
       <section className="container-page py-20 md:py-28" aria-labelledby="moments">
         <SectionHeading eyebrow="The wedding weekend" title={<span id="moments">Every moment that needs feeding.</span>} />
@@ -151,6 +130,30 @@ export default function WeddingsPage() {
               </Reveal>
             ))}
           </div>
+          {flags.threeJourneyArchitectureV2 ? (
+            <Reveal className="mt-6">
+              <div className="flex flex-col gap-6 rounded-[1.75rem] border border-cream/20 bg-olive-deep/60 p-7 md:flex-row md:items-center md:justify-between md:p-9">
+                <div className="max-w-xl">
+                  <h3 className="display-sm text-cream">Prefer to Build Your Own?</h3>
+                  <p className="mt-2 text-[0.98rem] text-cream/85">
+                    Pick a package and make every decision yourself, with the estimate updating as you go.
+                  </p>
+                </div>
+                <div className="flex shrink-0 flex-col gap-3 md:items-end">
+                  <ButtonLink href={routes.weddingPlanner} variant="light" className="self-start md:self-end">
+                    {routeLabels.weddingPlanner}
+                  </ButtonLink>
+                  <p className="text-[0.88rem] text-cream/80">
+                    Planner or venue?{" "}
+                    <Link href="/inquire?type=wedding" className="text-cream underline underline-offset-4">
+                      Send us a note instead
+                    </Link>
+                    .
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ) : null}
           <div className="mt-10 grid gap-6 text-[0.95rem] text-cream/80 md:grid-cols-3">
             <p>
               <span className="text-cream">Peak Saturdays</span> in May, June, September, October and December carry a higher food
@@ -170,19 +173,9 @@ export default function WeddingsPage() {
         <div className="platter-bottom absolute inset-x-0 -bottom-10 h-12 bg-olive" aria-hidden="true" />
       </section>
 
-      {/* Estimator — or, with the three journeys on, the way into Build Your Table */}
+      {/* Classic estimator (with the three journeys on, Build Your Table replaces it) */}
       {flags.threeJourneyArchitectureV2 ? (
-        <section id="estimate" className="container-page scroll-mt-24 pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="build-title">
-          <TrackView event="journey_landing_view" props={{ journey: "weddings", page: "landing" }} />
-          <SectionHeading
-            eyebrow="Build your table"
-            title={<span id="build-title">Two ways to begin.</span>}
-            lede="Start from one of our favorites or from scratch. Either way you can change everything, and the estimate updates as you go — minimums, fees, tax and the retainer included."
-          />
-          <div className="mt-12">
-            <BuildYourTableInvite />
-          </div>
-        </section>
+        <TrackView event="journey_landing_view" props={{ journey: "weddings", page: "landing" }} />
       ) : (
         <section id="estimate" className="container-page scroll-mt-24 pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="estimate-title">
           <SectionHeading
@@ -204,7 +197,7 @@ export default function WeddingsPage() {
         <div className="container-page py-20 md:py-28">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
-              eyebrow={flags.threeJourneyArchitectureV2 ? "Everyday" : "Order online"}
+              eyebrow={flags.threeJourneyArchitectureV2 ? "Shop" : "Order online"}
               title={<span id="extras-title">For the rest of the weekend.</span>}
               lede={`Fixed-price extras you can order right now. Book two or more Signiorina events for the same weekend and we take ${weddingRules.bundle.foodDiscountPercent}% off the food.`}
             />

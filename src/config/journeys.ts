@@ -17,8 +17,6 @@ export interface Journey {
   href: string;
   /** Photo registry key (src/config/media.ts). */
   media: string;
-  /** How this journey buys — used in "how it works". */
-  steps: Array<{ title: string; body: string }>;
 }
 
 /** Weddings, Events, Shop: the homepage, navigation and footer follow this order. */
@@ -30,11 +28,6 @@ export const journeys: Journey[] = [
     cta: "Build Your Table",
     href: "/weddings/build",
     media: "weddingTable",
-    steps: [
-      { title: "Build your table", body: "Start from a favorite or from scratch, and watch the estimate update." },
-      { title: "Request your proposal", body: "Send us the whole configuration — no blank form to fill in." },
-      { title: "We set the table", body: "A written proposal, then we style it on the day." },
-    ],
   },
   {
     id: "events",
@@ -43,11 +36,6 @@ export const journeys: Journey[] = [
     cta: "Explore Packages",
     href: "/events",
     media: "boardLargeWide",
-    steps: [
-      { title: "Pick a package", body: "Three styled grazing tables, priced per guest." },
-      { title: "Tell us about it", body: "Date, place and guest count — see your estimate as you go." },
-      { title: "We confirm + style", body: "We confirm availability, send a written quote and set the table on site." },
-    ],
   },
   {
     id: "everyday",
@@ -56,11 +44,6 @@ export const journeys: Journey[] = [
     cta: "Shop Treats",
     href: "/everyday",
     media: "aperitivoBox",
-    steps: [
-      { title: "Choose", body: "Boxes and boards at fixed prices, for one to fifteen." },
-      { title: "Schedule", body: "Pick a date and a delivery window. Every fee shows before you pay." },
-      { title: "Enjoy", body: "We deliver it fresh, in the window you chose." },
-    ],
   },
 ];
 

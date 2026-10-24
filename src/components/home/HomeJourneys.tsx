@@ -11,13 +11,11 @@ import { Reveal } from "@/components/motion/Reveal";
 import { FaqList } from "@/components/sections/FaqList";
 import { Testimonials } from "@/components/sections/Sections";
 import { ButtonLink } from "@/components/ui/Button";
-import { IconArrow } from "@/components/ui/Icons";
 import { Badge } from "@/components/ui/Notice";
 import { getProduct } from "@/config/catalog";
 import { faqSections } from "@/config/content";
 import { deliveryWindows, zones } from "@/config/delivery";
 import { grazingTables, weddingPackages, weddingRules } from "@/config/events";
-import { journeys } from "@/config/journeys";
 import { ambientLoops } from "@/config/media";
 import { site } from "@/config/site";
 import { eventPackageViews } from "@/lib/event-packages";
@@ -209,39 +207,6 @@ export function HomeJourneys() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS ----------------------------------------------- */}
-      <section className="container-page py-20 md:py-28" aria-labelledby="how-it-works">
-        <SectionHeading
-          eyebrow="How Signiorina works"
-          title={<span id="how-it-works">Three ways to buy, one kitchen.</span>}
-          align="center"
-        />
-        <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-8">
-          {journeys.map((j, i) => (
-            <Reveal key={j.id} delay={i * 110} className="flex flex-col">
-              <h3 className="display-sm text-olive">{j.name}</h3>
-              <ol className="mt-6 flex flex-col gap-5 border-t border-line pt-6">
-                {j.steps.map((s, n) => (
-                  <li key={s.title} className="grid grid-cols-[2rem_1fr] gap-3">
-                    <span aria-hidden="true" className="font-display text-[1.4rem] leading-none text-olive/60">
-                      {n + 1}
-                    </span>
-                    <span>
-                      <span className="block font-medium text-espresso">{s.title}</span>
-                      <span className="text-[0.95rem] text-muted">{s.body}</span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-              <Link href={j.href} className="label-caps mt-7 inline-flex items-center gap-2 text-[0.7rem] text-olive">
-                {j.cta}
-                <IconArrow size={16} />
-              </Link>
-            </Reveal>
-          ))}
         </div>
       </section>
 
