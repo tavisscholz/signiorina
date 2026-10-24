@@ -61,63 +61,48 @@ export default function HomePage() {
     <>
       {/* HERO ------------------------------------------------------- */}
       <section className="relative overflow-hidden">
-        <div className="container-page grid items-center gap-12 pb-16 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-16">
-          <div className="lg:col-span-6 xl:col-span-6">
-            {/* Hero content is never hidden behind a scroll/hydration animation (see .hero-enter). */}
-            <div className="hero-enter">
-              <p className="eyebrow flex flex-col gap-1 text-olive-soft sm:flex-row sm:items-center sm:gap-3">
-                <span>Modern Aperitivo</span>
-                <span aria-hidden="true" className="hidden h-px w-6 bg-olive/40 sm:block" />
-                <span>Mobile charcuterie + hospitality</span>
-              </p>
-              <h1 className="display-xl mt-6 text-olive">
-                Good things, <span className="accent">generously</span> served.
-              </h1>
-              <p className="lede mt-7 max-w-xl text-muted">
-                Modern Italian-inspired grazing for Smoky Mountain weddings, cabin weekends, office lunches and tables
-                worth gathering around.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="/weddings" size="lg">
-                  Plan a wedding
-                </ButtonLink>
-                <ButtonLink href="/order" variant="secondary" size="lg">
-                  Order online
-                </ButtonLink>
-              </div>
-              <p className="mt-8 flex flex-wrap gap-x-5 gap-y-1 text-[0.88rem] text-muted">
-                <span>Wedding tables from {formatDollars(weddingPackages[0].pricePerPerson)}/guest</span>
-                <span aria-hidden="true">·</span>
-                <span>Boxes from {formatDollars(getProduct("aperitivo-box")!.price)}</span>
-                <span aria-hidden="true">·</span>
-                <span>Every fee shown up front</span>
-              </p>
-            </div>
+        {/*
+          Three grid items so the photos can sit between the headline and the copy below lg:
+          on a phone the first screen is headline → Irina + the table → copy. From lg up the
+          photos span both rows of the right column, as before.
+        */}
+        <div className="container-page grid pb-14 pt-6 sm:pt-10 md:pt-14 lg:grid-cols-12 lg:gap-x-8 lg:pb-24 lg:pt-16">
+          {/* Hero content is never hidden behind a scroll/hydration animation (see .hero-enter). */}
+          <div className="hero-enter lg:col-span-6 lg:row-start-1 lg:self-end">
+            <p className="eyebrow flex items-center gap-3 text-olive-soft">
+              {/* The wordmark directly above already says "Modern Aperitivo" on small screens. */}
+              <span className="hidden sm:block">Modern Aperitivo</span>
+              <span aria-hidden="true" className="hidden h-px w-6 bg-olive/40 sm:block" />
+              <span>Mobile charcuterie + hospitality</span>
+            </p>
+            <h1 className="display-xl mt-4 text-olive sm:mt-6">
+              Good things, <span className="accent">generously</span> served.
+            </h1>
           </div>
 
-          <div className="relative lg:col-span-6 xl:col-span-6">
-            <div className="relative mx-auto aspect-[5/6] w-full max-w-[36rem] lg:mr-0">
-              <div className="arch absolute right-0 top-0 h-[92%] w-[74%]">
+          <div className="relative mt-6 sm:mt-10 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-center">
+            <div className="relative mx-auto aspect-[13/9] w-full max-w-[34rem] lg:mr-0 lg:aspect-[5/6] lg:max-w-[36rem]">
+              <div className="arch absolute right-0 top-0 h-[90%] w-[56%] lg:h-[92%] lg:w-[74%]">
                 <Photo
                   media="boxForTwo"
                   shape="arch"
                   priority
                   className="hero-settle h-full w-full"
-                  sizes="(min-width: 1024px) 34vw, 70vw"
+                  sizes="(min-width: 1024px) 34vw, 56vw"
                   position="50% 45%"
                 />
               </div>
-              <div className="hero-enter absolute bottom-0 left-0 w-[44%]" style={{ ["--hero-delay" as string]: "200ms" }}>
+              <div className="hero-enter absolute bottom-0 left-0 w-[52%] lg:w-[44%]" style={{ ["--hero-delay" as string]: "200ms" }}>
                 <Photo
                   media="irina"
                   shape="oval"
                   priority
-                  className="aspect-[4/5] w-full border-[7px] border-cream shadow-[var(--shadow-lift)]"
-                  sizes="(min-width: 1024px) 16rem, 44vw"
+                  className="aspect-[4/5] w-full border-[6px] border-cream shadow-[var(--shadow-lift)] lg:border-[7px]"
+                  sizes="(min-width: 1024px) 16rem, 52vw"
                   position="50% 30%"
                 />
               </div>
-              <div className="hero-enter absolute left-[2%] top-[8%] hidden w-[38%] sm:block" style={{ ["--hero-delay" as string]: "350ms" }}>
+              <div className="hero-enter absolute left-[2%] top-[8%] hidden w-[38%] lg:block" style={{ ["--hero-delay" as string]: "350ms" }}>
                 <div className="menu-card rotate-[-3deg] rounded-sm px-5 py-6 text-center">
                   <OliveSprig className="mx-auto w-14 text-olive/70" />
                   <p className="eyebrow mt-3 text-[0.6rem] text-olive-soft">Aperitivo</p>
@@ -130,6 +115,29 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="hero-enter mt-6 sm:mt-8 lg:col-span-6 lg:row-start-2 lg:mt-7 lg:self-start" style={{ ["--hero-delay" as string]: "80ms" }}>
+            <p className="lede max-w-xl text-muted">
+              Modern Italian-inspired grazing for Smoky Mountain weddings, cabin weekends, office lunches and tables
+              worth gathering around.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row">
+              <ButtonLink href="/weddings" size="lg">
+                Plan a wedding
+              </ButtonLink>
+              {/* Below md the sticky action bar already carries Order online. */}
+              <ButtonLink href="/order" variant="secondary" size="lg" className="hidden md:inline-flex">
+                Order online
+              </ButtonLink>
+            </div>
+            <p className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[0.88rem] text-muted sm:mt-8">
+              <span>Wedding tables from {formatDollars(weddingPackages[0].pricePerPerson)}/guest</span>
+              <span aria-hidden="true" className="hidden sm:inline">·</span>
+              <span>Boxes from {formatDollars(getProduct("aperitivo-box")!.price)}</span>
+              <span aria-hidden="true" className="hidden sm:inline">·</span>
+              <span>Every fee shown up front</span>
+            </p>
           </div>
         </div>
       </section>

@@ -109,12 +109,13 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
     <header className="sticky top-0 z-40">
       {!isCheckout ? (
         <div className="bg-olive text-cream">
-          <p className="container-page flex h-9 items-center justify-center gap-3 text-center text-[0.7rem] font-medium uppercase tracking-[0.2em]">
-            <span className="hidden sm:inline">Published prices</span>
-            <span aria-hidden="true" className="hidden text-prosecco sm:inline">·</span>
-            <span>Delivering across the Smokies + Knoxville</span>
+          {/* Items appear only at widths where the line still fits on one row (36px tall). */}
+          <p className="container-page flex h-9 items-center justify-center gap-3 text-center text-[0.64rem] font-medium uppercase tracking-[0.1em] xs:text-[0.7rem] xs:tracking-[0.2em]">
+            <span className="hidden md:inline">Published prices</span>
             <span aria-hidden="true" className="hidden text-prosecco md:inline">·</span>
-            <span className="hidden md:inline">Order by noon, two days ahead</span>
+            <span>Delivering across the Smokies + Knoxville</span>
+            <span aria-hidden="true" className="hidden text-prosecco lg:inline">·</span>
+            <span className="hidden lg:inline">Order by noon, two days ahead</span>
           </p>
         </div>
       ) : null}
