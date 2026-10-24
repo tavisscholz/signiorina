@@ -196,3 +196,46 @@ Current images are the launch mockups (vision board + product renders), cropped 
 | Menu + allergen card | Printed on linen |
 
 Replace a file in `src/assets/images/` (or point the slot at a new import) and update its `alt` text and `status` to `"final"`.
+
+---
+
+## Background video
+
+The home page's **The idea** section has a slot for a muted 10–12 second loop behind white type (`ambientLoops.idea` in `src/config/media.ts`). Until a clip is added it shows a **placeholder animation**: a slow 12-second pan over the candlelit wedding-table photo with flickering candle glows and drifting bokeh. Visitors who prefer reduced motion, or have Data Saver on, always get a still; the video only downloads and plays while the section is on screen.
+
+**The shot:** a wedding party gathered around a generous grazing table at dusk. The table is sharp in the foreground; the guests behind it are softly out of focus, laughing, talking, reaching in for a plate. Warm candle and string-light glow, a slow sideways slide, no faces in focus. Keep the brightest detail in the lower half of the frame — the text sits over the upper two-thirds.
+
+**Getting the footage — any one of these:**
+
+1. **Film it at a real event (best).** Tripod or slider, camera at table height, lens wide open (f/1.8–f/2.8) focused on the food, guests 2–4 m behind. 4K or 1080p at 24/30 fps, white balance around 3200 K, one slow 15–20 second move. Get the guests' and couple's permission to use the footage.
+2. **License stock footage.** Search "wedding reception grazing table bokeh", "charcuterie table party blurred guests", "candlelit dinner party shallow depth of field" on Artgrid, Storyblocks, Adobe Stock or Pexels (free). Check the license allows website use.
+3. **Generate it with AI video.** ElevenLabs needs a paid plan for video (Seedance 2.5 or Veo 3.1), as do Runway, Sora or Veo directly. Ask for 13 seconds at 16:9, 1080p, no audio, with this prompt:
+
+   > Slow cinematic slide along a long rustic wooden grazing table at an evening wedding reception. The table is in sharp focus in the foreground: folded prosciutto, salami, wedges of aged cheese, halved figs, grapes, olives, focaccia, honey and brass candlesticks with lit candles. Behind it, wedding guests in soft focus laugh, talk and reach in for plates under warm string lights. Shallow depth of field, cozy amber evening light, gentle film grain. No text, no logos, no bottles or drinks in focus, faces never sharp.
+
+   AI footage is a stand-in like the other mockup imagery — replace it with real event footage when you have it.
+
+**Encoding (needs [ffmpeg](https://ffmpeg.org)).** Start from a clip at least 13 seconds long. This keeps seconds 1–13 and crossfades the last second into the first so the 12-second loop has no visible jump, drops the audio, and writes web-sized files (about 2 MB each at 1600 px):
+
+```bash
+mkdir -p public/media
+ffmpeg -i source.mp4 -filter_complex "[0:v]fps=30,scale=1600:-2,setsar=1,split[a][b];[a]trim=1:13,setpts=PTS-STARTPTS[main];[b]trim=0:1,setpts=PTS-STARTPTS[head];[main][head]xfade=transition=fade:duration=1:offset=11,format=yuv420p[v]" \
+  -map "[v]" -an -c:v libx264 -preset slow -crf 27 -profile:v high -movflags +faststart public/media/idea-loop.mp4
+ffmpeg -i public/media/idea-loop.mp4 -an -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 public/media/idea-loop.webm
+ffmpeg -i public/media/idea-loop.mp4 -frames:v 1 -q:v 3 public/media/idea-loop.jpg
+```
+
+For a 10-second loop instead, use `trim=1:11` and `offset=9` (and a source of at least 11 seconds).
+
+**Turning it on:** in `src/config/media.ts`, set
+
+```ts
+idea: {
+  mp4: "/media/idea-loop.mp4",
+  webm: "/media/idea-loop.webm",
+  poster: "/media/idea-loop.jpg",
+  ...
+}
+```
+
+then commit the three files and redeploy. Keep each file under about 4 MB.

@@ -177,3 +177,35 @@ export function getMedia(key: string): MediaItem {
   if (!item) throw new Error(`Unknown media key: ${key}`);
   return item;
 }
+
+/**
+ * Background video loops. Each slot plays a muted, looping clip from /public/media once
+ * `mp4` is set; until then (and for visitors who prefer reduced motion) the section shows
+ * a placeholder animation built from `placeholder`, a photo from the registry above.
+ * Encoding steps are in the README under "Background video".
+ */
+export interface AmbientLoop {
+  /** e.g. "/media/idea-loop.mp4" — H.264, no audio track. */
+  mp4: string | null;
+  /** Optional smaller VP9/AV1 version, e.g. "/media/idea-loop.webm". */
+  webm: string | null;
+  /** First frame of the clip as a JPG, e.g. "/media/idea-loop.jpg". Shown before playback and under reduced motion. */
+  poster: string | null;
+  placeholder: MediaKey;
+  /** object-position for the placeholder still, e.g. "50% 75%" to favour the table. */
+  placeholderPosition?: string;
+  /** Brief for the footage. */
+  shot: string;
+}
+
+export const ambientLoops = {
+  idea: {
+    mp4: null,
+    webm: null,
+    poster: null,
+    placeholder: "weddingTable",
+    placeholderPosition: "50% 78%",
+    shot:
+      "10–12 s seamless loop: a wedding party gathered around a generous grazing table at dusk. The table is sharp in the foreground; guests behind it are softly blurred, laughing and reaching in. Warm candle and string-light glow, slow lateral slide, no faces in focus.",
+  },
+} satisfies Record<string, AmbientLoop>;

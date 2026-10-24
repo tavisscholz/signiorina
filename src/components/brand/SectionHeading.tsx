@@ -18,20 +18,26 @@ export function SectionHeading({
   as?: "h1" | "h2" | "h3";
   size?: "xl" | "lg" | "md";
   className?: string;
-  tone?: "dark" | "light";
+  /** dark = on cream, light = on olive, white = over photography or video. */
+  tone?: "dark" | "light" | "white";
 }) {
   const sizeClass = { xl: "display-xl", lg: "display-lg", md: "display-md" }[size];
+  const colors = {
+    dark: { eyebrow: "text-olive-soft", rule: "bg-olive/40", title: "text-olive", lede: "text-muted" },
+    light: { eyebrow: "text-prosecco", rule: "bg-prosecco/60", title: "text-cream", lede: "text-cream/80" },
+    white: { eyebrow: "text-white/80", rule: "bg-white/50", title: "text-white", lede: "text-white/85" },
+  }[tone];
   return (
     <div className={clsx("flex flex-col gap-4", align === "center" && "items-center text-center", className)}>
       {eyebrow ? (
-        <p className={clsx("eyebrow flex items-center gap-3", tone === "dark" ? "text-olive-soft" : "text-prosecco")}>
-          <span aria-hidden="true" className={clsx("h-px w-8", tone === "dark" ? "bg-olive/40" : "bg-prosecco/60")} />
+        <p className={clsx("eyebrow flex items-center gap-3", colors.eyebrow)}>
+          <span aria-hidden="true" className={clsx("h-px w-8", colors.rule)} />
           {eyebrow}
         </p>
       ) : null}
-      <Tag className={clsx(sizeClass, tone === "dark" ? "text-olive" : "text-cream")}>{title}</Tag>
+      <Tag className={clsx(sizeClass, colors.title)}>{title}</Tag>
       {lede ? (
-        <div className={clsx("lede max-w-2xl", tone === "dark" ? "text-muted" : "text-cream/80", align === "center" && "mx-auto")}>
+        <div className={clsx("lede max-w-2xl", colors.lede, align === "center" && "mx-auto")}>
           {lede}
         </div>
       ) : null}

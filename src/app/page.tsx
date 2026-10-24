@@ -5,6 +5,7 @@ import { OliveSprig } from "@/components/brand/OliveSprig";
 import { Photo } from "@/components/brand/Photo";
 import { PriceOval, SectionHeading } from "@/components/brand/SectionHeading";
 import { ProductCard } from "@/components/commerce/ProductCard";
+import { AmbientLoop } from "@/components/motion/AmbientLoop";
 import { Reveal } from "@/components/motion/Reveal";
 import { CTABand, ProcessSteps, Testimonials } from "@/components/sections/Sections";
 import { ButtonLink } from "@/components/ui/Button";
@@ -12,6 +13,7 @@ import { IconArrow, IconClock, IconLock, IconPin } from "@/components/ui/Icons";
 import { getProduct } from "@/config/catalog";
 import { deliveryWindows } from "@/config/delivery";
 import { weddingPackages, weddingRules } from "@/config/events";
+import { ambientLoops } from "@/config/media";
 import { formatDollars } from "@/lib/money";
 import { pageMetadata } from "@/lib/seo";
 
@@ -82,10 +84,10 @@ export default function HomePage() {
 
           <div className="relative mt-6 sm:mt-10 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-center">
             <div className="relative mx-auto aspect-[13/9] w-full max-w-[34rem] lg:mr-0 lg:aspect-[5/6] lg:max-w-[36rem]">
-              <div className="arch absolute right-0 top-0 h-[90%] w-[56%] lg:h-[92%] lg:w-[74%]">
+              {/* A plain rectangle beside the oval on small screens; the brand arch from lg up. */}
+              <div className="absolute right-0 top-0 h-[90%] w-[56%] overflow-hidden rounded-xl lg:arch lg:h-[92%] lg:w-[74%]">
                 <Photo
                   media="boxForTwo"
-                  shape="arch"
                   priority
                   className="hero-settle h-full w-full"
                   sizes="(min-width: 1024px) 34vw, 56vw"
@@ -143,23 +145,38 @@ export default function HomePage() {
       </section>
 
       {/* BRAND STATEMENT -------------------------------------------- */}
-      <section className="border-y border-line bg-paper">
-        <div className="container-page grid gap-10 py-20 md:py-28 lg:grid-cols-12">
+      <section className="on-dark relative isolate overflow-hidden bg-espresso" aria-labelledby="idea-title">
+        <AmbientLoop loop={ambientLoops.idea} />
+        {/* Warm, dark scrim so white type reads over any frame of the footage. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-espresso/72 lg:bg-transparent lg:bg-linear-to-r lg:from-espresso/90 lg:via-espresso/75 lg:to-espresso/55"
+        />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-espresso/70 to-transparent" />
+        <div className="container-page relative grid gap-10 py-24 [text-shadow:0_1px_16px_rgb(36_35_31/0.45)] md:py-36 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
-            <SectionHeading eyebrow="The idea" title={<>A beautiful reason to <span className="accent">gather.</span></>} />
+            <SectionHeading
+              tone="white"
+              eyebrow="The idea"
+              title={
+                <span id="idea-title">
+                  A beautiful reason to <span className="accent">gather.</span>
+                </span>
+              }
+            />
           </Reveal>
           <Reveal delay={150} className="lg:col-span-7">
-            <p className="font-display text-[clamp(1.4rem,2.4vw,2rem)] leading-[1.35] text-espresso">
+            <p className="font-display text-[clamp(1.4rem,2.4vw,2rem)] leading-[1.35] text-white">
               Aperitivo is less a menu than a habit: slowing down, sharing something good, making people feel looked after.
               Signiorina brings that to wherever you&apos;re already gathering — grazing tables for the middle of the
               celebration, generous boards for the cabin, lunches worth leaving your desk for, and thoughtfully packed boxes
               for everything in between.
             </p>
-            <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-3 text-[0.95rem] text-muted sm:grid-cols-3">
+            <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-3 text-[0.95rem] text-white/85 sm:grid-cols-3">
               {["Grazing tables", "Wedding experiences", "Generous boards", "Corporate lunches", "Cabin arrival spreads", "Packed-to-go boxes"].map(
                 (item) => (
                   <li key={item} className="flex items-center gap-2.5">
-                    <span aria-hidden="true" className="h-2.5 w-3.5 rounded-[50%] border border-olive/50" />
+                    <span aria-hidden="true" className="h-2.5 w-3.5 rounded-[50%] border border-white/60" />
                     {item}
                   </li>
                 ),
