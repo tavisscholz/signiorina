@@ -68,7 +68,7 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
           <ol className="flex flex-wrap items-center gap-2">
             <li>
               <Link href={routes.store} className="hover:text-olive hover:underline">
-                Order online
+                {routeLabels.store}
               </Link>
             </li>
             <li aria-hidden="true">/</li>

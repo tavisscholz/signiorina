@@ -90,6 +90,8 @@ export const routeLabels = flags.threeJourneyArchitectureV2
 
 export interface JourneyRedirect {
   source: string;
+  /** Only when the request has these query keys (e.g. an estimate from the classic estimators). */
+  has?: Array<{ type: "query"; key: string }>;
   destination: string;
   /** Always temporary (307) so turning the flag off never fights cached permanent redirects. */
   permanent: false;
@@ -101,10 +103,14 @@ export interface JourneyRedirect {
  * closest original page. Query strings pass through, so estimate parameters survive.
  */
 export function journeyRedirects(enabledFlag: boolean): JourneyRedirect[] {
+  const carriesEstimate = [{ type: "query" as const, key: "service" }];
   return enabledFlag
     ? [
         { source: "/order", destination: "/everyday", permanent: false },
+        // Estimate links from the classic estimators open the matching planner, state intact.
+        { source: "/gatherings", has: carriesEstimate, destination: "/events/plan?step=2", permanent: false },
         { source: "/gatherings", destination: "/events", permanent: false },
+        { source: "/weddings", has: carriesEstimate, destination: "/weddings/build?step=3", permanent: false },
       ]
     : [
         { source: "/everyday", destination: "/order", permanent: false },

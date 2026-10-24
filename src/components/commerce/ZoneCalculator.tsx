@@ -10,7 +10,7 @@ import { beyondZoneC, deliveryAreas, deliveryWindows, getArea, zones } from "@/c
 import { track } from "@/lib/analytics";
 import { routeDayNames } from "@/lib/delivery-fees";
 import { formatDollars } from "@/lib/money";
-import { routes } from "@/config/journeys";
+import { routeLabels, routes } from "@/config/journeys";
 
 /** "Do you deliver to me, and what does it cost?" — answered before anyone builds a cart. */
 export function ZoneCalculator({
@@ -78,7 +78,7 @@ export function ZoneCalculator({
             </ul>
             {showShopLink ? (
               <Link href={routes.store} className={clsx("mt-1 self-start underline underline-offset-4", tone === "dark" ? "text-cream" : "text-olive")}>
-                Order online
+                {routeLabels.store}
               </Link>
             ) : null}
           </div>

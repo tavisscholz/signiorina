@@ -14,6 +14,10 @@ describe("three journeys", () => {
     const on = journeyRedirects(true);
     expect(on).toContainEqual({ source: "/order", destination: "/everyday", permanent: false });
     expect(on).toContainEqual({ source: "/gatherings", destination: "/events", permanent: false });
+    // Classic estimate links (they always carry ?service=) open the planner, ahead of the plain redirect.
+    const gatherings = on.filter((r) => r.source === "/gatherings");
+    expect(gatherings[0]).toMatchObject({ has: [{ type: "query", key: "service" }], destination: "/events/plan?step=2" });
+    expect(on.find((r) => r.source === "/weddings")).toMatchObject({ has: [{ type: "query", key: "service" }], destination: "/weddings/build?step=3" });
     // Product, cart and checkout URLs never move.
     expect(on.some((r) => r.source.startsWith("/order/") || r.source.startsWith("/checkout") || r.source === "/cart")).toBe(false);
 

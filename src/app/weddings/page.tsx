@@ -204,7 +204,7 @@ export default function WeddingsPage() {
         <div className="container-page py-20 md:py-28">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
-              eyebrow="Order online"
+              eyebrow={flags.threeJourneyArchitectureV2 ? "Everyday" : "Order online"}
               title={<span id="extras-title">For the rest of the weekend.</span>}
               lede={`Fixed-price extras you can order right now. Book two or more Signiorina events for the same weekend and we take ${weddingRules.bundle.foodDiscountPercent}% off the food.`}
             />
