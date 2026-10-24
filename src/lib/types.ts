@@ -434,6 +434,9 @@ export interface EventInquiry {
   serviceInterest: string;
   budgetRange?: string;
   heardAbout?: string;
-  message: string;
+  /** Optional for planner submissions (older inquiries always have one). */
+  message?: string;
   estimate?: Record<string, unknown>;
+  /** Planner submissions only (threeJourneyArchitectureV2). */
+  planner?: { journey: "weddings" | "events"; start?: "preset" | "custom"; preset?: string; occasion?: string; area?: string };
 }

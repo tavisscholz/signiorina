@@ -14,6 +14,7 @@ import { deliveryAreas, deliveryWindows, zones } from "@/config/delivery";
 import { leadTimeLabel } from "@/lib/format";
 import { formatDollars } from "@/lib/money";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
+import { routes } from "@/config/journeys";
 
 export const metadata: Metadata = pageMetadata({
   title: "Cabin Food Delivery — Gatlinburg, Pigeon Forge + Smoky Mountain Cabins",
@@ -214,7 +215,7 @@ export default function CabinDeliveryPage() {
         title="Arrive hungry."
         lede="Order the Cabin Welcome Box up to a few months ahead, or a few days — we'll handle the first spread."
         primary={{ href: `/order/${cabin.slug}`, label: "Order a Cabin Welcome Box" }}
-        secondary={{ href: "/order?category=cabin", label: "Everything for the cabin" }}
+        secondary={{ href: `${routes.store}?category=cabin`, label: "Everything for the cabin" }}
       />
     </>
   );

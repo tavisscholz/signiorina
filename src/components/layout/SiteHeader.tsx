@@ -9,8 +9,17 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { useCartHydrated } from "@/components/providers/StoreHydrator";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconBag, IconClose, IconMenu } from "@/components/ui/Icons";
-import { navigation } from "@/config/site";
+import { flags } from "@/config/flags";
+import { navigation, type NavItem } from "@/config/site";
 import { useCart } from "@/lib/cart-store";
+
+// The three-journey nav has four items, so it fits from lg; the classic six need xl.
+const desktopNav = flags.threeJourneyArchitectureV2 ? "hidden lg:block" : "hidden xl:block";
+const mobileOnly = flags.threeJourneyArchitectureV2 ? "lg:hidden" : "xl:hidden";
+
+function isCurrent(item: NavItem, pathname: string): boolean {
+  return [item.href, ...(item.match ?? [])].some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
 
 function CartButton({ className }: { className?: string }) {
   const hydrated = useCartHydrated();
@@ -104,6 +113,7 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
   }, [menuOpen]);
 
   const isCheckout = pathname.startsWith("/checkout");
+  const actions = navigation.actions;
 
   return (
     <header className="sticky top-0 z-40">
@@ -131,10 +141,10 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
           </Link>
 
           {!isCheckout ? (
-            <nav aria-label="Primary" className="hidden xl:block">
+            <nav aria-label="Primary" className={desktopNav}>
               <ul className="flex items-center gap-7">
                 {navigation.primary.map((item) => {
-                  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  const active = isCurrent(item, pathname);
                   return (
                     <li key={item.href}>
                       <Link
@@ -156,24 +166,24 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
           ) : null}
 
           <div className="flex items-center gap-2">
-            {!isCheckout ? (
+            {isCheckout ? (
+              <p className="hidden items-center gap-2 text-[0.85rem] text-muted sm:flex">Secure guest checkout</p>
+            ) : actions ? (
               <>
-                <ButtonLink href={navigation.actions.order.href} variant="secondary" size="sm" className="hidden md:inline-flex">
-                  {navigation.actions.order.label}
+                <ButtonLink href={actions.order.href} variant="secondary" size="sm" className="hidden md:inline-flex">
+                  {actions.order.label}
                 </ButtonLink>
-                <ButtonLink href={navigation.actions.plan.href} variant="primary" size="sm" className="hidden lg:inline-flex">
-                  {navigation.actions.plan.label}
+                <ButtonLink href={actions.plan.href} variant="primary" size="sm" className="hidden lg:inline-flex">
+                  {actions.plan.label}
                 </ButtonLink>
               </>
-            ) : (
-              <p className="hidden items-center gap-2 text-[0.85rem] text-muted sm:flex">Secure guest checkout</p>
-            )}
+            ) : null}
             <CartButton />
             {!isCheckout ? (
               <button
                 ref={toggleRef}
                 type="button"
-                className="grid size-11 place-items-center rounded-full text-olive hover:bg-olive/8 xl:hidden"
+                className={clsx("grid size-11 place-items-center rounded-full text-olive hover:bg-olive/8", mobileOnly)}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -193,7 +203,7 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="animate-rise fixed inset-x-0 bottom-0 top-[6.75rem] z-40 overflow-y-auto bg-cream xl:hidden"
+          className={clsx("animate-rise fixed inset-x-0 bottom-0 top-[6.75rem] z-40 overflow-y-auto bg-cream", mobileOnly)}
         >
           <nav aria-label="Mobile" className="container-page flex min-h-full flex-col justify-between gap-10 pb-10 pt-6">
             <ul className="flex flex-col divide-y divide-line border-y border-line">
@@ -201,7 +211,7 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    aria-current={pathname === item.href ? "page" : undefined}
+                    aria-current={isCurrent(item, pathname) ? "page" : undefined}
                     className="flex items-center justify-between py-4 font-display text-[1.9rem] text-olive"
                   >
                     {item.label}
@@ -210,17 +220,34 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col gap-3">
-              <ButtonLink href={navigation.actions.order.href} variant="secondary" size="lg">
-                {navigation.actions.order.label}
-              </ButtonLink>
-              <ButtonLink href={navigation.actions.plan.href} variant="primary" size="lg">
-                {navigation.actions.plan.label}
-              </ButtonLink>
-              <p className="mt-2 text-center text-[0.85rem] text-muted">
-                Weddings and events are planned together. Boxes and boards order online.
-              </p>
-            </div>
+            {navigation.secondary.length > 0 ? (
+              <ul className="-mt-4 flex flex-col gap-3">
+                {navigation.secondary.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      aria-current={isCurrent(item, pathname) ? "page" : undefined}
+                      className="text-[1.05rem] text-olive underline decoration-olive/30 underline-offset-4"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {actions ? (
+              <div className="flex flex-col gap-3">
+                <ButtonLink href={actions.order.href} variant="secondary" size="lg">
+                  {actions.order.label}
+                </ButtonLink>
+                <ButtonLink href={actions.plan.href} variant="primary" size="lg">
+                  {actions.plan.label}
+                </ButtonLink>
+                <p className="mt-2 text-center text-[0.85rem] text-muted">
+                  Weddings and events are planned together. Boxes and boards order online.
+                </p>
+              </div>
+            ) : null}
           </nav>
         </div>
       ) : null}

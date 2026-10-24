@@ -10,9 +10,24 @@ import { beyondZoneC, deliveryAreas, deliveryWindows, getArea, zones } from "@/c
 import { track } from "@/lib/analytics";
 import { routeDayNames } from "@/lib/delivery-fees";
 import { formatDollars } from "@/lib/money";
+import { routes } from "@/config/journeys";
 
 /** "Do you deliver to me, and what does it cost?" — answered before anyone builds a cart. */
-export function ZoneCalculator({ className, tone = "light" }: { className?: string; tone?: "light" | "dark" }) {
+export function ZoneCalculator({
+  className,
+  tone = "light",
+  source = "calculator",
+  showShopLink = true,
+  label = "Where are you staying or gathering?",
+}: {
+  className?: string;
+  tone?: "light" | "dark";
+  /** Analytics: where the check happened. */
+  source?: string;
+  /** Hide the "shop" link where the visitor is already in the store. */
+  showShopLink?: boolean;
+  label?: string;
+}) {
   const id = useId();
   const [areaId, setAreaId] = useState("");
   const area = areaId && areaId !== "other" ? getArea(areaId) : undefined;
@@ -21,12 +36,12 @@ export function ZoneCalculator({ className, tone = "light" }: { className?: stri
     <div className={clsx("rounded-[1.75rem] border p-6 md:p-8", tone === "dark" ? "border-cream/20 bg-olive-deep/40 text-cream" : "border-line bg-paper", className)}>
       <SelectField
         id={`${id}-area`}
-        label={<span className={tone === "dark" ? "text-cream" : undefined}>Where are you staying or gathering?</span>}
+        label={<span className={tone === "dark" ? "text-cream" : undefined}>{label}</span>}
         value={areaId}
         onChange={(e) => {
           setAreaId(e.target.value);
           const a = getArea(e.target.value);
-          if (a) track("delivery_zone_validated", { zone: a.zone, area: a.id, source: "calculator" });
+          if (a) track("delivery_zone_validated", { zone: a.zone, area: a.id, source });
         }}
         className="text-espresso"
       >
@@ -61,15 +76,17 @@ export function ZoneCalculator({ className, tone = "light" }: { className?: stri
               <li>Windows: {deliveryWindows.map((w) => w.display).join(" · ")}.</li>
               {area.cabinCountry ? <li>Cabin deliveries: we&apos;ll ask about gate codes and steep or gravel driveways.</li> : null}
             </ul>
-            <Link href="/order" className={clsx("mt-1 self-start underline underline-offset-4", tone === "dark" ? "text-cream" : "text-olive")}>
-              Order online
-            </Link>
+            {showShopLink ? (
+              <Link href={routes.store} className={clsx("mt-1 self-start underline underline-offset-4", tone === "dark" ? "text-cream" : "text-olive")}>
+                Order online
+              </Link>
+            ) : null}
           </div>
         ) : areaId === "other" ? (
           <p className={clsx("text-[0.95rem]", tone === "dark" ? "text-cream/85" : "text-muted")}>
             Looks like this one is outside our usual route. For events we travel by quote — the Zone C fee plus{" "}
             {formatDollars(beyondZoneC.perMileRoundTrip)} a mile round trip beyond it.{" "}
-            <Link href="/inquire?type=event" className={tone === "dark" ? "text-cream underline" : "text-olive underline"}>
+            <Link href={routes.eventPlanner} className={tone === "dark" ? "text-cream underline" : "text-olive underline"}>
               Ask about an event
             </Link>
           </p>

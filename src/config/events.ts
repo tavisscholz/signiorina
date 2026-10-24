@@ -154,6 +154,121 @@ export const eventFees = {
   noCardSurcharge: true,
 };
 
+/* ------------------------------------------------------------------ */
+/* threeJourneyArchitectureV2                                          */
+/* ------------------------------------------------------------------ */
+
+export type GrazingTierId = "light" | "generous" | "premium";
+
+export interface EventPackage {
+  tierId: GrazingTierId;
+  /** PROPOSED customer-facing name — shown only once `eventPackages.namesApproved` is true (or where placeholders show). */
+  proposedName: string;
+  /** PROPOSED one-line description that goes with the proposed name. */
+  proposedSubline: string;
+  /** Photo registry key. */
+  image: string;
+}
+
+/**
+ * Events journey: the three styled grazing tables above, presented as packages. Prices,
+ * minimums, setup and lead time all come from `grazingTables`; this adds presentation only.
+ *
+ * The names are PROPOSALS awaiting the owner's approval. Until `namesApproved` is true they
+ * appear only where placeholders are shown (development, or NEXT_PUBLIC_SHOW_PLACEHOLDERS=true)
+ * and carry a visible "Proposed name" label; everywhere else the current tier names are used.
+ */
+export const eventPackages = {
+  namesApproved: false,
+  packages: [
+    { tierId: "light", proposedName: "The Spuntino", proposedSubline: "A light graze before dinner", image: "gatheringBoardSmall" },
+    { tierId: "generous", proposedName: "The Festa", proposedSubline: "The party table", image: "gatheringBoardLarge" },
+    { tierId: "premium", proposedName: "The Abbondanza", proposedSubline: "Abundant enough to be dinner", image: "abundantBoard" },
+  ] as EventPackage[],
+  /** Included with every styled grazing table, as published on the gatherings page. */
+  includes: ["Styled grazing table, built on site", "All food", "Eco plates, napkins + picks", "Menu card + allergen card"],
+};
+
+/** Occasions for the Events journey. Explanatory and carried into the proposal — they don't change the price. */
+export const eventOccasions = [
+  { id: "corporate", label: "Corporate gathering or offsite" },
+  { id: "birthday", label: "Birthday" },
+  { id: "graduation", label: "Graduation" },
+  { id: "shower", label: "Bridal or baby shower" },
+  { id: "anniversary", label: "Anniversary party" },
+  { id: "private", label: "Private celebration" },
+  { id: "other", label: "Something else" },
+] as const;
+
+/** Wedding moments a table can be for. Carried into the proposal; they don't change the price. */
+export const weddingMoments = [
+  { id: "cocktail-hour", label: "Cocktail hour" },
+  { id: "reception", label: "Reception" },
+  { id: "welcome-party", label: "Welcome party" },
+  { id: "rehearsal", label: "Rehearsal gathering" },
+  { id: "other", label: "Something else" },
+] as const;
+
+export interface WeddingPreset {
+  id: string;
+  /** Working UX label — not an approved product name. */
+  name: string;
+  line: string;
+  /** The wedding package it starts from; every price and rule comes from that package. */
+  packageId: string;
+  /** Starting guest count, used only when the couple hasn't entered one. */
+  guests: number;
+  moment: (typeof weddingMoments)[number]["id"];
+  dopUpgrade: boolean;
+  addOns: Array<{ id: string; quantity: number }>;
+  /** Enhancements listed first and marked "Recommended": add-on ids, or "dop" / "attendant". */
+  recommended: string[];
+}
+
+/**
+ * Build Your Table "Start with a favorite" combinations. Editable starting points for the
+ * shared planner — not separate products or prices. Labels are working names pending approval.
+ */
+export const weddingPresets: WeddingPreset[] = [
+  {
+    id: "cocktail-hour",
+    name: "Cocktail Hour",
+    line: "A lighter grazing table for the hour before dinner.",
+    packageId: "aperitivo-hour",
+    guests: 50,
+    moment: "cocktail-hour",
+    dopUpgrade: false,
+    addOns: [],
+    recommended: ["burrata-focaccia", "dop"],
+  },
+  {
+    id: "celebration-table",
+    name: "The Celebration Table",
+    line: "A substantial table for a reception or rehearsal gathering.",
+    packageId: "gathering-table",
+    guests: 60,
+    moment: "reception",
+    dopUpgrade: false,
+    addOns: [{ id: "dolce-board", quantity: 1 }],
+    recommended: ["panini-tray", "dop"],
+  },
+  {
+    id: "full-reception",
+    name: "The Full Reception",
+    line: "A generous hosted table that stands in for dinner, with attendants and teardown.",
+    packageId: "hosted-table",
+    guests: 80,
+    moment: "reception",
+    dopUpgrade: true,
+    addOns: [],
+    recommended: ["attendant", "dolce-board"],
+  },
+];
+
+export function getWeddingPreset(id: string): WeddingPreset | undefined {
+  return weddingPresets.find((p) => p.id === id);
+}
+
 /** Future / test offerings. Present in the data model, not marketed at launch. */
 export const futureOfferings = [
   {

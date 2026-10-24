@@ -14,6 +14,7 @@ import { getArea, getWindow } from "@/config/delivery";
 import { track } from "@/lib/analytics";
 import { useCart } from "@/lib/cart-store";
 import { formatDateLong } from "@/lib/dates";
+import { routes } from "@/config/journeys";
 
 export function CartView() {
   const { pricing, hydrated } = useCartPricing();
@@ -32,7 +33,7 @@ export function CartView() {
           ))}
         </ul>
         <CartIssues pricing={pricing} className="mt-6" />
-        <Link href="/order" className="mt-6 inline-block text-[0.92rem] text-olive underline underline-offset-4">
+        <Link href={routes.store} className="mt-6 inline-block text-[0.92rem] text-olive underline underline-offset-4">
           Keep browsing
         </Link>
         <p className="mt-10 rounded-2xl border border-line bg-paper p-5 text-[0.88rem] leading-relaxed text-muted">{ALLERGEN_STATEMENT}</p>

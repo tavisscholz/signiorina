@@ -10,6 +10,7 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { SelectField, TextAreaField, TextField } from "@/components/ui/Field";
 import { Notice } from "@/components/ui/Notice";
 import { getZone } from "@/config/delivery";
+import { flags } from "@/config/flags";
 import { grazingTables, weddingPackages } from "@/config/events";
 import { track } from "@/lib/analytics";
 import { businessNow } from "@/lib/dates";
@@ -17,6 +18,7 @@ import { fromEstimateParams, toEstimateParams } from "@/lib/estimate-params";
 import { estimateEvent } from "@/lib/event-estimate";
 import { useNow } from "@/lib/use-now";
 import { inquirySchema, toFieldErrors, type FieldErrors } from "@/lib/validation";
+import { routeLabels, routes } from "@/config/journeys";
 
 export const EVENT_TYPES = [
   "Wedding",
@@ -175,7 +177,7 @@ export function InquiryForm() {
           <ButtonLink href="/weddings" variant="secondary">
             See wedding packages
           </ButtonLink>
-          <ButtonLink href="/order">Order online</ButtonLink>
+          <ButtonLink href={routes.store}>{routeLabels.store}</ButtonLink>
         </div>
       </div>
     );
@@ -204,7 +206,11 @@ export function InquiryForm() {
               Your estimate is attached
             </h2>
             <Link
-              href={`/${estimateState.kind === "wedding" ? "weddings" : "gatherings"}?${toEstimateParams(estimateState).toString()}#estimate`}
+              href={
+                flags.threeJourneyArchitectureV2
+                  ? `${estimateState.kind === "wedding" ? "/weddings/build" : "/events/plan"}?${toEstimateParams(estimateState).toString()}&step=${estimateState.kind === "wedding" ? 3 : 2}`
+                  : `/${estimateState.kind === "wedding" ? "weddings" : "gatherings"}?${toEstimateParams(estimateState).toString()}#estimate`
+              }
               className="text-[0.88rem] text-olive underline underline-offset-4"
             >
               Edit estimate
@@ -294,7 +300,7 @@ export function InquiryForm() {
       <div className="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[0.88rem] text-muted">
           Looking for boxes, lunch or cabin delivery?{" "}
-          <Link href="/order" className="text-olive underline underline-offset-4">
+          <Link href={routes.store} className="text-olive underline underline-offset-4">
             Order online
           </Link>
         </p>

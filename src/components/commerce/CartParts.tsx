@@ -10,6 +10,7 @@ import { scheduling } from "@/config/delivery";
 import { setAddOnQuantity, useCart } from "@/lib/cart-store";
 import { formatCents, formatDollars } from "@/lib/money";
 import type { CartPricing } from "@/lib/pricing";
+import { routes } from "@/config/journeys";
 
 export function EmptyCart({ onNavigate, headingLevel = "h2" }: { onNavigate?: () => void; headingLevel?: "h2" | "h3" }) {
   const Heading = headingLevel;
@@ -22,7 +23,7 @@ export function EmptyCart({ onNavigate, headingLevel = "h2" }: { onNavigate?: ()
       <p className="max-w-xs text-[0.95rem] text-muted">
         Boxes from {formatDollars(getProduct("aperitivo-box")?.price ?? 18)}, boards for a crowd, and an arrival supper for the cabin.
       </p>
-      <ButtonLink href="/order" onClick={onNavigate}>
+      <ButtonLink href={routes.store} onClick={onNavigate}>
         Find something good
       </ButtonLink>
     </div>

@@ -17,7 +17,19 @@ export type AnalyticsEvent =
   | "wedding_inquiry_submitted"
   | "corporate_inquiry_submitted"
   | "inquiry_submitted"
-  | "event_estimate_used";
+  | "event_estimate_used"
+  // threeJourneyArchitectureV2
+  | "journey_selected"
+  | "journey_landing_view"
+  | "delivery_eligibility_checked"
+  | "event_package_selected"
+  | "planner_step_view"
+  | "planner_estimate_reviewed"
+  | "planner_link_copied"
+  | "event_proposal_submitted"
+  | "wedding_builder_started"
+  | "wedding_preset_switched"
+  | "wedding_proposal_submitted";
 
 type Props = Record<string, string | number | boolean | undefined>;
 

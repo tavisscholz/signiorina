@@ -5,6 +5,7 @@ import { OliveSprig } from "@/components/brand/OliveSprig";
 import { Photo } from "@/components/brand/Photo";
 import { PriceOval, SectionHeading } from "@/components/brand/SectionHeading";
 import { ProductCard } from "@/components/commerce/ProductCard";
+import { HomeJourneys } from "@/components/home/HomeJourneys";
 import { AmbientLoop } from "@/components/motion/AmbientLoop";
 import { Reveal } from "@/components/motion/Reveal";
 import { CTABand, ProcessSteps, Testimonials } from "@/components/sections/Sections";
@@ -13,6 +14,7 @@ import { IconArrow, IconClock, IconLock, IconPin } from "@/components/ui/Icons";
 import { getProduct } from "@/config/catalog";
 import { deliveryWindows } from "@/config/delivery";
 import { weddingPackages, weddingRules } from "@/config/events";
+import { flags } from "@/config/flags";
 import { ambientLoops } from "@/config/media";
 import { formatDollars } from "@/lib/money";
 import { pageMetadata } from "@/lib/seo";
@@ -54,6 +56,11 @@ const pathways = [
 const featured = ["box-for-two", "gathering-board-small", "cabin-welcome-box", "gift-box"].map((id) => getProduct(id)!);
 
 export default function HomePage() {
+  // threeJourneyArchitectureV2: the Everyday · Events · Weddings homepage; otherwise the original.
+  return flags.threeJourneyArchitectureV2 ? <HomeJourneys /> : <ClassicHome />;
+}
+
+function ClassicHome() {
   const cabinBox = getProduct("cabin-welcome-box")!;
   const pranzo = getProduct("pranzo-lunch-box")!;
   const spread = getProduct("office-grazing-spread")!;

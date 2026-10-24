@@ -16,6 +16,7 @@ import { routeDayNames } from "@/lib/delivery-fees";
 import { leadTimeLabel } from "@/lib/format";
 import { formatDollars } from "@/lib/money";
 import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
+import { routeLabels, routes } from "@/config/journeys";
 
 export const metadata: Metadata = pageMetadata({
   title: "Knoxville Corporate Catering — Boxed Lunches + Office Grazing",
@@ -234,7 +235,7 @@ export default function CorporatePage() {
         title="Make Tuesday lunch the good part of Tuesday."
         lede="Order boxes for this week, or tell us about your team and we'll set up a standing lunch."
         primary={{ href: "/inquire?type=corporate", label: "Corporate inquiry" }}
-        secondary={{ href: "/order?category=corporate", label: "Order online" }}
+        secondary={{ href: `${routes.store}?category=corporate`, label: routeLabels.store }}
       />
     </>
   );

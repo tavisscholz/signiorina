@@ -1,6 +1,7 @@
 import clsx from "clsx";
 
 import { Photo } from "@/components/brand/Photo";
+import { ButtonLink } from "@/components/ui/Button";
 import { IconCheck } from "@/components/ui/Icons";
 import { weddingRules, type WeddingPackage } from "@/config/events";
 import { formatDollars } from "@/lib/money";
@@ -11,12 +12,15 @@ export function WeddingPackageCard({
   detailed = true,
   featured = false,
   className,
+  action,
 }: {
   pkg: WeddingPackage;
   tone?: "light" | "dark";
   detailed?: boolean;
   featured?: boolean;
   className?: string;
+  /** Optional button under the card, e.g. into Build Your Table with this package. */
+  action?: { href: string; label: string };
 }) {
   const dark = tone === "dark";
   return (
@@ -78,6 +82,11 @@ export function WeddingPackageCard({
         <p className={clsx("mt-auto pt-2 text-[0.8rem]", dark ? "text-cream/80" : "text-muted")}>
           Setup + styling included. Delivery and tax additional. Book {weddingRules.bookingLeadDays}+ days ahead.
         </p>
+        {action ? (
+          <ButtonLink href={action.href} variant={dark ? "light" : "primary"} className="mt-4 self-start">
+            {action.label}
+          </ButtonLink>
+        ) : null}
       </div>
     </article>
   );

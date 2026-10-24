@@ -9,6 +9,8 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Notice";
 import { testimonials } from "@/config/content";
 import { site } from "@/config/site";
+import { flags } from "@/config/flags";
+import { routeLabels, routes } from "@/config/journeys";
 
 /* ------------------------------------------------------------------ */
 /* Page hero for inner pages                                           */
@@ -76,16 +78,33 @@ export function PageHero({
 /* Final call to action                                                */
 /* ------------------------------------------------------------------ */
 
+const ctaDefaults = flags.threeJourneyArchitectureV2
+  ? {
+      lede: "Order a box for tonight, book a styled table for your party, or build the one for your wedding.",
+      primary: { href: routes.weddingPlanner, label: routeLabels.weddingPlanner },
+      secondary: { href: routes.store, label: routeLabels.store },
+      tertiary: { href: routes.events, label: "Explore event packages" } as { href: string; label: string } | undefined,
+    }
+  : {
+      lede: "Tell us what you're gathering for, or order a box for tonight — either way, we'll take it from here.",
+      primary: { href: "/inquire", label: "Plan your gathering" },
+      secondary: { href: "/order", label: "Order online" },
+      tertiary: undefined,
+    };
+
 export function CTABand({
   title = "Bring everyone to the table.",
-  lede = "Tell us what you're gathering for, or order a box for tonight — either way, we'll take it from here.",
-  primary = { href: "/inquire", label: "Plan your gathering" },
-  secondary = { href: "/order", label: "Order online" },
+  lede = ctaDefaults.lede,
+  primary = ctaDefaults.primary,
+  secondary = ctaDefaults.secondary,
+  tertiary = ctaDefaults.tertiary,
 }: {
   title?: ReactNode;
   lede?: ReactNode;
   primary?: { href: string; label: string };
   secondary?: { href: string; label: string };
+  /** Optional text link under the buttons. */
+  tertiary?: { href: string; label: string };
 }) {
   return (
     <section className="container-page py-20 md:py-28">
@@ -101,6 +120,11 @@ export function CTABand({
             {secondary.label}
           </ButtonLink>
         </div>
+        {tertiary ? (
+          <ButtonLink href={tertiary.href} variant="text" className="mt-5">
+            {tertiary.label}
+          </ButtonLink>
+        ) : null}
       </Reveal>
     </section>
   );

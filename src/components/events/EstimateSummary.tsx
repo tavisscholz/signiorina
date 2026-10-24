@@ -4,11 +4,11 @@ import type { EventEstimate } from "@/lib/event-estimate";
 import { formatCents, formatCentsExact } from "@/lib/money";
 
 /** Itemized event estimate: lines, tax, total, retainer, warnings and notes. */
-export function EstimateSummary({ estimate }: { estimate: EventEstimate }) {
+export function EstimateSummary({ estimate, title }: { estimate: EventEstimate; title?: string }) {
   return (
     <>
       <p className="mt-3 font-display text-[1.6rem] leading-tight text-olive">
-        {estimate.optionName}, {estimate.guests} guests
+        {title ?? estimate.optionName}, {estimate.guests} guests
       </p>
       <ul className="mt-5 flex flex-col divide-y divide-line">
         {estimate.lines.map((l) => (

@@ -1,3 +1,5 @@
+import { flags } from "@/config/flags";
+
 /**
  * Public origin for canonical URLs, Open Graph, the sitemap and structured data.
  * Order: an explicit NEXT_PUBLIC_SITE_URL (set this for a custom domain), then Vercel's
@@ -71,7 +73,22 @@ export const site = {
     (process.env.NEXT_PUBLIC_SHOW_PLACEHOLDERS !== "false" && process.env.NODE_ENV !== "production"),
 } as const;
 
-export const navigation = {
+export interface NavItem {
+  href: string;
+  label: string;
+  /** Extra path prefixes that mark this item as current (e.g. product pages under the store). */
+  match?: string[];
+}
+
+export interface Navigation {
+  primary: NavItem[];
+  /** Header buttons. Null in the three-journey layout, where they would compete with the journeys. */
+  actions: { order: NavItem; plan: NavItem } | null;
+  /** Smaller links under the primary list in the mobile menu. */
+  secondary: NavItem[];
+}
+
+const classicNavigation: Navigation = {
   primary: [
     { href: "/weddings", label: "Weddings" },
     { href: "/gatherings", label: "Gatherings" },
@@ -84,4 +101,24 @@ export const navigation = {
     order: { href: "/order", label: "Order Online" },
     plan: { href: "/inquire", label: "Plan Your Gathering" },
   },
-} as const;
+  secondary: [],
+};
+
+/** threeJourneyArchitectureV2: Everyday | Events | Weddings | About. */
+const journeyNavigation: Navigation = {
+  primary: [
+    { href: "/everyday", label: "Everyday", match: ["/order", "/cart"] },
+    { href: "/events", label: "Events" },
+    { href: "/weddings", label: "Weddings" },
+    { href: "/about", label: "About" },
+  ],
+  actions: null,
+  secondary: [
+    { href: "/corporate", label: "Corporate" },
+    { href: "/cabin-delivery", label: "Cabin delivery" },
+    { href: "/delivery", label: "Delivery areas + fees" },
+    { href: "/faq", label: "FAQ" },
+  ],
+};
+
+export const navigation: Navigation = flags.threeJourneyArchitectureV2 ? journeyNavigation : classicNavigation;

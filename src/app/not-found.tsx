@@ -1,5 +1,6 @@
 import { OliveSprig } from "@/components/brand/OliveSprig";
 import { ButtonLink } from "@/components/ui/Button";
+import { routeLabels, routes } from "@/config/journeys";
 
 export default function NotFound() {
   return (
@@ -9,7 +10,7 @@ export default function NotFound() {
       <h1 className="display-lg text-olive">This one wandered off the table.</h1>
       <p className="lede max-w-md text-muted">The page you&apos;re after has moved or never existed. Here are better places to be.</p>
       <div className="flex flex-col gap-3 sm:flex-row">
-        <ButtonLink href="/order">Order online</ButtonLink>
+        <ButtonLink href={routes.store}>{routeLabels.store}</ButtonLink>
         <ButtonLink href="/" variant="secondary">
           Back home
         </ButtonLink>

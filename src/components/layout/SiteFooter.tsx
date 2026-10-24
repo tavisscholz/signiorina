@@ -3,9 +3,10 @@ import Link from "next/link";
 import { OliveSprig } from "@/components/brand/OliveSprig";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { deliveryAreas } from "@/config/delivery";
+import { flags } from "@/config/flags";
 import { site } from "@/config/site";
 
-const columns = [
+const classicColumns = [
   {
     title: "Plan",
     links: [
@@ -36,6 +37,47 @@ const columns = [
   },
 ];
 
+/** threeJourneyArchitectureV2: one column per journey, then the information pages. */
+const journeyColumns = [
+  {
+    title: "Everyday",
+    links: [
+      { href: "/everyday", label: "Shop Everyday" },
+      { href: "/order/cabin-welcome-box", label: "Cabin Welcome Box" },
+      { href: "/order/box-for-two", label: "Box for Two" },
+      { href: "/order/pranzo-lunch-box", label: "Pranzo Lunch Box" },
+      { href: "/order/signiorina-gift-box", label: "Gift Box" },
+    ],
+  },
+  {
+    title: "Events",
+    links: [
+      { href: "/events", label: "Event packages" },
+      { href: "/events/plan", label: "Plan an event" },
+      { href: "/corporate", label: "Corporate" },
+    ],
+  },
+  {
+    title: "Weddings",
+    links: [
+      { href: "/weddings", label: "Weddings" },
+      { href: "/weddings/build", label: "Build Your Table" },
+      { href: "/everyday?category=wedding-weekend", label: "Wedding weekend extras" },
+    ],
+  },
+  {
+    title: "Good to know",
+    links: [
+      { href: "/about", label: "About" },
+      { href: "/faq", label: "FAQ" },
+      { href: "/delivery", label: "Delivery areas + fees" },
+      { href: "/cabin-delivery", label: "Cabin delivery" },
+    ],
+  },
+];
+
+const columns = flags.threeJourneyArchitectureV2 ? journeyColumns : classicColumns;
+
 export function SiteFooter() {
   const areaPages = deliveryAreas.filter((a) => a.pageSlug);
   return (
@@ -50,7 +92,7 @@ export function SiteFooter() {
             </p>
             <OliveSprig className="w-28 text-prosecco/70" />
           </div>
-          <div className="grid gap-10 sm:grid-cols-3">
+          <div className={flags.threeJourneyArchitectureV2 ? "grid gap-10 sm:grid-cols-2 xl:grid-cols-4" : "grid gap-10 sm:grid-cols-3"}>
             {columns.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <h2 className="eyebrow mb-4 text-prosecco">{col.title}</h2>

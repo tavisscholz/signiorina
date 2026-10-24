@@ -7,7 +7,9 @@ import { SectionHeading } from "@/components/brand/SectionHeading";
 import { ProductCard } from "@/components/commerce/ProductCard";
 import { EventEstimator, EventEstimatorFromUrl } from "@/components/events/EventEstimator";
 import { WeddingPackageCard } from "@/components/events/WeddingPackageCard";
+import { TrackView } from "@/components/journeys/Tracking";
 import { Reveal } from "@/components/motion/Reveal";
+import { BuildYourTableInvite } from "@/components/planner/BuildYourTableInvite";
 import { FaqList } from "@/components/sections/FaqList";
 import { CTABand, PageHero, ProcessSteps } from "@/components/sections/Sections";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -15,6 +17,8 @@ import { ButtonLink } from "@/components/ui/Button";
 import { getProduct } from "@/config/catalog";
 import { faqSections } from "@/config/content";
 import { eventFees, weddingPackages, weddingRules } from "@/config/events";
+import { flags } from "@/config/flags";
+import { routeLabels, routes } from "@/config/journeys";
 import { formatDollars } from "@/lib/money";
 import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 
@@ -66,8 +70,8 @@ export default function WeddingsPage() {
         lede={`Styled grazing tables for Smoky Mountain weddings of ${weddingRules.focusGuestRange} — from the welcome party to the last toast. Priced per guest, published right here.`}
         actions={
           <>
-            <ButtonLink href="/inquire?type=wedding" size="lg">
-              Plan a wedding
+            <ButtonLink href={routes.weddingPlanner} size="lg">
+              {routeLabels.weddingPlanner}
             </ButtonLink>
             <ButtonLink href="#packages" variant="secondary" size="lg">
               See the packages
@@ -134,7 +138,16 @@ export default function WeddingsPage() {
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {weddingPackages.map((pkg, i) => (
               <Reveal key={pkg.id} delay={i * 120}>
-                <WeddingPackageCard pkg={pkg} tone="dark" featured={pkg.id === "gathering-table"} />
+                <WeddingPackageCard
+                  pkg={pkg}
+                  tone="dark"
+                  featured={pkg.id === "gathering-table"}
+                  action={
+                    flags.threeJourneyArchitectureV2
+                      ? { href: `/weddings/build?start=custom&service=${pkg.id}&step=2`, label: "Build with this package" }
+                      : undefined
+                  }
+                />
               </Reveal>
             ))}
           </div>
@@ -157,20 +170,34 @@ export default function WeddingsPage() {
         <div className="platter-bottom absolute inset-x-0 -bottom-10 h-12 bg-olive" aria-hidden="true" />
       </section>
 
-      {/* Estimator */}
-      <section id="estimate" className="container-page scroll-mt-24 pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="estimate-title">
-        <SectionHeading
-          eyebrow="Price your table"
-          title={<span id="estimate-title">See the whole number.</span>}
-          lede="Choose a package, your guest count and where you're celebrating. The estimate updates as you go — minimums, fees, tax and the retainer included."
-        />
-        <div className="mt-12">
-          {/* Restores a shared or "Edit estimate" link's state from the URL. */}
-          <Suspense fallback={<EventEstimator kind="wedding" />}>
-            <EventEstimatorFromUrl kind="wedding" />
-          </Suspense>
-        </div>
-      </section>
+      {/* Estimator — or, with the three journeys on, the way into Build Your Table */}
+      {flags.threeJourneyArchitectureV2 ? (
+        <section id="estimate" className="container-page scroll-mt-24 pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="build-title">
+          <TrackView event="journey_landing_view" props={{ journey: "weddings", page: "landing" }} />
+          <SectionHeading
+            eyebrow="Build your table"
+            title={<span id="build-title">Two ways to begin.</span>}
+            lede="Start from one of our favorites or from scratch. Either way you can change everything, and the estimate updates as you go — minimums, fees, tax and the retainer included."
+          />
+          <div className="mt-12">
+            <BuildYourTableInvite />
+          </div>
+        </section>
+      ) : (
+        <section id="estimate" className="container-page scroll-mt-24 pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="estimate-title">
+          <SectionHeading
+            eyebrow="Price your table"
+            title={<span id="estimate-title">See the whole number.</span>}
+            lede="Choose a package, your guest count and where you're celebrating. The estimate updates as you go — minimums, fees, tax and the retainer included."
+          />
+          <div className="mt-12">
+            {/* Restores a shared or "Edit estimate" link's state from the URL. */}
+            <Suspense fallback={<EventEstimator kind="wedding" />}>
+              <EventEstimatorFromUrl kind="wedding" />
+            </Suspense>
+          </div>
+        </section>
+      )}
 
       {/* Order-online extras */}
       <section className="border-y border-line bg-paper" aria-labelledby="extras-title">
@@ -181,7 +208,7 @@ export default function WeddingsPage() {
               title={<span id="extras-title">For the rest of the weekend.</span>}
               lede={`Fixed-price extras you can order right now. Book two or more Signiorina events for the same weekend and we take ${weddingRules.bundle.foodDiscountPercent}% off the food.`}
             />
-            <ButtonLink href="/order?category=wedding-weekend" variant="secondary">
+            <ButtonLink href={`${routes.store}?category=wedding-weekend`} variant="secondary">
               All wedding-weekend items
             </ButtonLink>
           </div>
@@ -239,8 +266,8 @@ export default function WeddingsPage() {
       <CTABand
         title="Let's talk about your weekend."
         lede="Tell us the date and the place. We'll come back with availability and a written quote."
-        primary={{ href: "/inquire?type=wedding", label: "Plan a wedding" }}
-        secondary={{ href: "/order?category=wedding-weekend", label: "Order wedding extras" }}
+        primary={{ href: routes.weddingPlanner, label: routeLabels.weddingPlanner }}
+        secondary={{ href: `${routes.store}?category=wedding-weekend`, label: "Order wedding extras" }}
       />
     </>
   );

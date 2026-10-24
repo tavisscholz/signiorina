@@ -14,6 +14,7 @@ import { deliveryWindows, getArea, getZone } from "@/config/delivery";
 import { routeDayNames } from "@/lib/delivery-fees";
 import { formatDollars } from "@/lib/money";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { routes } from "@/config/journeys";
 
 export async function generateStaticParams() {
   return areaPages.map((a) => ({ slug: a.slug }));
@@ -63,7 +64,7 @@ async function AreaContent({ params }: { params: PageProps<"/areas/[slug]">["par
         lede={page.intro}
         actions={
           <>
-            <ButtonLink href="/order" size="lg">
+            <ButtonLink href={routes.store} size="lg">
               Order online
             </ButtonLink>
             <ButtonLink href="/inquire" variant="secondary" size="lg">

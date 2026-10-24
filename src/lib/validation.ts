@@ -160,6 +160,14 @@ export function validateDetails(details: CheckoutDetails): FieldErrors {
   return errors;
 }
 
+export const plannerMetaSchema = z.object({
+  journey: z.enum(["weddings", "events"]),
+  start: z.enum(["preset", "custom"]).optional(),
+  preset: z.string().max(40).optional(),
+  occasion: z.string().max(40).optional(),
+  area: z.string().max(40).optional(),
+});
+
 export const inquirySchema = z.object({
   name: z.string().trim().min(2, "Enter your name.").max(100),
   email: z.string().trim().email("Enter a valid email address.").max(120),
@@ -176,11 +184,18 @@ export const inquirySchema = z.object({
   serviceInterest: z.string().trim().min(1, "Choose a service.").max(60),
   budgetRange: z.string().trim().max(60).optional(),
   heardAbout: z.string().trim().max(120).optional(),
-  message: z.string().trim().min(10, "Tell us a little about the occasion.").max(4000),
+  /** Required, except from the planners — their configuration already says what the occasion is. */
+  message: z.string().trim().max(4000).optional(),
   /** Estimator inputs handed over from /weddings or /gatherings; the server recomputes the estimate. */
   estimateInput: estimateStateSchema.optional(),
+  /** threeJourneyArchitectureV2: where a planner submission came from and how it began. */
+  planner: plannerMetaSchema.optional(),
   /** Honeypot — must stay empty. */
   website: z.string().max(0).optional(),
+}).superRefine((data, ctx) => {
+  if (!data.planner && (data.message ?? "").length < 10) {
+    ctx.addIssue({ code: "custom", path: ["message"], message: "Tell us a little about the occasion." });
+  }
 });
 
 export type InquiryInput = z.infer<typeof inquirySchema>;

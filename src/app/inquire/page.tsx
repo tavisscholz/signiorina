@@ -5,6 +5,8 @@ import { Photo } from "@/components/brand/Photo";
 import { InquiryForm } from "@/components/events/InquiryForm";
 import { ButtonLink } from "@/components/ui/Button";
 import { eventFees, grazingTables, weddingPackages, weddingRules } from "@/config/events";
+import { flags } from "@/config/flags";
+import { routes } from "@/config/journeys";
 import { site } from "@/config/site";
 import { formatDollars } from "@/lib/money";
 import { pageMetadata } from "@/lib/seo";
@@ -31,6 +33,17 @@ export default function InquirePage() {
           Weddings, showers, celebrations and corporate events. Share the basics and we&apos;ll come back with availability and
           a written quote.
         </p>
+        {flags.threeJourneyArchitectureV2 ? (
+          <div className="mt-8 grid gap-3 rounded-[1.5rem] border border-line bg-paper p-5 text-[0.95rem] sm:grid-cols-2">
+            <p className="sm:col-span-2 text-muted">Want an instant, itemized estimate first?</p>
+            <ButtonLink href="/weddings/build" size="sm">
+              Build Your Table — weddings
+            </ButtonLink>
+            <ButtonLink href="/events/plan" variant="secondary" size="sm">
+              Plan an event
+            </ButtonLink>
+          </div>
+        ) : null}
         <div className="mt-12">
           <Suspense fallback={<div className="h-[60rem] animate-pulse rounded-2xl bg-linen/60" />}>
             <InquiryForm />
@@ -74,7 +87,7 @@ export default function InquirePage() {
         <div className="rounded-[1.75rem] border border-line p-7">
           <p className="font-display text-[1.3rem] text-olive">Looking for boxes, lunch or cabin delivery?</p>
           <p className="mt-2 text-[0.92rem] text-muted">Those order online — no inquiry needed.</p>
-          <ButtonLink href="/order" variant="secondary" className="mt-4">
+          <ButtonLink href={routes.store} variant="secondary" className="mt-4">
             Order online
           </ButtonLink>
           {site.contact.email ? (

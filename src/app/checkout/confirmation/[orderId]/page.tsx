@@ -10,6 +10,7 @@ import { formatDateFull } from "@/lib/dates";
 import { formatCents, formatCentsExact } from "@/lib/money";
 import type { Order } from "@/lib/types";
 import { getOrderForConfirmation } from "@/server/checkout";
+import { routes } from "@/config/journeys";
 
 export const metadata: Metadata = { title: "Order confirmed", robots: { index: false } };
 
@@ -31,7 +32,7 @@ async function Confirmation({ params, searchParams }: PageProps<"/checkout/confi
       <section className="container-narrow flex min-h-[60vh] flex-col items-center justify-center gap-5 py-20 text-center">
         <h1 className="display-md text-olive">We couldn&apos;t find that order.</h1>
         <p className="text-muted">The confirmation link may be incomplete. If you placed an order, send us a note with your name and delivery date.</p>
-        <ButtonLink href="/order">Back to the shop</ButtonLink>
+        <ButtonLink href={routes.store}>Back to the shop</ButtonLink>
       </section>
     );
   }
@@ -123,7 +124,7 @@ async function Confirmation({ params, searchParams }: PageProps<"/checkout/confi
       </div>
 
       <div className="mt-14 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-        <ButtonLink href="/order" variant="secondary">
+        <ButtonLink href={routes.store} variant="secondary">
           Order something else
         </ButtonLink>
         <ButtonLink href="/inquire">Plan a gathering</ButtonLink>

@@ -18,6 +18,7 @@ import { routeDayNames } from "@/lib/delivery-fees";
 import { leadTimeLabel, priceLabel } from "@/lib/format";
 import { formatDollars } from "@/lib/money";
 import { breadcrumbJsonLd, pageMetadata, productJsonLd } from "@/lib/seo";
+import { routeLabels, routes } from "@/config/journeys";
 
 export async function generateStaticParams() {
   return activeProducts().map((p) => ({ slug: p.slug }));
@@ -58,7 +59,7 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
       <JsonLd data={productJsonLd(product, getMedia(product.images[0]).src.src)} />
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Order online", path: "/order" },
+          { name: routeLabels.store, path: routes.store },
           { name: product.name, path: `/order/${product.slug}` },
         ])}
       />
@@ -66,7 +67,7 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
         <nav aria-label="Breadcrumb" className="text-[0.85rem] text-muted">
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/order" className="hover:text-olive hover:underline">
+              <Link href={routes.store} className="hover:text-olive hover:underline">
                 Order online
               </Link>
             </li>
