@@ -14,8 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Delivery Areas + Fees — Sevierville, Pigeon Forge, Gatlinburg + Knoxville",
-  description:
-    "Every Signiorina delivery fee, published: Zone A $15, Zone B $30, Zone C $45 or $25 on Knoxville route days. Delivery windows, lead times, holiday rules and minimums.",
+  description: `Every Signiorina delivery fee, published: ${zones.map((z) => `Zone ${z.id} ${formatDollars(z.fee)}`).join(", ")} or ${formatDollars(zones.find((z) => z.routeDays)!.routeDays!.fee)} on Knoxville route days. Delivery windows, lead times, holiday rules and minimums.`,
   path: "/delivery",
 });
 

@@ -54,7 +54,7 @@ export function StoreExtras() {
                 {a.name}
                 {a.serves ? <span className="ml-2 text-[0.85rem] text-muted">{a.serves}</span> : null}
               </span>
-              <span className="price text-[1.15rem] text-olive">{formatDollars(a.price)}</span>
+              <span className="price text-[1.15rem] text-olive">{a.price === 0 ? "Free" : formatDollars(a.price)}</span>
             </li>
           ))}
         </ul>

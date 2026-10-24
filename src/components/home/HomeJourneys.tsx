@@ -198,7 +198,7 @@ export function HomeJourneys() {
             </Reveal>
             <Reveal delay={120}>
               <ButtonLink href="/everyday" variant="secondary">
-                Shop Everyday
+                Shop Treats
               </ButtonLink>
             </Reveal>
           </div>

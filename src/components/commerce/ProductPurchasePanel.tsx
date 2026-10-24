@@ -170,7 +170,7 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
                       <p className="font-medium">
-                        {addOn.name} <span className="price ml-1 text-olive">{formatDollars(addOn.price)}</span>
+                        {addOn.name} <span className="price ml-1 text-olive">{addOn.price === 0 ? "Free" : formatDollars(addOn.price)}</span>
                       </p>
                       <p className="text-[0.84rem] text-muted">
                         {addOn.serves ? `${addOn.serves} · ` : ""}

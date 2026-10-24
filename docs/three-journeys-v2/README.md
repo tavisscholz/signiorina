@@ -37,7 +37,7 @@ Leave `NEXT_PUBLIC_SHOW_PLACEHOLDERS` unset in Production.
 | `/` | Original homepage | Three-journey homepage |
 | `/everyday` | 307 → `/order` | **Everyday** store |
 | `/order` | Store | 307 → `/everyday` (query kept, e.g. `?category=cabin`) |
-| `/order/[slug]` | Product page | Product page (unchanged URL; breadcrumb "Shop Everyday") |
+| `/order/[slug]` | Product page | Product page (unchanged URL; breadcrumb "Shop Treats") |
 | `/events` | 307 → `/gatherings` | **Events** package catalog |
 | `/events/plan` | 307 → `/inquire` (query kept, so the estimate is attached) | Event planner (not indexed) |
 | `/gatherings` | Grazing tables + estimator | 307 → `/events`; with an estimate (`?service=…`) → `/events/plan?…&step=2` |

@@ -121,8 +121,8 @@ export const addOns: AddOn[] = [
   {
     id: "personalized-note",
     name: "Personalized Note",
-    description: "Your message, handwritten on a classic card and tucked inside — a thoughtful touch for any occasion.",
-    price: 10,
+    description: "Your message, handwritten on a classic card and sealed with wax — a thoughtful touch for any occasion, always on us.",
+    price: 0,
     priceUnit: "each",
     scope: ["cart"],
     maxQuantity: 1,

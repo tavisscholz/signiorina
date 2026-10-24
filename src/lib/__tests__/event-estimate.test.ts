@@ -11,7 +11,7 @@ describe("estimateEvent — weddings", () => {
     expect(e?.minimumApplied).toBe(true);
     expect(line(e, "food")?.amount).toBe(100000);
     expect(line(e, "pickup")?.amount).toBe(7500);
-    expect(line(e, "delivery")?.amount).toBe(1500);
+    expect(line(e, "delivery")?.amount).toBe(4500);
   });
 
   it("raises the Gathering Table minimum on peak Saturdays", () => {
@@ -49,7 +49,7 @@ describe("estimateEvent — grazing tables", () => {
     const e = estimateEvent({ kind: "grazing", optionId: "generous", guests: 20, zone: "A", today: TODAY, date: "2026-12-05" });
     expect(line(e, "food")?.amount).toBe(65000);
     expect(line(e, "setup")?.amount).toBe(12500);
-    expect(e?.tax).toBe(Math.round((65000 + 1500) * 0.0975));
+    expect(e?.tax).toBe(Math.round((65000 + 4500) * 0.0975));
     const zoneC = estimateEvent({ kind: "grazing", optionId: "light", guests: 40, zone: "C", today: TODAY });
     expect(line(zoneC, "setup")?.amount).toBe(17500);
     expect(line(zoneC, "food")?.amount).toBe(88000);

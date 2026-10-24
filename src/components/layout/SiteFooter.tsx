@@ -58,7 +58,7 @@ const journeyColumns = [
   {
     title: "Shop",
     links: [
-      { href: "/everyday", label: "Shop Everyday" },
+      { href: "/everyday", label: "Shop Treats" },
       { href: "/order/cabin-welcome-box", label: "Cabin Welcome Box" },
       { href: "/order/box-for-two", label: "Box for Two" },
       { href: "/order/pranzo-lunch-box", label: "Pranzo Lunch Box" },

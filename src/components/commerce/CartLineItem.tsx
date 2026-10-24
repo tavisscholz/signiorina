@@ -70,7 +70,7 @@ export function CartLineItem({ priced, variant = "page" }: { priced: PricedLine;
           {priced.addOns.map((a) => (
             <li key={a.addOn.id}>
               + {a.addOn.name}
-              {a.quantity > 1 ? ` × ${a.quantity}` : ""} · {formatCents(a.total)}
+              {a.quantity > 1 ? ` × ${a.quantity}` : ""} · {a.total === 0 ? "Free" : formatCents(a.total)}
               {a.addOn.message ? (
                 <span className={clsx("block", a.message ? "italic" : "text-fig")}>
                   {a.message ? `“${a.message}”` : "Note not written yet"}
@@ -161,7 +161,7 @@ export function CartLineItem({ priced, variant = "page" }: { priced: PricedLine;
                       <li key={id} className={clsx(writing && "sm:col-span-2")}>
                         <div className="flex items-center justify-between gap-3">
                           <span className="text-[0.9rem]">
-                            {addOn.name} <span className="text-muted">· {formatDollars(addOn.price)}</span>
+                            {addOn.name} <span className="text-muted">· {addOn.price === 0 ? "Free" : formatDollars(addOn.price)}</span>
                           </span>
                           <QuantitySelector
                             value={qty}

@@ -71,7 +71,7 @@ export function EventPlanner({ showProposed }: { showProposed: boolean }) {
               <Notice tone="pistachio" title="A board may suit you better.">
                 For fewer than {grazingTables.minimumGuests} guests, our boards are fixed-price and delivered — no setup fee.{" "}
                 <Link href="/everyday?category=gather" className="underline underline-offset-4">
-                  Shop Everyday boards
+                  Shop Treats boards
                 </Link>
                 , or carry on and we&apos;ll talk it through.
               </Notice>
@@ -103,7 +103,7 @@ export function EventPlanner({ showProposed }: { showProposed: boolean }) {
             planner: { journey: "events", occasion: state.occasion, area: state.area },
             submittedEvent: "event_proposal_submitted",
           }}
-          success={<CrossSell href="/everyday">Shop Everyday boxes + boards</CrossSell>}
+          success={<CrossSell href="/everyday">Shop Treats: boxes + boards</CrossSell>}
         />
       ) : null}
     </PlannerShell>

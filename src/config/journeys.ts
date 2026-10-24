@@ -53,7 +53,7 @@ export const journeys: Journey[] = [
     id: "everyday",
     name: "Shop",
     description: "Browse Boxes, Boards & Little Indulgences",
-    cta: "Shop Everyday",
+    cta: "Shop Treats",
     href: "/everyday",
     media: "aperitivoBox",
     steps: [
@@ -85,9 +85,9 @@ export const routes = flags.threeJourneyArchitectureV2
       weddingPlanner: "/inquire?type=wedding",
     };
 
-/** Labels for shared links, so "Order online" becomes "Shop Everyday" with the journeys on. */
+/** Labels for shared links, so "Order online" becomes "Shop Treats" with the journeys on. */
 export const routeLabels = flags.threeJourneyArchitectureV2
-  ? { store: "Shop Everyday", eventPlanner: "Plan an event", weddingPlanner: "Build Your Table" }
+  ? { store: "Shop Treats", eventPlanner: "Plan an event", weddingPlanner: "Build Your Table" }
   : { store: "Order online", eventPlanner: "Ask about an event", weddingPlanner: "Plan a wedding" };
 
 export interface JourneyRedirect {
