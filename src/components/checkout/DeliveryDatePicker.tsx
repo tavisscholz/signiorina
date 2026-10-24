@@ -29,7 +29,7 @@ function cellTone(day: DayAvailability | undefined) {
     case "few-left":
       return "bg-paper text-espresso hover:bg-olive hover:text-cream border-fig/50";
     case "sold-out":
-      return "text-muted/70 line-through decoration-muted/50 border-transparent";
+      return "text-muted line-through decoration-muted/60 border-transparent";
     default:
       return "text-muted/45 border-transparent";
   }
@@ -231,7 +231,7 @@ export function DeliveryDatePicker({
           <span className="size-1.5 rounded-full bg-pistachio" aria-hidden="true" /> Holiday preorder
         </li>
         <li className="flex items-center gap-2">
-          <span className="text-muted/70 line-through" aria-hidden="true">
+          <span className="text-muted line-through" aria-hidden="true">
             12
           </span>{" "}
           Fully booked

@@ -74,7 +74,7 @@ export function ZoneCalculator({ className, tone = "light" }: { className?: stri
             </Link>
           </p>
         ) : (
-          <p className={clsx("text-[0.92rem]", tone === "dark" ? "text-cream/70" : "text-muted")}>
+          <p className={clsx("text-[0.92rem]", tone === "dark" ? "text-cream/80" : "text-muted")}>
             Pick an area to see the fee, free-delivery threshold and windows.
           </p>
         )}

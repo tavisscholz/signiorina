@@ -120,7 +120,7 @@ export function CartDrawer() {
 
         <div className="flex-1 overflow-y-auto px-6">
           {!hydrated ? null : pricing.lines.length === 0 ? (
-            <EmptyCart onNavigate={close} />
+            <EmptyCart onNavigate={close} headingLevel="h3" />
           ) : (
             <>
               <ul className="divide-y divide-line">

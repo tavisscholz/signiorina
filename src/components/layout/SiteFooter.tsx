@@ -92,7 +92,7 @@ export function SiteFooter() {
             <p>Prices in USD. Sales tax calculated at checkout.</p>
           </div>
         </div>
-        <p className="mt-10 text-[0.8rem] text-cream/55">© Signiorina. Good people, beautiful food, anywhere.</p>
+        <p className="mt-10 text-[0.8rem] text-cream/75">© Signiorina. Good people, beautiful food, anywhere.</p>
       </div>
     </footer>
   );

@@ -113,7 +113,7 @@ export default function GatheringsPage() {
               {grazingTables.tiers.map((t) => (
                 <li key={t.id} className="flex items-baseline justify-between gap-4 py-3">
                   <span>
-                    {t.name} <span className="text-[0.88rem] text-cream/70">· {t.portion}</span>
+                    {t.name} <span className="text-[0.88rem] text-cream/80">· {t.portion}</span>
                   </span>
                   <span className="price text-[1.2rem]">{formatDollars(t.pricePerPerson)}/guest</span>
                 </li>

@@ -223,14 +223,14 @@ export default function HomePage() {
                     <p className="accent text-[1.08rem] text-cream/80">{pkg.line}</p>
                     <p className="mt-auto flex items-baseline gap-2 border-t border-cream/15 pt-4">
                       <span className="price text-[2.2rem] leading-none text-cream">{formatDollars(pkg.pricePerPerson)}</span>
-                      <span className="text-[0.88rem] text-cream/70">per guest · {formatDollars(pkg.minimumFood)} minimum</span>
+                      <span className="text-[0.88rem] text-cream/80">per guest · {formatDollars(pkg.minimumFood)} minimum</span>
                     </p>
                   </div>
                 </article>
               </Reveal>
             ))}
           </div>
-          <p className="mt-8 text-[0.9rem] text-cream/70">
+          <p className="mt-8 text-[0.9rem] text-cream/80">
             Also for the wedding weekend: bridal suite and groom&apos;s room boards, welcome parties, rehearsal tables and guest
             welcome boxes. Book two or more and take {weddingRules.bundle.foodDiscountPercent}% off the food.
           </p>

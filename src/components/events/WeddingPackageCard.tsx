@@ -39,9 +39,9 @@ export function WeddingPackageCard({
             <span className={clsx("price text-[2.6rem] leading-none", dark ? "text-cream" : "text-olive")}>
               {formatDollars(pkg.pricePerPerson)}
             </span>
-            <span className={clsx("ml-1 text-[0.9rem]", dark ? "text-cream/70" : "text-muted")}>/ guest</span>
+            <span className={clsx("ml-1 text-[0.9rem]", dark ? "text-cream/80" : "text-muted")}>/ guest</span>
           </p>
-          <p className={clsx("text-right text-[0.82rem] leading-snug", dark ? "text-cream/75" : "text-muted")}>
+          <p className={clsx("text-right text-[0.82rem] leading-snug", dark ? "text-cream/85" : "text-muted")}>
             {formatDollars(pkg.minimumFood)} food minimum
             {pkg.peakSaturdayMinimum ? (
               <>
@@ -51,17 +51,17 @@ export function WeddingPackageCard({
             ) : null}
           </p>
         </div>
-        <dl className={clsx("grid grid-cols-2 gap-3 text-[0.85rem]", dark ? "text-cream/80" : "text-muted")}>
+        <dl className={clsx("grid grid-cols-2 gap-3 text-[0.85rem]", dark ? "text-cream/85" : "text-muted")}>
           <div>
-            <dt className="label-caps text-[0.62rem] opacity-80">Portion</dt>
+            <dt className="label-caps text-[0.62rem]">Portion</dt>
             <dd className="mt-1">{pkg.portion}</dd>
           </div>
           <div>
-            <dt className="label-caps text-[0.62rem] opacity-80">Guests</dt>
+            <dt className="label-caps text-[0.62rem]">Guests</dt>
             <dd className="mt-1">{pkg.recommendedGuests}</dd>
           </div>
           <div className="col-span-2">
-            <dt className="label-caps text-[0.62rem] opacity-80">Best for</dt>
+            <dt className="label-caps text-[0.62rem]">Best for</dt>
             <dd className="mt-1">{pkg.bestFor.join(" · ")}</dd>
           </div>
         </dl>
@@ -75,7 +75,7 @@ export function WeddingPackageCard({
             ))}
           </ul>
         ) : null}
-        <p className={clsx("mt-auto pt-2 text-[0.8rem]", dark ? "text-cream/60" : "text-muted")}>
+        <p className={clsx("mt-auto pt-2 text-[0.8rem]", dark ? "text-cream/80" : "text-muted")}>
           Setup + styling included. Delivery and tax additional. Book {weddingRules.bookingLeadDays}+ days ahead.
         </p>
       </div>

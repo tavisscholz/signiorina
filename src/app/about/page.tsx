@@ -97,7 +97,7 @@ export default function AboutPage() {
           <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {signatures.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 90} className="menu-card flex flex-col items-center gap-3 rounded-sm px-5 py-8 text-center">
-                <span className="price text-[1.8rem] text-pistachio">{String(i + 1).padStart(2, "0")}</span>
+                <span className="price text-[1.8rem] text-olive-soft" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="font-display text-[1.25rem] leading-tight text-olive">{s.title}</h3>
                 <p className="text-[0.9rem] text-muted">{s.body}</p>
               </Reveal>

@@ -120,7 +120,7 @@ export function ProcessSteps({
     <ol className={clsx("grid gap-8", steps.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2", className)}>
       {steps.map((s, i) => (
         <Reveal as="li" key={s.title} delay={i * 120} className="flex flex-col gap-3">
-          <span className={clsx("price text-[3rem] leading-none", tone === "dark" ? "text-prosecco" : "text-pistachio")} aria-hidden="true">
+          <span className={clsx("price text-[3rem] leading-none", tone === "dark" ? "text-prosecco" : "text-olive-soft/80")} aria-hidden="true">
             {String(i + 1).padStart(2, "0")}
           </span>
           <h3 className={clsx("display-sm", tone === "dark" ? "text-cream" : "text-olive")}>{s.title}</h3>

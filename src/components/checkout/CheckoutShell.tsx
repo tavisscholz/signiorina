@@ -92,6 +92,7 @@ export function CheckoutShell({
   if (live.lines.length === 0) {
     return (
       <div className="container-page py-16">
+        <h1 className="sr-only">Checkout</h1>
         <EmptyCart />
       </div>
     );

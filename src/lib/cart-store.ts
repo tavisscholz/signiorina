@@ -127,11 +127,6 @@ export const useCheckoutDetails = create<DetailsState>()(
   ),
 );
 
-/** Helper for UI: total units in the cart. */
-export function cartCount(lines: CartLine[]): number {
-  return lines.length;
-}
-
 export function toggleDietary(list: DietaryId[], id: DietaryId): DietaryId[] {
   return list.includes(id) ? list.filter((d) => d !== id) : [...list, id];
 }

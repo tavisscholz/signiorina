@@ -102,10 +102,10 @@ export function EventEstimator({ kind, defaultOption }: { kind: EventKind; defau
   };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-12" onChange={touch} onClick={touch}>
-      <div className="flex flex-col gap-7 lg:col-span-7">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12" onChange={touch} onClick={touch}>
+      <div className="flex min-w-0 flex-col gap-7 lg:col-span-7">
         <Fieldset legend={kind === "wedding" ? "Package" : "Portion"}>
-          <div className="grid gap-2 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {options.map((o) => {
               const checked = o.id === optionId;
               return (

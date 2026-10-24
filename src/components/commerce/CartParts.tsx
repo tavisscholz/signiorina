@@ -11,13 +11,14 @@ import { setAddOnQuantity, useCart } from "@/lib/cart-store";
 import { formatCents, formatDollars } from "@/lib/money";
 import type { CartPricing } from "@/lib/pricing";
 
-export function EmptyCart({ onNavigate }: { onNavigate?: () => void }) {
+export function EmptyCart({ onNavigate, headingLevel = "h2" }: { onNavigate?: () => void; headingLevel?: "h2" | "h3" }) {
+  const Heading = headingLevel;
   return (
     <div className="flex flex-col items-center gap-5 py-16 text-center">
       <span aria-hidden="true" className="oval grid h-24 w-32 place-items-center border border-olive/30 font-display text-[2rem] italic text-olive/60">
         ~
       </span>
-      <h3 className="display-sm text-olive">Nothing on the table yet.</h3>
+      <Heading className="display-sm text-olive">Nothing on the table yet.</Heading>
       <p className="max-w-xs text-[0.95rem] text-muted">
         Boxes from {formatDollars(getProduct("aperitivo-box")?.price ?? 18)}, boards for a crowd, and an arrival supper for the cabin.
       </p>

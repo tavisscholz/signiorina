@@ -43,7 +43,7 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
   useEffect(() => {
     const el = buttonRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(([entry]) => setShowSticky(!entry.isIntersecting && entry.boundingClientRect.top > 0), {
+    const io = new IntersectionObserver(([entry]) => setShowSticky(!entry.isIntersecting), {
       threshold: 0,
     });
     io.observe(el);
