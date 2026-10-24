@@ -33,7 +33,7 @@ export default function EverydayPage() {
           <div className="hero-enter lg:col-span-7">
             <p className="eyebrow flex items-center gap-3 text-olive-soft">
               <span aria-hidden="true" className="h-px w-8 bg-olive/40" />
-              Everyday
+              Shop
             </p>
             <h1 className="display-xl mt-5 text-olive">
               Boxes, boards <span className="accent">&amp; little indulgences.</span>
@@ -47,7 +47,6 @@ export default function EverydayPage() {
             <ZoneCalculator source="everyday" showShopLink={false} label="Do we deliver to you?" />
           </div>
         </div>
-        <StoreFacts />
       </section>
 
       <section className="container-page" aria-label="Products">
@@ -83,6 +82,9 @@ export default function EverydayPage() {
       </section>
 
       <StoreExtras />
+      <div className="container-page">
+        <StoreFacts className="mt-12" />
+      </div>
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Checkbox, TextAreaField, TextField } from "@/components/ui/Field";
@@ -16,6 +16,8 @@ import { leadTimeSentence, quickAddQuantity } from "@/lib/format";
 import { formatCents, formatDollars, toCents } from "@/lib/money";
 import { priceLines } from "@/lib/pricing";
 import type { CartAddOn, DietaryId } from "@/lib/types";
+
+const noSubscribe = () => () => {};
 
 /**
  * Product options → cart. Price updates live with quantity, dietary versions and add-ons.
@@ -40,6 +42,15 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
   useEffect(() => {
     track("view_product", { product_id: product.id, price: product.price });
   }, [product.id, product.price]);
+
+  // Arriving from the store's extras (?addon=…): start with that extra chosen. Read from the
+  // URL after hydration (the page is static), then applied once while rendering.
+  const wanted = useSyncExternalStore(noSubscribe, () => new URLSearchParams(window.location.search).get("addon"), () => null);
+  const [arrivedFor, setArrivedFor] = useState<string | null>(null);
+  if (wanted && wanted !== arrivedFor && product.addOnIds.includes(wanted)) {
+    setArrivedFor(wanted);
+    setLineAddOns((list) => (list.some((a) => a.addOnId === wanted) ? list : setAddOnQuantity(list, wanted, 1)));
+  }
 
   useEffect(() => {
     const el = buttonRef.current;
@@ -193,6 +204,7 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
                       hint={`${addOn.message.helper} ${message.length}/${addOn.message.maxLength}`}
                       maxLength={addOn.message.maxLength}
                       required
+                      autoFocus={arrivedFor === addOnId}
                       value={message}
                       error={messageError?.addOnId === addOnId && !message.trim() ? messageError.text : undefined}
                       onChange={(e) => setLineAddOns((list) => setAddOnMessage(list, addOnId, e.target.value))}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { AddOnPicker } from "@/components/commerce/AddOnPicker";
 import { Reveal } from "@/components/motion/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconCalendar, IconClock, IconTruck } from "@/components/ui/Icons";
@@ -9,7 +10,7 @@ import { deliveryWindows, scheduling, zones } from "@/config/delivery";
 import { routeDayNames } from "@/lib/delivery-fees";
 import { formatDollars } from "@/lib/money";
 
-/** Delivery fees, windows and lead time — the store's three facts, shown above the products. */
+/** Delivery fees, windows and lead time — the store's three facts. */
 export function StoreFacts({ className = "mt-10" }: { className?: string }) {
   return (
     <ul className={`${className} grid gap-4 border-y border-line py-5 text-[0.9rem] text-muted md:grid-cols-3`}>
@@ -46,18 +47,8 @@ export function StoreExtras() {
     <section className="container-page mt-24 grid gap-12 lg:grid-cols-2">
       <Reveal className="rounded-[1.75rem] border border-line bg-paper p-8">
         <h2 className="display-sm text-olive">Add to any board</h2>
-        <p className="mt-2 text-[0.95rem] text-muted">Choose add-ons on each product page.</p>
-        <ul className="mt-6 divide-y divide-line">
-          {cartAddOns.map((a) => (
-            <li key={a.id} className="flex items-baseline justify-between gap-4 py-3">
-              <span>
-                {a.name}
-                {a.serves ? <span className="ml-2 text-[0.85rem] text-muted">{a.serves}</span> : null}
-              </span>
-              <span className="price text-[1.15rem] text-olive">{a.price === 0 ? "Free" : formatDollars(a.price)}</span>
-            </li>
-          ))}
-        </ul>
+        <p className="mt-2 text-[0.95rem] text-muted">Tap an extra to add it to a box in your cart, or to pick a box for it.</p>
+        <AddOnPicker addOns={cartAddOns} />
       </Reveal>
       <Reveal delay={120} className="flex flex-col justify-between gap-8 rounded-[1.75rem] bg-olive p-8 text-cream on-dark">
         <div>
