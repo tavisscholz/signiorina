@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useId, useState } from "react";
 
 import { Photo } from "@/components/brand/Photo";
-import { Checkbox, TextField } from "@/components/ui/Field";
+import { Checkbox, TextAreaField, TextField } from "@/components/ui/Field";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { getAddOn, getDietaryOption } from "@/config/catalog";
 import { track } from "@/lib/analytics";
-import { setAddOnQuantity, toggleDietary, useCart } from "@/lib/cart-store";
+import { setAddOnMessage, setAddOnQuantity, toggleDietary, useCart } from "@/lib/cart-store";
 import { formatCents, formatDollars } from "@/lib/money";
 import type { PricedLine } from "@/lib/pricing";
 
@@ -71,6 +71,11 @@ export function CartLineItem({ priced, variant = "page" }: { priced: PricedLine;
             <li key={a.addOn.id}>
               + {a.addOn.name}
               {a.quantity > 1 ? ` × ${a.quantity}` : ""} · {formatCents(a.total)}
+              {a.addOn.message ? (
+                <span className={clsx("block", a.message ? "italic" : "text-fig")}>
+                  {a.message ? `“${a.message}”` : "Note not written yet"}
+                </span>
+              ) : null}
             </li>
           ))}
           {line.personalization ? <li>Tag: “{line.personalization}”</li> : null}
@@ -149,20 +154,37 @@ export function CartLineItem({ priced, variant = "page" }: { priced: PricedLine;
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {product.addOnIds.map((id) => {
                     const addOn = getAddOn(id)!;
-                    const qty = line.addOns.find((a) => a.addOnId === id)?.quantity ?? 0;
+                    const chosen = line.addOns.find((a) => a.addOnId === id);
+                    const qty = chosen?.quantity ?? 0;
+                    const writing = addOn.message && qty > 0;
                     return (
-                      <li key={id} className="flex items-center justify-between gap-3">
-                        <span className="text-[0.9rem]">
-                          {addOn.name} <span className="text-muted">· {formatDollars(addOn.price)}</span>
-                        </span>
-                        <QuantitySelector
-                          value={qty}
-                          min={0}
-                          max={addOn.maxQuantity ?? 10}
-                          label="Quantity"
-                          itemName={addOn.name}
-                          onChange={(q) => updateLine(line.lineId, { addOns: setAddOnQuantity(line.addOns, id, q) })}
-                        />
+                      <li key={id} className={clsx(writing && "sm:col-span-2")}>
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-[0.9rem]">
+                            {addOn.name} <span className="text-muted">· {formatDollars(addOn.price)}</span>
+                          </span>
+                          <QuantitySelector
+                            value={qty}
+                            min={0}
+                            max={addOn.maxQuantity ?? 10}
+                            label="Quantity"
+                            itemName={addOn.name}
+                            onChange={(q) => updateLine(line.lineId, { addOns: setAddOnQuantity(line.addOns, id, q) })}
+                          />
+                        </div>
+                        {writing && addOn.message ? (
+                          <TextAreaField
+                            id={`${editId}-${id}-message`}
+                            label={addOn.message.label}
+                            hint={`${addOn.message.helper} ${(chosen?.message ?? "").length}/${addOn.message.maxLength}`}
+                            maxLength={addOn.message.maxLength}
+                            required
+                            value={chosen?.message ?? ""}
+                            onChange={(e) => updateLine(line.lineId, { addOns: setAddOnMessage(line.addOns, id, e.target.value) })}
+                            wrapperClassName="mt-3"
+                            className="min-h-24"
+                          />
+                        ) : null}
                       </li>
                     );
                   })}

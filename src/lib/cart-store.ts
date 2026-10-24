@@ -132,6 +132,12 @@ export function toggleDietary(list: DietaryId[], id: DietaryId): DietaryId[] {
 }
 
 export function setAddOnQuantity(list: CartAddOn[], addOnId: string, quantity: number): CartAddOn[] {
+  const current = list.find((a) => a.addOnId === addOnId);
   const rest = list.filter((a) => a.addOnId !== addOnId);
-  return quantity > 0 ? [...rest, { addOnId, quantity }] : rest;
+  return quantity > 0 ? [...rest, { ...current, addOnId, quantity }] : rest;
+}
+
+/** The message on an add-on that carries one (e.g. the personalized note). */
+export function setAddOnMessage(list: CartAddOn[], addOnId: string, message: string): CartAddOn[] {
+  return list.map((a) => (a.addOnId === addOnId ? { ...a, message } : a));
 }

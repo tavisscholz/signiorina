@@ -25,6 +25,8 @@ export interface PricedAddOn {
   quantity: number;
   unitPrice: number;
   total: number;
+  /** Trimmed, and only for add-ons that carry a message. */
+  message?: string;
 }
 
 export interface PricedLine {
@@ -48,6 +50,7 @@ export type IssueCode =
   | "delivery-bundle"
   | "product-minimum"
   | "personalization-required"
+  | "add-on-message-required"
   | "unknown-product"
   | "off-route-minimum";
 
@@ -125,11 +128,12 @@ export function priceLines(lines: CartLine[]): { priced: PricedLine[]; unknown: 
     const baseTotal = unit * line.quantity;
     const dietaryFee = line.dietary.includes("gluten-conscious") ? toCents(product.glutenConsciousFee) * line.quantity : 0;
     const addOns: PricedAddOn[] = line.addOns
-      .map((a) => {
+      .map((a): PricedAddOn | null => {
         const addOn = getAddOn(a.addOnId);
         if (!addOn || !addOn.scope.includes("cart") || a.quantity <= 0) return null;
         const unitPrice = toCents(addOn.price);
-        return { addOn, quantity: a.quantity, unitPrice, total: unitPrice * a.quantity };
+        const message = addOn.message ? a.message?.trim().slice(0, addOn.message.maxLength) || undefined : undefined;
+        return { addOn, quantity: a.quantity, unitPrice, total: unitPrice * a.quantity, message };
       })
       .filter((a): a is PricedAddOn => a !== null);
     const addOnsTotal = addOns.reduce((sum, a) => sum + a.total, 0);
@@ -210,6 +214,16 @@ export function priceCart(args: { lines: CartLine[]; delivery?: DeliverySelectio
         productId: l.product.id,
         blocking: true,
       });
+    }
+    for (const a of l.addOns) {
+      if (a.addOn.message && !a.message) {
+        issues.push({
+          code: "add-on-message-required",
+          message: `Write the message for the ${a.addOn.name} on your ${l.product.name}, or remove it.`,
+          productId: l.product.id,
+          blocking: true,
+        });
+      }
     }
   }
 

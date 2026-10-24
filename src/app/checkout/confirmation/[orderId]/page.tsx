@@ -103,6 +103,13 @@ async function Confirmation({ params, searchParams }: PageProps<"/checkout/confi
                       .filter(Boolean)
                       .join(" · ")}
                   </p>
+                  {item.addOns
+                    .filter((a) => a.message)
+                    .map((a) => (
+                      <p key={a.addOnId} className="mt-1 text-[0.85rem] italic text-muted">
+                        {a.name}: “{a.message}”
+                      </p>
+                    ))}
                 </div>
                 <p className="tabular">{formatCents(item.lineTotal)}</p>
               </li>

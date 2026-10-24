@@ -5,13 +5,13 @@ import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
-import { Checkbox, TextField } from "@/components/ui/Field";
+import { Checkbox, TextAreaField, TextField } from "@/components/ui/Field";
 import { IconCheck, IconClock, IconInfo } from "@/components/ui/Icons";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { getAddOn, getDietaryOption, getProduct } from "@/config/catalog";
 import { deliveryWindows, scheduling } from "@/config/delivery";
 import { track } from "@/lib/analytics";
-import { setAddOnQuantity, toggleDietary, useCart } from "@/lib/cart-store";
+import { setAddOnMessage, setAddOnQuantity, toggleDietary, useCart } from "@/lib/cart-store";
 import { leadTimeSentence, quickAddQuantity } from "@/lib/format";
 import { formatCents, formatDollars, toCents } from "@/lib/money";
 import { priceLines } from "@/lib/pricing";
@@ -32,6 +32,7 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
   const [lineAddOns, setLineAddOns] = useState<CartAddOn[]>([]);
   const [personalization, setPersonalization] = useState("");
   const [error, setError] = useState<string>();
+  const [messageError, setMessageError] = useState<{ addOnId: string; text: string }>();
   const [added, setAdded] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
@@ -63,6 +64,13 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
   const allowedWindowLabels = product.allowedWindows?.map((w) => deliveryWindows.find((d) => d.id === w)!);
 
   const add = () => {
+    const unwritten = lineAddOns.find((a) => getAddOn(a.addOnId)?.message && !a.message?.trim());
+    if (unwritten) {
+      setMessageError({ addOnId: unwritten.addOnId, text: "Write your note, or remove it." });
+      document.getElementById(`${id}-${unwritten.addOnId}-message`)?.focus();
+      return;
+    }
+    setMessageError(undefined);
     if (product.personalization?.required && !personalization.trim()) {
       setError(`Add the ${product.personalization.label.toLowerCase()} so we can print it.`);
       document.getElementById(`${id}-personalization`)?.focus();
@@ -74,7 +82,7 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
       variantId,
       quantity,
       dietary,
-      addOns: lineAddOns,
+      addOns: lineAddOns.map((a) => (a.message === undefined ? a : { ...a, message: a.message.trim() })),
       personalization: personalization.trim() || undefined,
     });
     track("add_to_cart", { product_id: product.id, quantity, value: priced.lineTotal / 100, source: "pdp" });
@@ -154,26 +162,44 @@ export function ProductPurchasePanel({ productId }: { productId: string }) {
           <ul className="divide-y divide-line rounded-2xl border border-line bg-paper">
             {product.addOnIds.map((addOnId) => {
               const addOn = getAddOn(addOnId)!;
-              const qty = lineAddOns.find((a) => a.addOnId === addOnId)?.quantity ?? 0;
+              const chosen = lineAddOns.find((a) => a.addOnId === addOnId);
+              const qty = chosen?.quantity ?? 0;
+              const message = chosen?.message ?? "";
               return (
-                <li key={addOnId} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <div className="min-w-0">
-                    <p className="font-medium">
-                      {addOn.name} <span className="price ml-1 text-olive">{formatDollars(addOn.price)}</span>
-                    </p>
-                    <p className="text-[0.84rem] text-muted">
-                      {addOn.serves ? `${addOn.serves} · ` : ""}
-                      {addOn.description}
-                    </p>
+                <li key={addOnId} className="px-4 py-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="font-medium">
+                        {addOn.name} <span className="price ml-1 text-olive">{formatDollars(addOn.price)}</span>
+                      </p>
+                      <p className="text-[0.84rem] text-muted">
+                        {addOn.serves ? `${addOn.serves} · ` : ""}
+                        {addOn.description}
+                      </p>
+                    </div>
+                    <QuantitySelector
+                      value={qty}
+                      min={0}
+                      max={addOn.maxQuantity ?? 10}
+                      label="Quantity"
+                      itemName={addOn.name}
+                      onChange={(q) => setLineAddOns((list) => setAddOnQuantity(list, addOnId, q))}
+                    />
                   </div>
-                  <QuantitySelector
-                    value={qty}
-                    min={0}
-                    max={addOn.maxQuantity ?? 10}
-                    label="Quantity"
-                    itemName={addOn.name}
-                    onChange={(q) => setLineAddOns((list) => setAddOnQuantity(list, addOnId, q))}
-                  />
+                  {addOn.message && qty > 0 ? (
+                    <TextAreaField
+                      id={`${id}-${addOnId}-message`}
+                      label={addOn.message.label}
+                      hint={`${addOn.message.helper} ${message.length}/${addOn.message.maxLength}`}
+                      maxLength={addOn.message.maxLength}
+                      required
+                      value={message}
+                      error={messageError?.addOnId === addOnId && !message.trim() ? messageError.text : undefined}
+                      onChange={(e) => setLineAddOns((list) => setAddOnMessage(list, addOnId, e.target.value))}
+                      wrapperClassName="mt-3"
+                      className="min-h-24"
+                    />
+                  ) : null}
                 </li>
               );
             })}

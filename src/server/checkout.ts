@@ -97,6 +97,7 @@ function toItems(pricing: CartPricing): OrderItem[] {
       quantity: a.quantity,
       unitPrice: a.unitPrice,
       total: a.total,
+      message: a.message,
     })),
     personalization: p.line.personalization?.trim() || undefined,
     lineTotal: p.lineTotal,

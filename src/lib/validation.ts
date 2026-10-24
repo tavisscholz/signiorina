@@ -22,7 +22,9 @@ export const cartLineSchema = z.object({
   variantId: z.string().max(64).optional(),
   quantity: z.number().int().min(1).max(500),
   dietary: z.array(z.enum(["vegetarian", "pork-free", "gluten-conscious", "nut-free"])).max(4),
-  addOns: z.array(z.object({ addOnId: z.string().max(64), quantity: z.number().int().min(0).max(50) })).max(12),
+  addOns: z
+    .array(z.object({ addOnId: z.string().max(64), quantity: z.number().int().min(0).max(50), message: z.string().trim().max(300).optional() }))
+    .max(12),
   personalization: z.string().trim().max(80).optional(),
 });
 

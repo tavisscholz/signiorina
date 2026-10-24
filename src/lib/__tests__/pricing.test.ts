@@ -71,6 +71,22 @@ describe("priceCart — items and minimums", () => {
     expect(priceCart({ lines: [line("wedding-welcome-box", 12, { personalization: "Lucia + Ben" })] }).canCheckout).toBe(true);
   });
 
+  it("prices the personalized note at $10 and needs its message before checkout", () => {
+    const note = (message?: string) =>
+      priceCart({ lines: [line("cabin-welcome-box", 1, { addOns: [{ addOnId: "personalized-note", quantity: 1, message }] })] });
+    expect(issueCodes(note())).toContain("add-on-message-required");
+    expect(issueCodes(note("   "))).toContain("add-on-message-required");
+    const written = note("  Welcome to the mountains!  ");
+    expect(written.addOnsTotal).toBe(1000);
+    expect(written.canCheckout).toBe(true);
+    expect(written.lines[0].addOns[0].message).toBe("Welcome to the mountains!");
+  });
+
+  it("drops messages on add-ons that don't carry one", () => {
+    const p = priceCart({ lines: [line("box-for-two", 1, { addOns: [{ addOnId: "whole-focaccia", quantity: 1, message: "hi" }] })] });
+    expect(p.lines[0].addOns[0].message).toBeUndefined();
+  });
+
   it("ignores add-ons that are event-only", () => {
     const p = priceCart({ lines: [line("box-for-two", 1, { addOns: [{ addOnId: "dop-upgrade", quantity: 2 }] })] });
     expect(p.addOnsTotal).toBe(0);

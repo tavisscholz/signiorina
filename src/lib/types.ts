@@ -113,6 +113,8 @@ export interface AddOn {
   maxQuantity?: number;
   perishable?: boolean;
   note?: string;
+  /** The customer writes a message for this add-on (e.g. a handwritten card). Required once chosen. */
+  message?: { label: string; helper: string; maxLength: number };
 }
 
 export interface DietaryOption {
@@ -241,6 +243,8 @@ export interface Booking {
 export interface CartAddOn {
   addOnId: string;
   quantity: number;
+  /** For add-ons that carry a message (see AddOn.message). */
+  message?: string;
 }
 
 export interface CartLine {
@@ -347,7 +351,7 @@ export interface OrderItem {
   unitPrice: number;
   dietary: DietaryId[];
   dietaryFee: number;
-  addOns: Array<{ addOnId: string; name: string; quantity: number; unitPrice: number; total: number }>;
+  addOns: Array<{ addOnId: string; name: string; quantity: number; unitPrice: number; total: number; message?: string }>;
   personalization?: string;
   lineTotal: number;
 }
