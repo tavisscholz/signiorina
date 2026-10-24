@@ -58,15 +58,15 @@ export function JourneyCards({
                 zoom
               />
               <span className="flex min-w-0 flex-col gap-0.5 md:gap-1.5 md:px-6 md:pb-6 md:pt-5">
-                <Heading className="font-display text-[1.45rem] leading-tight md:text-[clamp(1.6rem,2.2vw,2.1rem)]">{j.name}</Heading>
-                <span className={clsx("text-[0.88rem] leading-snug md:text-[0.98rem]", quiet)}>
-                  {j.description}
+                <span className="flex items-center justify-between gap-3">
+                  <Heading className="font-display text-[1.45rem] leading-tight md:text-[clamp(1.6rem,2.2vw,2.1rem)]">{j.name}</Heading>
+                  <IconArrow
+                    size={22}
+                    className="hidden shrink-0 transition-transform duration-500 group-hover:translate-x-1 md:block"
+                  />
                 </span>
-                <span className="label-caps mt-2 hidden items-center gap-2 text-[0.7rem] md:inline-flex">
-                  {j.cta}
-                  <IconArrow size={16} className="transition-transform duration-500 group-hover:translate-x-1" />
-                </span>
-                <span className="sr-only md:hidden"> — {j.cta}</span>
+                {/* The line is the call to action, so the card needs no separate button label. */}
+                <span className={clsx("text-[0.88rem] leading-snug md:text-[0.98rem]", quiet)}>{j.description}</span>
               </span>
               <IconChevron size={20} aria-hidden="true" className="shrink-0 md:hidden" />
             </TrackedLink>

@@ -1,3 +1,4 @@
+import { Parisienne } from "next/font/google";
 import Link from "next/link";
 
 import { Photo } from "@/components/brand/Photo";
@@ -22,6 +23,9 @@ import { site } from "@/config/site";
 import { eventPackageViews } from "@/lib/event-packages";
 import { formatDollars } from "@/lib/money";
 
+// The script half of the hero headline. Loaded here, not in the layout, so only the homepage downloads it.
+const script = Parisienne({ weight: "400", subsets: ["latin"], display: "swap" });
+
 const featured = ["box-for-two", "gathering-board-small", "cabin-welcome-box", "gift-box"].map((id) => getProduct(id)!);
 const homeFaq = ["notice", "where", "cabins", "allergies"]
   .map((id) => faqSections.flatMap((s) => s.items).find((i) => i.id === id))
@@ -29,7 +33,7 @@ const homeFaq = ["notice", "where", "cabins", "allergies"]
 
 /**
  * Homepage for threeJourneyArchitectureV2: one brand, three entrances. The first screen
- * answers what Signiorina is and offers Weddings, Events and Everyday; the sections below
+ * answers what Signiorina is and offers Weddings, Events and Shop; the sections below
  * follow the same order, then sell the brand and point back into a journey.
  */
 export function HomeJourneys() {
@@ -49,9 +53,10 @@ export function HomeJourneys() {
               </p>
               <h1
                 id="home-title"
-                className="font-display text-[min(8.6vw,2.3rem)] uppercase leading-[0.96] tracking-[0.01em] text-olive sm:mt-5 sm:text-[clamp(2.3rem,5vw,4.6rem)]"
+                className="font-display text-[min(12vw,3rem)] leading-[0.98] tracking-[-0.01em] text-olive sm:mt-5 sm:text-[clamp(2.8rem,6.4vw,5.6rem)]"
               >
-                Charcuterie <span className="accent block">Beautifully done</span>
+                Charcuterie{" "}
+                <span className={`${script.className} block text-[1.02em] leading-[1.18] tracking-normal`}>Beautifully Done</span>
               </h1>
               <p className="mt-3 max-w-xl text-[0.95rem] leading-normal text-muted sm:mt-5 sm:text-[1.15rem] sm:leading-relaxed">
                 Italian-inspired, delivered for everyday enjoyment, celebrations and weddings.
@@ -182,7 +187,7 @@ export function HomeJourneys() {
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <Reveal>
               <SectionHeading
-                eyebrow="Everyday"
+                eyebrow="Shop"
                 title={
                   <span id="everyday-feature">
                     Little lunches. Long tables. <span className="accent">Everything between.</span>

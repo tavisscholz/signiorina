@@ -6,7 +6,7 @@ import { eventPackageViews } from "@/lib/event-packages";
 
 describe("three journeys", () => {
   it("use the three customer-facing names, in order", () => {
-    expect(journeys.map((j) => j.name)).toEqual(["Weddings", "Events", "Everyday"]);
+    expect(journeys.map((j) => j.name)).toEqual(["Weddings", "Events", "Shop"]);
     expect(journeys.map((j) => j.cta)).toEqual(["Build Your Table", "Explore Packages", "Shop Everyday"]);
   });
 

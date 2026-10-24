@@ -9,8 +9,9 @@ export type JourneyId = "everyday" | "events" | "weddings";
 
 export interface Journey {
   id: JourneyId;
-  /** Customer-facing name. Fixed by the architecture brief — do not rename. */
-  name: "Everyday" | "Events" | "Weddings";
+  /** Customer-facing name. The "everyday" journey is labelled Shop (owner's choice); its store is still Everyday. */
+  name: "Weddings" | "Events" | "Shop";
+  /** The line on the journey card, written as the call to action. */
   description: string;
   cta: string;
   href: string;
@@ -20,12 +21,12 @@ export interface Journey {
   steps: Array<{ title: string; body: string }>;
 }
 
-/** Weddings, Events, Everyday: the homepage, navigation and footer follow this order. */
+/** Weddings, Events, Shop: the homepage, navigation and footer follow this order. */
 export const journeys: Journey[] = [
   {
     id: "weddings",
     name: "Weddings",
-    description: "An unforgettable grazing experience made for your special day.",
+    description: "Build Your Dream Grazing Experience",
     cta: "Build Your Table",
     href: "/weddings/build",
     media: "weddingTable",
@@ -38,7 +39,7 @@ export const journeys: Journey[] = [
   {
     id: "events",
     name: "Events",
-    description: "Beautifully catered gatherings & celebrations.",
+    description: "Explore Packages for Gatherings & Celebrations",
     cta: "Explore Packages",
     href: "/events",
     media: "boardLargeWide",
@@ -50,8 +51,8 @@ export const journeys: Journey[] = [
   },
   {
     id: "everyday",
-    name: "Everyday",
-    description: "Boxes, boards & little indulgences.",
+    name: "Shop",
+    description: "Browse Boxes, Boards & Little Indulgences",
     cta: "Shop Everyday",
     href: "/everyday",
     media: "aperitivoBox",
