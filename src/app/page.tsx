@@ -109,11 +109,12 @@ export default function HomePage() {
               </div>
               <div className="hero-enter absolute bottom-0 left-0 w-[44%]" style={{ ["--hero-delay" as string]: "200ms" }}>
                 <Photo
-                  media="weddingTable"
+                  media="irina"
                   shape="oval"
                   priority
                   className="aspect-[4/5] w-full border-[7px] border-cream shadow-[var(--shadow-lift)]"
-                  sizes="(min-width: 1024px) 18vw, 40vw"
+                  sizes="(min-width: 1024px) 16rem, 44vw"
+                  position="50% 30%"
                 />
               </div>
               <div className="hero-enter absolute left-[2%] top-[8%] hidden w-[38%] sm:block" style={{ ["--hero-delay" as string]: "350ms" }}>

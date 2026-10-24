@@ -9,6 +9,7 @@ import cabinEvening from "@/assets/images/cabin-evening.jpg";
 import gatheringBoardLarge from "@/assets/images/gathering-board-large.jpg";
 import gatheringBoardSmall from "@/assets/images/gathering-board-small.jpg";
 import groomsRoom from "@/assets/images/grooms-room.jpg";
+import irina from "@/assets/images/irina.jpg";
 import officeGrazingWide from "@/assets/images/office-grazing-wide.jpg";
 import officeGrazing from "@/assets/images/office-grazing.jpg";
 import pranzoLunchBox from "@/assets/images/pranzo-lunch-box.jpg";
@@ -106,6 +107,12 @@ export const media = {
     alt: "An open Pranzo Lunch Box with a prosciutto and mozzarella focaccia panino, antipasti salad, parmigiano, salame, grapes, a fig and amaretti",
     status: "mockup",
     shot: "A stack of Pranzo boxes on a reception desk, one open.",
+  },
+  irina: {
+    src: irina,
+    alt: "Irina, smiling in a white chef's jacket and olive apron, holding brass cheese knives",
+    status: "final",
+    shot: "Owner-supplied portrait.",
   },
   weddingTable: {
     src: vbWeddingTable,
