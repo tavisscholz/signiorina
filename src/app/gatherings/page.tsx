@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { SectionHeading } from "@/components/brand/SectionHeading";
 import { ProductCard } from "@/components/commerce/ProductCard";
-import { EventEstimator } from "@/components/events/EventEstimator";
+import { EventEstimator, EventEstimatorFromUrl } from "@/components/events/EventEstimator";
 import { Reveal } from "@/components/motion/Reveal";
 import { CTABand, PageHero } from "@/components/sections/Sections";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -152,7 +153,13 @@ export default function GatheringsPage() {
           title={<span id="table-prices">What a table costs.</span>}
           lede={`Per guest, with a ${formatDollars(grazingTables.minimumFood)} food minimum. Setup and delivery are added by zone.`}
         />
-        <div className="mt-10 overflow-x-auto rounded-[1.5rem] border border-line">
+        {/* Focusable so keyboard users can scroll the table sideways on small screens. */}
+        <div
+          className="mt-10 overflow-x-auto rounded-[1.5rem] border border-line"
+          tabIndex={0}
+          role="region"
+          aria-label="Grazing table totals by guest count"
+        >
           <table className="w-full min-w-[34rem] text-left text-[0.95rem]">
             <caption className="sr-only">Food totals for styled grazing tables by guest count</caption>
             <thead className="bg-paper">
@@ -189,7 +196,7 @@ export default function GatheringsPage() {
         <p className="mt-3 text-[0.85rem] text-muted">* Food minimum applies. Food only — setup, delivery and tax are itemized in your quote.</p>
       </section>
 
-      <section className="border-t border-line bg-paper" aria-labelledby="grazing-estimate">
+      <section id="estimate" className="scroll-mt-24 border-t border-line bg-paper" aria-labelledby="grazing-estimate">
         <div className="container-page py-20 md:py-28">
           <SectionHeading
             eyebrow="Price your table"
@@ -197,7 +204,10 @@ export default function GatheringsPage() {
             lede="Pick a tier, a headcount and where you're gathering."
           />
           <div className="mt-12">
-            <EventEstimator kind="grazing" />
+            {/* Restores a shared or "Edit estimate" link's state from the URL. */}
+          <Suspense fallback={<EventEstimator kind="grazing" />}>
+            <EventEstimatorFromUrl kind="grazing" />
+          </Suspense>
           </div>
         </div>
       </section>

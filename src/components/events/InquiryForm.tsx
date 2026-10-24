@@ -2,15 +2,20 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useId, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useId, useMemo, useRef, useState } from "react";
 
 import { OliveSprig } from "@/components/brand/OliveSprig";
-import { ESTIMATE_STORAGE_KEY } from "@/components/events/EventEstimator";
+import { EstimateSummary } from "@/components/events/EstimateSummary";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { SelectField, TextAreaField, TextField } from "@/components/ui/Field";
 import { Notice } from "@/components/ui/Notice";
+import { getZone } from "@/config/delivery";
 import { grazingTables, weddingPackages } from "@/config/events";
 import { track } from "@/lib/analytics";
+import { businessNow } from "@/lib/dates";
+import { fromEstimateParams, toEstimateParams } from "@/lib/estimate-params";
+import { estimateEvent } from "@/lib/event-estimate";
+import { useNow } from "@/lib/use-now";
 import { inquirySchema, toFieldErrors, type FieldErrors } from "@/lib/validation";
 
 export const EVENT_TYPES = [
@@ -66,11 +71,16 @@ function typeFromParam(type: string | null): string {
 
 type Values = Record<string, string>;
 
-const noopSubscribe = () => () => undefined;
-
 export function InquiryForm() {
   const id = useId();
   const params = useSearchParams();
+  // A full event estimate handed over from /weddings or /gatherings (package, guests, date, zone, options, add-ons).
+  const estimateState = useMemo(() => fromEstimateParams(params), [params]);
+  const now = useNow();
+  const estimate = useMemo(
+    () => (estimateState && now !== undefined ? estimateEvent({ ...estimateState, today: businessNow(new Date(now)).date }) : null),
+    [estimateState, now],
+  );
   const [values, setValues] = useState<Values>(() => ({
     name: "",
     email: "",
@@ -86,25 +96,6 @@ export function InquiryForm() {
     message: "",
     website: "",
   }));
-  const storedEstimate = useSyncExternalStore(
-    noopSubscribe,
-    () => {
-      try {
-        return sessionStorage.getItem(ESTIMATE_STORAGE_KEY);
-      } catch {
-        return null;
-      }
-    },
-    () => null,
-  );
-  const estimate = useMemo<Record<string, unknown> | undefined>(() => {
-    if (!storedEstimate || !params.get("service")) return undefined;
-    try {
-      return JSON.parse(storedEstimate);
-    } catch {
-      return undefined;
-    }
-  }, [storedEstimate, params]);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [reference, setReference] = useState<string>();
@@ -129,7 +120,8 @@ export function InquiryForm() {
       company: values.company || undefined,
       budgetRange: values.budgetRange || undefined,
       heardAbout: values.heardAbout || undefined,
-      estimate,
+      // The server recomputes the estimate from these inputs; client totals aren't trusted.
+      estimateInput: estimateState ?? undefined,
     };
     const parsed = inquirySchema.safeParse(payload);
     if (!parsed.success) {
@@ -159,11 +151,6 @@ export function InquiryForm() {
         event_type: values.eventType,
         service: values.serviceInterest,
       });
-      try {
-        sessionStorage.removeItem(ESTIMATE_STORAGE_KEY);
-      } catch {
-        /* ignore */
-      }
       requestAnimationFrame(() => successRef.current?.focus());
     } catch {
       setStatus("error");
@@ -210,11 +197,27 @@ export function InquiryForm() {
       }}
       className="flex flex-col gap-8"
     >
-      {estimate ? (
-        <Notice tone="pistachio" title="Your estimate is attached.">
-          {String(estimate.option)} for {String(estimate.guests)} guests · estimated {String(estimate.estimatedTotal)}. We&apos;ll
-          use it as a starting point.
-        </Notice>
+      {estimateState ? (
+        <section aria-labelledby={`${id}-estimate`} className="rounded-[1.5rem] border border-olive/25 bg-paper p-6 md:p-7">
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <h2 id={`${id}-estimate`} className="eyebrow text-olive-soft">
+              Your estimate is attached
+            </h2>
+            <Link
+              href={`/${estimateState.kind === "wedding" ? "weddings" : "gatherings"}?${toEstimateParams(estimateState).toString()}#estimate`}
+              className="text-[0.88rem] text-olive underline underline-offset-4"
+            >
+              Edit estimate
+            </Link>
+          </div>
+          {estimate ? <EstimateSummary estimate={estimate} /> : <div className="mt-4 h-40 animate-pulse rounded-xl bg-linen/70" />}
+          {estimateState.zone && estimateState.zone !== "beyond" ? (
+            <p className="mt-4 text-[0.85rem] text-muted">Priced for {getZone(estimateState.zone).label}.</p>
+          ) : null}
+          <p className="mt-3 text-[0.8rem] text-muted">
+            We&apos;ll use this as the starting point for your written quote.
+          </p>
+        </section>
       ) : null}
       {values.eventType === "Allergy question" ? (
         <Notice tone="olive">

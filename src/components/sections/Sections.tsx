@@ -37,31 +37,34 @@ export function PageHero({
   return (
     <section className={clsx("relative overflow-hidden", dark ? "on-dark bg-olive text-cream" : "bg-cream")}>
       <div className="container-page grid items-center gap-10 py-12 md:py-16 lg:grid-cols-12 lg:gap-12 lg:py-20">
-        <div className="lg:col-span-6">
-          <Reveal>
-            <p className={clsx("eyebrow mb-5 flex items-center gap-3", dark ? "text-prosecco" : "text-olive-soft")}>
-              <span aria-hidden="true" className={clsx("h-px w-8", dark ? "bg-prosecco/60" : "bg-olive/40")} />
-              {eyebrow}
-            </p>
-            <h1 className={clsx("display-xl", dark ? "text-cream" : "text-olive")}>{title}</h1>
-            {lede ? <div className={clsx("lede mt-6 max-w-xl", dark ? "text-cream/80" : "text-muted")}>{lede}</div> : null}
-            {actions ? <div className="mt-8 flex flex-wrap gap-3">{actions}</div> : null}
-            {children}
-          </Reveal>
+        {/* Hero content is never hidden behind a scroll/hydration animation (see .hero-enter). */}
+        <div className="hero-enter lg:col-span-6">
+          <p className={clsx("eyebrow mb-5 flex items-center gap-3", dark ? "text-prosecco" : "text-olive-soft")}>
+            <span aria-hidden="true" className={clsx("h-px w-8", dark ? "bg-prosecco/60" : "bg-olive/40")} />
+            {eyebrow}
+          </p>
+          <h1 className={clsx("display-xl", dark ? "text-cream" : "text-olive")}>{title}</h1>
+          {lede ? <div className={clsx("lede mt-6 max-w-xl", dark ? "text-cream/80" : "text-muted")}>{lede}</div> : null}
+          {actions ? <div className="mt-8 flex flex-wrap gap-3">{actions}</div> : null}
+          {children}
         </div>
         <div className="relative lg:col-span-6">
-          <Reveal variant="oval" className="relative">
-            <Photo media={media} shape="arch" priority className="aspect-[4/5] w-full max-w-[34rem] lg:ml-auto" sizes="(min-width: 1024px) 40vw, 92vw" />
-          </Reveal>
+          <div className="arch relative aspect-[4/5] w-full max-w-[34rem] lg:ml-auto">
+            <Photo media={media} shape="arch" priority className="hero-settle h-full w-full" sizes="(min-width: 1024px) 40vw, 92vw" />
+          </div>
           {mediaSecondary ? (
-            <Reveal delay={250} className="absolute -bottom-6 left-0 w-[38%] max-w-[13rem] sm:left-6 lg:-left-4">
+            <div
+              className="hero-enter absolute -bottom-6 left-0 w-[38%] max-w-[13rem] sm:left-6 lg:-left-4"
+              style={{ ["--hero-delay" as string]: "200ms" }}
+            >
               <Photo
                 media={mediaSecondary}
                 shape="oval"
+                priority
                 className={clsx("aspect-[4/5] border-[6px] shadow-[var(--shadow-lift)]", dark ? "border-olive" : "border-cream")}
                 sizes="220px"
               />
-            </Reveal>
+            </div>
           ) : null}
         </div>
       </div>

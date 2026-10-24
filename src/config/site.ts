@@ -1,4 +1,19 @@
 /**
+ * Public origin for canonical URLs, Open Graph, the sitemap and structured data.
+ * Order: an explicit NEXT_PUBLIC_SITE_URL (set this for a custom domain), then Vercel's
+ * production domain (previews still point canonicals at production), then the deployment
+ * URL, then localhost for local development.
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/+$/, "");
+  const production = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL;
+  if (production) return `https://${production}`;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+}
+
+/**
  * Site-wide settings. Contact details, address, hours, social handles and
  * licensing statements stay `null` until the owner supplies them — the UI and
  * structured data omit anything that is null rather than inventing it.
@@ -11,7 +26,7 @@ export const site = {
   territory: "Modern Aperitivo",
   positioning:
     "Modern Italian-inspired hospitality made mobile — generous, polished, social food that makes any gathering feel beautifully hosted.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: resolveSiteUrl(),
   timeZone: "America/New_York",
   currency: "USD",
   locale: "en-US",

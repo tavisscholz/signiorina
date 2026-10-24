@@ -125,7 +125,7 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
         )}
       >
         <div className="container-page flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
-          <Link href="/" className="shrink-0 rounded-sm" aria-label="Signiorina — home">
+          <Link href="/" className="shrink-0 rounded-sm" aria-label="Signiorina Modern Aperitivo — home">
             <Wordmark />
           </Link>
 

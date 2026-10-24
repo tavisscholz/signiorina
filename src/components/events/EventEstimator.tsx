@@ -1,24 +1,23 @@
 "use client";
 
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo, useRef, useState } from "react";
 
+import { EstimateSummary } from "@/components/events/EstimateSummary";
 import { Button } from "@/components/ui/Button";
 import { Checkbox, Fieldset, SelectField, TextField } from "@/components/ui/Field";
-import { IconInfo } from "@/components/ui/Icons";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { addOns } from "@/config/catalog";
 import { beyondZoneC, zones } from "@/config/delivery";
 import { eventFees, grazingTables, weddingPackages, weddingRules } from "@/config/events";
 import { track } from "@/lib/analytics";
 import { businessNow } from "@/lib/dates";
+import { fromEstimateParams, toEstimateParams, type EstimateState } from "@/lib/estimate-params";
 import { estimateEvent, type EventKind, type PickupChoice } from "@/lib/event-estimate";
-import { formatCents, formatCentsExact, formatDollars } from "@/lib/money";
+import { formatDollars } from "@/lib/money";
 import type { ZoneId } from "@/lib/types";
 import { useNow } from "@/lib/use-now";
-
-export const ESTIMATE_STORAGE_KEY = "signiorina-event-estimate";
 
 const EVENT_ADD_ONS = addOns.filter((a) => a.scope.includes("event") && a.priceUnit === "each" && ["burrata-focaccia", "dolce-board", "panini-tray"].includes(a.id));
 
@@ -26,21 +25,33 @@ const EVENT_ADD_ONS = addOns.filter((a) => a.scope.includes("event") && a.priceU
  * Transparent event estimate: pick a package, guest count, date and area to see the
  * itemized cost, minimums, fees and retainer — then carry it into the inquiry.
  */
-export function EventEstimator({ kind, defaultOption }: { kind: EventKind; defaultOption?: string }) {
+export function EventEstimator({
+  kind,
+  defaultOption,
+  initial,
+}: {
+  kind: EventKind;
+  defaultOption?: string;
+  /** Restored state (e.g. "Edit estimate" from the inquiry form). Ignored if it's for the other estimator. */
+  initial?: EstimateState | null;
+}) {
   const id = useId();
   const router = useRouter();
   const options = kind === "wedding" ? weddingPackages.map((p) => ({ id: p.id, name: p.name, price: p.pricePerPerson })) : grazingTables.tiers.map((t) => ({ id: t.id, name: t.name, price: t.pricePerPerson }));
-  const [optionId, setOptionId] = useState(defaultOption ?? options[1].id);
-  const [guests, setGuests] = useState(kind === "wedding" ? 60 : 30);
-  const [date, setDate] = useState("");
-  const [zone, setZone] = useState<ZoneId | "beyond" | "">("");
-  const [dopUpgrade, setDop] = useState(false);
-  const [glutenConscious, setGluten] = useState(false);
-  const [attendantHours, setAttendantHours] = useState(0);
-  const [pickup, setPickup] = useState<PickupChoice>("next-day");
-  const [rental, setRental] = useState(false);
-  const [bundle, setBundle] = useState(false);
-  const [extra, setExtra] = useState<Record<string, number>>({});
+  const start = initial?.kind === kind ? initial : undefined;
+  const [optionId, setOptionId] = useState(start?.optionId ?? defaultOption ?? options[1].id);
+  const [guests, setGuests] = useState(start?.guests ?? (kind === "wedding" ? 60 : 30));
+  const [date, setDate] = useState(start?.date ?? "");
+  const [zone, setZone] = useState<ZoneId | "beyond" | "">(start?.zone ?? "");
+  const [dopUpgrade, setDop] = useState(start?.dopUpgrade ?? false);
+  const [glutenConscious, setGluten] = useState(start?.glutenConscious ?? false);
+  const [attendantHours, setAttendantHours] = useState(start?.attendantHours ?? 0);
+  const [pickup, setPickup] = useState<PickupChoice>(start?.pickup ?? "next-day");
+  const [rental, setRental] = useState(start?.servingPieceRental ?? false);
+  const [bundle, setBundle] = useState(start?.bundle ?? false);
+  const [extra, setExtra] = useState<Record<string, number>>(
+    Object.fromEntries((start?.addOns ?? []).map((a) => [a.id, a.quantity])),
+  );
   const now = useNow();
   const today = now === undefined ? undefined : businessNow(new Date(now)).date;
   const tracked = useRef(false);
@@ -76,26 +87,20 @@ export function EventEstimator({ kind, defaultOption }: { kind: EventKind; defau
 
   const startPlanning = () => {
     if (!estimate) return;
-    const summary = {
+    // The whole estimate travels in the URL: package, guests, date, zone, options, pickup, attendant hours and add-ons.
+    const params = toEstimateParams({
       kind,
-      option: estimate.optionName,
+      optionId,
       guests,
       date: date || undefined,
       zone: zone || undefined,
-      estimatedTotal: formatCentsExact(estimate.total),
-      retainer: formatCentsExact(estimate.retainer),
-      lines: estimate.lines.map((l) => `${l.label}: ${l.quoted ? "quoted" : formatCents(l.amount)}`),
-    };
-    try {
-      sessionStorage.setItem(ESTIMATE_STORAGE_KEY, JSON.stringify(summary));
-    } catch {
-      /* storage unavailable — the query string still carries the essentials */
-    }
-    const params = new URLSearchParams({
-      type: kind === "wedding" ? "wedding" : "event",
-      service: optionId,
-      guests: String(guests),
-      ...(date ? { date } : {}),
+      dopUpgrade,
+      glutenConscious,
+      attendantHours,
+      pickup,
+      servingPieceRental: rental,
+      bundle,
+      addOns: Object.entries(extra).map(([addOnId, quantity]) => ({ id: addOnId, quantity })),
     });
     if (kind === "wedding") track("wedding_inquiry_started", { source: "estimator", option: optionId });
     router.push(`/inquire?${params.toString()}`);
@@ -241,46 +246,7 @@ export function EventEstimator({ kind, defaultOption }: { kind: EventKind; defau
           <p className="eyebrow text-olive-soft">Your estimate</p>
           {estimate ? (
             <>
-              <p className="mt-3 font-display text-[1.6rem] leading-tight text-olive">
-                {estimate.optionName}, {estimate.guests} guests
-              </p>
-              <ul className="mt-5 flex flex-col divide-y divide-line">
-                {estimate.lines.map((l) => (
-                  <li key={l.id} className="flex items-start justify-between gap-4 py-2.5 text-[0.92rem]">
-                    <span>
-                      {l.label}
-                      {l.detail ? <span className="block text-[0.8rem] text-muted">{l.detail}</span> : null}
-                    </span>
-                    <span className="tabular shrink-0">{l.quoted ? "Quoted" : `${l.amount < 0 ? "−" : ""}${formatCents(Math.abs(l.amount))}`}</span>
-                  </li>
-                ))}
-                <li className="flex justify-between py-2.5 text-[0.92rem] text-muted">
-                  <span>Estimated tax</span>
-                  <span className="tabular">{formatCentsExact(estimate.tax)}</span>
-                </li>
-              </ul>
-              <div className="mt-2 flex items-baseline justify-between border-t border-line-strong pt-4">
-                <span className="label-caps text-olive">Estimated total</span>
-                <span className="price text-[2rem] text-olive tabular">{formatCentsExact(estimate.total)}</span>
-              </div>
-              <p className="mt-2 text-[0.88rem] text-muted">
-                {eventFees.retainerPercent}% nonrefundable retainer to reserve: {formatCentsExact(estimate.retainer)}
-                {estimate.deliveryQuoted ? " (before travel is quoted)" : ""}.
-              </p>
-              {[...estimate.warnings, ...estimate.notes].length ? (
-                <ul className="mt-4 flex flex-col gap-2 text-[0.85rem]">
-                  {estimate.warnings.map((w) => (
-                    <li key={w} className="flex gap-2 text-fig">
-                      <IconInfo size={16} className="mt-0.5 shrink-0" /> {w}
-                    </li>
-                  ))}
-                  {estimate.notes.map((n) => (
-                    <li key={n} className="flex gap-2 text-muted">
-                      <IconInfo size={16} className="mt-0.5 shrink-0 text-olive" /> {n}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+              <EstimateSummary estimate={estimate} />
               <Button size="lg" className="mt-6 w-full" onClick={startPlanning}>
                 Start planning with this estimate
               </Button>
@@ -296,4 +262,11 @@ export function EventEstimator({ kind, defaultOption }: { kind: EventKind; defau
       </div>
     </div>
   );
+}
+
+/** Estimator that restores its state from the URL (used for "Edit estimate" links). Render inside <Suspense>. */
+export function EventEstimatorFromUrl({ kind }: { kind: EventKind }) {
+  const params = useSearchParams();
+  const initial = useMemo(() => fromEstimateParams(params), [params]);
+  return <EventEstimator kind={kind} initial={initial} key={params.toString()} />;
 }

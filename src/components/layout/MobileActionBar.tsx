@@ -12,7 +12,10 @@ export function MobileActionBar() {
   const pathname = usePathname();
   if (HIDDEN_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return null;
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-cream/95 px-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-md md:hidden">
+    <nav
+      aria-label="Quick actions"
+      className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-cream/95 px-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-md md:hidden"
+    >
       <div className="grid grid-cols-2 gap-2">
         <ButtonLink href={navigation.actions.order.href} variant="secondary" size="md" className="px-3 text-[0.66rem]">
           {navigation.actions.order.label}
@@ -21,6 +24,6 @@ export function MobileActionBar() {
           {navigation.actions.plan.label}
         </ButtonLink>
       </div>
-    </div>
+    </nav>
   );
 }

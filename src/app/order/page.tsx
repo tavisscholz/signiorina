@@ -28,7 +28,7 @@ export default function OrderPage() {
     <>
       <section className="container-page pb-10 pt-12 md:pt-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-          <Reveal className="lg:col-span-7">
+          <div className="hero-enter lg:col-span-7">
             <p className="eyebrow flex items-center gap-3 text-olive-soft">
               <span aria-hidden="true" className="h-px w-8 bg-olive/40" />
               Order online
@@ -39,8 +39,8 @@ export default function OrderPage() {
             <p className="lede mt-6 max-w-xl text-muted">
               Boxes, boards and lunches at fixed prices, delivered in a window you choose. Every fee is shown before you pay.
             </p>
-          </Reveal>
-          <Reveal delay={120} className="lg:col-span-5">
+          </div>
+          <div className="hero-enter lg:col-span-5" style={{ ["--hero-delay" as string]: "120ms" }}>
             <div className="grid gap-px overflow-hidden rounded-[1.5rem] border border-line bg-line sm:grid-cols-2">
               <div className="bg-paper p-5">
                 <p className="label-caps text-[0.66rem] text-olive">Order online</p>
@@ -59,7 +59,7 @@ export default function OrderPage() {
                 </p>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
 
         <ul className="mt-10 grid gap-4 border-y border-line py-5 text-[0.9rem] text-muted md:grid-cols-3">

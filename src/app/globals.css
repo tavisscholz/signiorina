@@ -314,6 +314,39 @@
     animation: rise-in 0.6s var(--ease-soft) both;
   }
 
+  /*
+   * Above-the-fold entrances. CSS-only and transform-only: hero content is fully
+   * visible from the first frame, with or without JavaScript, and never waits on
+   * an observer. Reveal-on-scroll is reserved for content below the fold.
+   */
+  @keyframes hero-lift {
+    from {
+      transform: translate3d(0, 14px, 0);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes hero-settle {
+    from {
+      transform: scale(1.035);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .hero-enter {
+    animation: hero-lift 0.9s var(--ease-soft) both;
+    animation-delay: var(--hero-delay, 0ms);
+  }
+
+  .hero-settle {
+    animation: hero-settle 1.4s var(--ease-soft) both;
+    animation-delay: var(--hero-delay, 0ms);
+  }
+
   @keyframes pop {
     0% {
       transform: scale(1);

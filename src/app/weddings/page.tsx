@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 
 import { Photo } from "@/components/brand/Photo";
 import { SectionHeading } from "@/components/brand/SectionHeading";
 import { ProductCard } from "@/components/commerce/ProductCard";
-import { EventEstimator } from "@/components/events/EventEstimator";
+import { EventEstimator, EventEstimatorFromUrl } from "@/components/events/EventEstimator";
 import { WeddingPackageCard } from "@/components/events/WeddingPackageCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { FaqList } from "@/components/sections/FaqList";
@@ -157,14 +158,17 @@ export default function WeddingsPage() {
       </section>
 
       {/* Estimator */}
-      <section className="container-page pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="estimate-title">
+      <section id="estimate" className="container-page scroll-mt-24 pb-20 pt-28 md:pb-28 md:pt-36" aria-labelledby="estimate-title">
         <SectionHeading
           eyebrow="Price your table"
           title={<span id="estimate-title">See the whole number.</span>}
           lede="Choose a package, your guest count and where you're celebrating. The estimate updates as you go — minimums, fees, tax and the retainer included."
         />
         <div className="mt-12">
-          <EventEstimator kind="wedding" />
+          {/* Restores a shared or "Edit estimate" link's state from the URL. */}
+          <Suspense fallback={<EventEstimator kind="wedding" />}>
+            <EventEstimatorFromUrl kind="wedding" />
+          </Suspense>
         </div>
       </section>
 

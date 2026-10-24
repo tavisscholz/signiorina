@@ -63,7 +63,8 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         <div className="container-page grid items-center gap-12 pb-16 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-16">
           <div className="lg:col-span-6 xl:col-span-6">
-            <Reveal>
+            {/* Hero content is never hidden behind a scroll/hydration animation (see .hero-enter). */}
+            <div className="hero-enter">
               <p className="eyebrow flex flex-col gap-1 text-olive-soft sm:flex-row sm:items-center sm:gap-3">
                 <span>Modern Aperitivo</span>
                 <span aria-hidden="true" className="hidden h-px w-6 bg-olive/40 sm:block" />
@@ -91,30 +92,31 @@ export default function HomePage() {
                 <span aria-hidden="true">·</span>
                 <span>Every fee shown up front</span>
               </p>
-            </Reveal>
+            </div>
           </div>
 
           <div className="relative lg:col-span-6 xl:col-span-6">
             <div className="relative mx-auto aspect-[5/6] w-full max-w-[36rem] lg:mr-0">
-              <Reveal variant="oval" className="absolute right-0 top-0 h-[92%] w-[74%]">
+              <div className="arch absolute right-0 top-0 h-[92%] w-[74%]">
                 <Photo
                   media="boxForTwo"
                   shape="arch"
                   priority
-                  className="h-full w-full"
+                  className="hero-settle h-full w-full"
                   sizes="(min-width: 1024px) 34vw, 70vw"
                   position="50% 45%"
                 />
-              </Reveal>
-              <Reveal delay={300} className="absolute bottom-0 left-0 w-[44%]">
+              </div>
+              <div className="hero-enter absolute bottom-0 left-0 w-[44%]" style={{ ["--hero-delay" as string]: "200ms" }}>
                 <Photo
                   media="weddingTable"
                   shape="oval"
+                  priority
                   className="aspect-[4/5] w-full border-[7px] border-cream shadow-[var(--shadow-lift)]"
                   sizes="(min-width: 1024px) 18vw, 40vw"
                 />
-              </Reveal>
-              <Reveal delay={500} className="absolute left-[2%] top-[8%] hidden w-[38%] sm:block">
+              </div>
+              <div className="hero-enter absolute left-[2%] top-[8%] hidden w-[38%] sm:block" style={{ ["--hero-delay" as string]: "350ms" }}>
                 <div className="menu-card rotate-[-3deg] rounded-sm px-5 py-6 text-center">
                   <OliveSprig className="mx-auto w-14 text-olive/70" />
                   <p className="eyebrow mt-3 text-[0.6rem] text-olive-soft">Aperitivo</p>
@@ -125,7 +127,7 @@ export default function HomePage() {
                     <li>Something sweet</li>
                   </ul>
                 </div>
-              </Reveal>
+              </div>
             </div>
           </div>
         </div>

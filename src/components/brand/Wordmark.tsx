@@ -18,6 +18,8 @@ export function Wordmark({
       <span className={clsx("font-display uppercase tracking-[0.08em]", text)} style={{ fontVariationSettings: "'opsz' 72" }}>
         Signiorina
       </span>
+      {/* Keeps the accessible text "Signiorina Modern Aperitivo" rather than "SigniorinaModern…". */}
+      {descriptor ? " " : null}
       {descriptor ? (
         <span className={clsx("mt-1.5 text-[0.52rem] font-medium uppercase tracking-[0.42em]", size === "lg" && "text-[0.7rem]")}>
           Modern Aperitivo

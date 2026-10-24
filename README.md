@@ -111,6 +111,8 @@ src/
 - **Cart** persists in `localStorage` (survives navigation and refresh); checkout contact details live in `sessionStorage`. Guest checkout only — no accounts.
 - **Data store**: `src/server/store.ts` is a JSON-file adapter behind a `DataStore` interface. It's right for local development and a single long-running server. **Before deploying to serverless or multiple instances, implement `DataStore` against a database** (e.g. Postgres) — capacity checks need shared bookings, and `exclusive()` should become a transaction or row lock.
 - **Notifications**: inquiries are stored and logged; set `INQUIRY_WEBHOOK_URL` to forward them to email/CRM. Order emails are not sent by this app — Stripe can send receipts.
+- **Estimate hand-off**: the wedding and grazing-table estimators put their full state (package/portion, guests, date, zone, options, pickup, attendant hours, add-ons) in the `/inquire` URL (`src/lib/estimate-params.ts`), so the link survives refresh and can be shared. The inquiry form shows the itemized estimate with an *Edit estimate* link back to the estimator, and the server recomputes the estimate from those inputs before storing it — client totals are never trusted.
+- **Site URL**: `site.url` resolves from `NEXT_PUBLIC_SITE_URL`, then Vercel's production domain (`VERCEL_PROJECT_PRODUCTION_URL`), then the deployment URL, then localhost.
 - **Analytics**: `src/lib/analytics.ts` pushes privacy-safe events (no personal data) to `window.dataLayer` if a tag manager is present: view_product, add_to_cart, remove_from_cart, begin_checkout, select_delivery_date, select_delivery_window, delivery_zone_validated, purchase, wedding_inquiry_started, wedding_inquiry_submitted, corporate_inquiry_submitted, inquiry_submitted, event_estimate_used.
 
 ---
@@ -131,7 +133,7 @@ Defined in `src/app/globals.css` (`@theme`) and the brand components.
 - **Type:** Bodoni Moda (high-contrast editorial display, with italic accents) + Jost (clean sans for UI and body).
 - **Geometry:** ovals and arches from shared platters — photo crops, price ovals, the platter-rim section edges, the oval CTA card, oval calendar days. Used deliberately, not everywhere.
 - **Materials:** subtle paper grain, deckle-style menu cards, hand-drawn olive sprig used sparingly.
-- **Motion:** fade/rise and oval-mask reveals, cart drawer slide, add-to-cart confirmation. Everything is disabled under `prefers-reduced-motion`, and content is visible without JavaScript.
+- **Motion:** fade/rise and oval-mask reveals, cart drawer slide, add-to-cart confirmation. Everything is disabled under `prefers-reduced-motion`, and content is visible without JavaScript. Above-the-fold hero content uses a CSS-only, transform-only entrance (`.hero-enter` / `.hero-settle`), so it's fully visible from the first frame; scroll reveals are reserved for content below the fold.
 
 ---
 
@@ -139,13 +141,14 @@ Defined in `src/app/globals.css` (`@theme`) and the brand components.
 
 - Unique titles and descriptions per page (weddings, corporate, cabin delivery, order online, gatherings, every product, local area pages).
 - JSON-LD: Organization, LocalBusiness (service-area: cities served, **no address, hours, ratings or reviews until supplied**), Service, Product, FAQPage, BreadcrumbList.
-- Local landing pages for Gatlinburg, Pigeon Forge, Sevierville, Wears Valley and Knoxville (`/areas/*`), a published fees page (`/delivery`), `sitemap.xml`, `robots.txt` and a branded share image.
+- Local landing pages for Gatlinburg, Pigeon Forge, Sevierville, Wears Valley and Knoxville (`/areas/*`), a published fees page (`/delivery`), `sitemap.xml`, `robots.txt` and a branded share image on every page (product pages use the product photo).
+- Canonicals, `og:url`, `og:image`, the sitemap and the robots sitemap line all use the production origin (see *Site URL* above).
 
 ---
 
 ## Quality checks run
 
-- 37 unit tests (lead-time cutoffs, holidays, minimums, volume pricing, zone fees, route days, rush and holiday fees, tax, capacity, Saturday/Sunday rules, event minimums, bundles, retainers).
+- 43 unit tests (lead-time cutoffs, holidays, minimums, volume pricing, zone fees, route days, rush and holiday fees, tax, capacity, Saturday/Sunday rules, event minimums, bundles, retainers, estimate URL round trips and tamper rejection).
 - TypeScript and ESLint clean; production build passes.
 - axe-core accessibility audit (WCAG 2.1 AA): no violations on any page, the cart drawer, scheduler, details step or inquiry form.
 - End-to-end walkthroughs at desktop and phone width: product → cart → address → date → window → details → payment → confirmation; out-of-area, wrong ZIP, off-route metro day, sold-out date, sold-out window, event-blocked window, severe-allergy gate, inquiry validation and estimate hand-off. Keyboard navigation in the date picker (arrows, Page Up/Down).

@@ -9,6 +9,17 @@ import type { Product } from "@/lib/types";
  * no address, hours, ratings, reviews or permits until the owner supplies them.
  */
 
+/**
+ * The site-wide share card (src/app/opengraph-image.jpg). A page that sets its own `openGraph`
+ * replaces the root one entirely, so pages without a specific image fall back to this explicitly.
+ */
+const defaultShareImage = {
+  url: "/opengraph-image.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Signiorina — modern Italian-inspired charcuterie and hospitality in the Smokies",
+};
+
 export function pageMetadata({
   title,
   description,
@@ -31,9 +42,9 @@ export function pageMetadata({
       siteName: site.name,
       type: "website",
       locale: "en_US",
-      ...(image ? { images: [{ url: image }] } : {}),
+      images: [image ? { url: image } : defaultShareImage],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description, images: [image ?? defaultShareImage.url] },
   };
 }
 

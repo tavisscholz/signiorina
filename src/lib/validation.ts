@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getProduct } from "@/config/catalog";
 import { getArea } from "@/config/delivery";
 import { isISODate } from "@/lib/dates";
+import { estimateStateSchema } from "@/lib/estimate-params";
 import type { CabinDetails, CartLine, CheckoutDetails, DeliverySelection } from "@/lib/types";
 
 /** Feature flag: pre-arrival refrigerator handoff via property managers (pending insurer confirmation). */
@@ -176,7 +177,8 @@ export const inquirySchema = z.object({
   budgetRange: z.string().trim().max(60).optional(),
   heardAbout: z.string().trim().max(120).optional(),
   message: z.string().trim().min(10, "Tell us a little about the occasion.").max(4000),
-  estimate: z.record(z.string(), z.unknown()).optional(),
+  /** Estimator inputs handed over from /weddings or /gatherings; the server recomputes the estimate. */
+  estimateInput: estimateStateSchema.optional(),
   /** Honeypot — must stay empty. */
   website: z.string().max(0).optional(),
 });

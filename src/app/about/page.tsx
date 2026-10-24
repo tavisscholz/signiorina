@@ -36,7 +36,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="container-page grid items-end gap-10 pb-12 pt-12 md:pt-20 lg:grid-cols-12">
-        <Reveal className="lg:col-span-8">
+        <div className="hero-enter lg:col-span-8">
           <p className="eyebrow flex items-center gap-3 text-olive-soft">
             <span aria-hidden="true" className="h-px w-8 bg-olive/40" />
             About
@@ -44,29 +44,29 @@ export default function AboutPage() {
           <h1 className="display-xl mt-5 text-olive">
             The best part is usually <span className="accent">around the table.</span>
           </h1>
-        </Reveal>
-        <Reveal delay={150} className="lg:col-span-4">
+        </div>
+        <div className="hero-enter lg:col-span-4" style={{ ["--hero-delay" as string]: "150ms" }}>
           <p className="lede text-muted">
             Signiorina is modern Italian-inspired hospitality made mobile — generous, polished, social food that makes any
             gathering feel beautifully hosted.
           </p>
-        </Reveal>
+        </div>
       </section>
 
       <section className="container-page" aria-hidden="true">
         <div className="grid grid-cols-12 gap-3 md:gap-5">
-          <Reveal variant="oval" className="col-span-7 md:col-span-5">
+          <div className="hero-enter col-span-7 md:col-span-5">
             <Photo media="abundantBoard" shape="rounded" className="aspect-[4/3] w-full" sizes="40vw" alt="" />
-          </Reveal>
-          <Reveal delay={100} className="col-span-5 md:col-span-3">
+          </div>
+          <div className="hero-enter col-span-5 md:col-span-3" style={{ ["--hero-delay" as string]: "100ms" }}>
             <Photo media="figsProsciutto" shape="arch" className="aspect-[3/4] w-full" sizes="25vw" alt="" />
-          </Reveal>
-          <Reveal delay={200} className="col-span-6 md:col-span-2 md:mt-16">
+          </div>
+          <div className="hero-enter col-span-6 md:col-span-2 md:mt-16" style={{ ["--hero-delay" as string]: "200ms" }}>
             <Photo media="waxSeal" shape="oval" className="aspect-square w-full" sizes="18vw" alt="" />
-          </Reveal>
-          <Reveal delay={300} className="col-span-6 md:col-span-2">
+          </div>
+          <div className="hero-enter col-span-6 md:col-span-2" style={{ ["--hero-delay" as string]: "300ms" }}>
             <Photo media="apron" shape="rounded" className="aspect-[3/4] w-full" sizes="18vw" alt="" />
-          </Reveal>
+          </div>
         </div>
       </section>
 
