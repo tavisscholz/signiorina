@@ -425,6 +425,41 @@ export const products: Product[] = [
     },
   },
   {
+    id: "vendor-gift-box",
+    slug: "vendor-gift-box",
+    name: "Vendor Gift Box",
+    status: "active",
+    categories: ["wedding-weekend", "gifts"],
+    price: 45,
+    priceUnit: "each",
+    volumePricing: [{ minQuantity: 10, unitPrice: 39 }],
+    serves: "Serves 1–2",
+    tagline: "A thank-you for everyone who made the day.",
+    description: [
+      "A smaller, pantry-only version of our Signiorina Gift Box — crackers, jam, biscotti and olives, with no meat or cheese, so it can wait at the venue until your planner, photographer and the rest of your team head home.",
+      "Ordering ten or more? They're $39 each.",
+    ],
+    contents: ["Crackers", "Jam", "Biscotti", "Olives"],
+    useCases: ["Wedding team thank-you", "Planner + coordinator", "Photographer + videographer", "Hair + makeup"],
+    leadTimeDays: 3,
+    allowRush: false,
+    // Two boxes clear the online delivery minimum; one can ride along with a bigger order.
+    deliveryBundle: { quantity: 2, waivedAtSubtotal: 55 },
+    perishable: false,
+    dietaryOptions: ["gluten-conscious", "nut-free"],
+    glutenConsciousFee: 5,
+    addOnIds: ["personalized-note"],
+    quantityLabel: "Boxes",
+    maxQuantity: 40,
+    images: ["giftBoxes", "waxSeal"],
+    alternatives: ["gift-box", "pantry-welcome-box"],
+    seo: {
+      title: "Vendor Gift Box — Wedding Team Thank-You Gifts, Smoky Mountains",
+      description:
+        "A smaller, shelf-stable Signiorina gift box to thank your wedding team. $45, or $39 each for 10+.",
+    },
+  },
+  {
     id: "pranzo-lunch-box",
     slug: "pranzo-lunch-box",
     name: "Pranzo Lunch Box",
@@ -574,7 +609,7 @@ export const products: Product[] = [
     shortName: "Guest Welcome Box",
     status: "active",
     categories: ["wedding-weekend", "gifts"],
-    price: 20,
+    price: 24,
     priceUnit: "each",
     serves: "Serves 1 · per guest",
     tagline: "An aperitivo waiting in every guest's room.",
@@ -603,7 +638,7 @@ export const products: Product[] = [
     alternatives: ["pantry-welcome-box"],
     seo: {
       title: "Fresh Guest Welcome Boxes — Smoky Mountain Wedding Guest Boxes",
-      description: "Aperitivo-style welcome boxes tagged with your names. $20 each, 12-box minimum, order 21 days ahead.",
+      description: "Aperitivo-style welcome boxes tagged with your names. $24 each, 12-box minimum, order 21 days ahead.",
     },
   },
   {
@@ -614,7 +649,7 @@ export const products: Product[] = [
     shortName: "Guest Welcome Box",
     status: "active",
     categories: ["wedding-weekend", "gifts"],
-    price: 16,
+    price: 20,
     priceUnit: "each",
     serves: "Serves 1 · per guest",
     tagline: "Shelf-stable, so it can wait in the room.",
@@ -642,7 +677,7 @@ export const products: Product[] = [
     alternatives: ["wedding-welcome-box"],
     seo: {
       title: "Pantry Guest Welcome Boxes — Shelf-Stable Wedding Guest Boxes",
-      description: "Shelf-stable welcome boxes with taralli, biscotti, olives and jam. $16 each, 12-box minimum.",
+      description: "Shelf-stable welcome boxes with taralli, biscotti, olives and jam. $20 each, 12-box minimum.",
     },
   },
 ];

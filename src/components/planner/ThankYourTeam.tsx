@@ -9,23 +9,25 @@ import { IconCheck } from "@/components/ui/Icons";
 import { getProduct } from "@/config/catalog";
 import { track } from "@/lib/analytics";
 import { useCart } from "@/lib/cart-store";
+import { quickAddQuantity } from "@/lib/format";
 import { formatDollars } from "@/lib/money";
 
 /**
- * Near the end of Build Your Table: gift boxes for the wedding team. They're an ordinary cart
- * order (checked out separately from the proposal), so the button adds one and opens the cart,
- * where the quantity can change.
+ * Near the end of Build Your Table: Vendor Gift Boxes for the wedding team. They're an ordinary
+ * cart order (checked out separately from the proposal), so the button adds the smallest
+ * deliverable set and opens the cart, where the quantity can change.
  */
 export function ThankYourTeam() {
-  const gift = getProduct("gift-box")!;
+  const gift = getProduct("vendor-gift-box")!;
   const volume = gift.volumePricing?.[0];
   const addLine = useCart((s) => s.addLine);
   const openDrawer = useCart((s) => s.openDrawer);
   const [added, setAdded] = useState(false);
 
   const add = () => {
-    addLine({ productId: gift.id, quantity: 1, dietary: [], addOns: [] });
-    track("add_to_cart", { product_id: gift.id, quantity: 1, source: "wedding-builder" });
+    const quantity = quickAddQuantity(gift);
+    addLine({ productId: gift.id, quantity, dietary: [], addOns: [] });
+    track("add_to_cart", { product_id: gift.id, quantity, source: "wedding-builder" });
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
     openDrawer();

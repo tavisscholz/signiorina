@@ -66,9 +66,21 @@ describe("priceCart — items and minimums", () => {
     expect(spread.itemsSubtotal).toBe(36000 + 2000);
   });
 
+  it("prices Vendor Gift Boxes at $45, $39 at 10+, delivered in twos", () => {
+    expect(issueCodes(priceCart({ lines: [line("vendor-gift-box", 1)] }))).toContain("delivery-bundle");
+    const two = priceCart({ lines: [line("vendor-gift-box", 2)] });
+    expect(two.merchandiseSubtotal).toBe(2 * 4500);
+    expect(two.canCheckout).toBe(true);
+    expect(priceCart({ lines: [line("vendor-gift-box", 10)] }).merchandiseSubtotal).toBe(10 * 3900);
+    expect(priceCart({ lines: [line("vendor-gift-box", 1), line("box-for-two", 1)] }).canCheckout).toBe(true);
+  });
+
   it("requires personalization on welcome boxes", () => {
     expect(issueCodes(priceCart({ lines: [line("wedding-welcome-box", 12)] }))).toContain("personalization-required");
-    expect(priceCart({ lines: [line("wedding-welcome-box", 12, { personalization: "Lucia + Ben" })] }).canCheckout).toBe(true);
+    const tagged = priceCart({ lines: [line("wedding-welcome-box", 12, { personalization: "Lucia + Ben" })] });
+    expect(tagged.canCheckout).toBe(true);
+    expect(tagged.merchandiseSubtotal).toBe(12 * 2400);
+    expect(priceCart({ lines: [line("pantry-welcome-box", 12, { personalization: "Lucia + Ben" })] }).merchandiseSubtotal).toBe(12 * 2000);
   });
 
   it("includes the personalized note free and needs its message before checkout", () => {
