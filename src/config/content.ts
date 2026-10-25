@@ -13,6 +13,8 @@ export interface FaqItem {
   id: string;
   question: string;
   answer: string;
+  /** Optional list shown above `answer`, e.g. lead times ("48 hours: …"). */
+  points?: Array<{ lead: string; text: string }>;
   clientInput?: boolean;
 }
 
@@ -64,7 +66,15 @@ export const faqSections: FaqSection[] = [
       {
         id: "notice",
         question: "How much notice do you need?",
-        answer: `Boxes and boards need 48 hours — order by noon two days before delivery. The Cabin Welcome Box, Large Gathering Board and Gift Boxes need 72 hours. Corporate lunches need 48 hours. Styled grazing tables need ${grazingTables.leadTimeDays} days. Weddings book ${weddingRules.bookingLeadDays}+ days ahead with a final guest count ${weddingRules.finalCountDays} days before. Bridal Suite and Groom's Room Boards need 14 days, and Guest Welcome Boxes need 21.`,
+        points: [
+          { lead: "48 hours", text: "Most boxes & boards (order by noon two days before delivery), plus corporate lunches." },
+          { lead: "72 hours", text: "Cabin Welcome Box, Large Gathering Board & Gift Boxes." },
+          { lead: `${grazingTables.leadTimeDays} days`, text: "Styled grazing tables." },
+          { lead: "14 days", text: "Bridal Suite & Groom’s Room Boards." },
+          { lead: "21 days", text: "Guest Welcome Boxes." },
+          { lead: `${weddingRules.bookingLeadDays}+ days`, text: "Weddings." },
+        ],
+        answer: `Wedding guest counts are due ${weddingRules.finalCountDays} days before the event.`,
       },
       {
         id: "deliver",

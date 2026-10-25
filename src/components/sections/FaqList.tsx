@@ -25,6 +25,15 @@ export function FaqList({ items, className }: { items: FaqItem[]; className?: st
                 Awaiting owner confirmation
               </Badge>
             ) : null}
+            {item.points ? (
+              <ul className="mb-3 list-disc space-y-1.5 pl-5 marker:text-olive/50">
+                {item.points.map((p) => (
+                  <li key={p.lead}>
+                    <span className="font-medium text-espresso">{p.lead}:</span> {p.text}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <p>{item.answer}</p>
           </div>
         </details>

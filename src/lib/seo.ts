@@ -134,14 +134,17 @@ export function productJsonLd(product: Product, imageUrl?: string) {
   };
 }
 
-export function faqJsonLd(items: Array<{ question: string; answer: string }>) {
+export function faqJsonLd(items: Array<{ question: string; answer: string; points?: Array<{ lead: string; text: string }> }>) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: items.map((i) => ({
       "@type": "Question",
       name: i.question,
-      acceptedAnswer: { "@type": "Answer", text: i.answer },
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: [...(i.points ?? []).map((p) => `${p.lead}: ${p.text}`), i.answer].join(" "),
+      },
     })),
   };
 }
