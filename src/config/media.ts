@@ -10,6 +10,7 @@ import gatheringBoardLarge from "@/assets/images/gathering-board-large.jpg";
 import gatheringBoardSmall from "@/assets/images/gathering-board-small.jpg";
 import groomsRoom from "@/assets/images/grooms-room.jpg";
 import irina from "@/assets/images/irina.jpg";
+import irinaBoard from "@/assets/images/irina-board.jpg";
 import officeGrazingWide from "@/assets/images/office-grazing-wide.jpg";
 import officeGrazing from "@/assets/images/office-grazing.jpg";
 import pranzoLunchBox from "@/assets/images/pranzo-lunch-box.jpg";
@@ -113,6 +114,12 @@ export const media = {
     alt: "Irina, smiling in a white chef's jacket and olive apron, holding brass cheese knives",
     status: "final",
     shot: "Owner-supplied portrait.",
+  },
+  irinaBoard: {
+    src: irinaBoard,
+    alt: "Chef Irina in a white chef's jacket and olive apron, smiling behind a grazing board of salame, cheeses, figs, grapes and crackers",
+    status: "final",
+    shot: "Owner-supplied portrait at the grazing board.",
   },
   weddingTable: {
     src: vbWeddingTable,

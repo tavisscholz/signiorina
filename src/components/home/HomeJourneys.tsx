@@ -216,11 +216,11 @@ export function HomeJourneys() {
         <div className="container-page grid items-center gap-12 py-20 md:py-28 lg:grid-cols-12 lg:gap-16">
           <Reveal variant="oval" className="lg:col-span-5">
             <Photo
-              media="irina"
+              media="irinaBoard"
               shape="oval"
               className="mx-auto aspect-[4/5] w-full max-w-[24rem]"
               sizes="(min-width: 1024px) 30vw, 80vw"
-              position="50% 30%"
+              position="50% 40%"
             />
           </Reveal>
           <Reveal delay={120} className="lg:col-span-7">
