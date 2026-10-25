@@ -105,7 +105,7 @@ export function HomeJourneys() {
                   A table worth <span className="accent">gathering</span> around.
                 </span>
               }
-              lede={`Styled grazing for Smoky Mountain weddings of ${weddingRules.focusGuestRange}, from cocktail hour to the whole reception. Start from a favorite or build your own, and watch the estimate as you go.`}
+              lede={`Styled grazing for Smoky Mountain weddings of ${weddingRules.focusGuestRange}, from cocktail hour to the whole reception. Start from a favorite or build your own.`}
             />
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/weddings/build" variant="light" size="lg">
