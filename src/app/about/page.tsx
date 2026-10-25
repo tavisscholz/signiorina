@@ -20,8 +20,9 @@ const smallButton = "min-h-9 px-[1.125rem] text-[0.6rem]";
 export default function AboutPage() {
   return (
     <>
-      <section className="container-page grid items-center gap-10 pb-16 pt-12 md:pt-20 lg:grid-cols-12 lg:gap-16">
-        <div className="hero-enter lg:col-span-5">
+      <section className="container-page grid items-start gap-10 pb-16 pt-12 md:pt-20 lg:grid-cols-12 lg:gap-16">
+        {/* On wide screens the oval stays in view while the bio scrolls. */}
+        <div className="hero-enter lg:sticky lg:top-32 lg:col-span-5">
           <Photo
             media="irina"
             shape="oval"
@@ -56,11 +57,11 @@ export default function AboutPage() {
           <p className="mt-10 text-[1.05rem] text-muted">We&apos;d love to feed your next gathering.</p>
           {/* A quarter smaller than the standard buttons. */}
           <div className="mt-5 flex flex-wrap gap-2.5">
-            <ButtonLink href={routes.weddingPlanner} className={smallButton}>
-              {routeLabels.weddingPlanner}
+            <ButtonLink href={routes.weddings} className={smallButton}>
+              Weddings
             </ButtonLink>
             <ButtonLink href={routes.events} variant="secondary" className={smallButton}>
-              Explore Packages
+              Events
             </ButtonLink>
             <ButtonLink href={routes.store} variant="secondary" className={smallButton}>
               {routeLabels.store}
