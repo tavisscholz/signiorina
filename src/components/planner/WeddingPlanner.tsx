@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import { PlannerShell } from "@/components/planner/PlannerShell";
 import { DetailsFields, OptionCards, UpgradeFields } from "@/components/planner/PlannerFields";
 import { CrossSell, PlannerSummary, RequestStep, ReviewBlocks } from "@/components/planner/PlannerParts";
+import { ThankYourTeam } from "@/components/planner/ThankYourTeam";
 import { usePlanner } from "@/components/planner/usePlanner";
 import { Button } from "@/components/ui/Button";
 import { IconInfo } from "@/components/ui/Icons";
@@ -240,14 +241,17 @@ export function WeddingPlanner() {
         ) : null}
 
         {state.step === 4 && pkg ? (
-          <ReviewBlocks
-            planner={planner}
-            title={preset?.name ?? pkg.name}
-            line={[preset ? `Built on ${pkg.name}` : pkg.line, moment ? `for the ${moment.label.toLowerCase()}` : ""].filter(Boolean).join(", ")}
-            includes={pkg.includes}
-            detailsStep={2}
-            customizeStep={3}
-          />
+          <>
+            <ReviewBlocks
+              planner={planner}
+              title={preset?.name ?? pkg.name}
+              line={[preset ? `Built on ${pkg.name}` : pkg.line, moment ? `for the ${moment.label.toLowerCase()}` : ""].filter(Boolean).join(", ")}
+              includes={pkg.includes}
+              detailsStep={2}
+              customizeStep={3}
+            />
+            <ThankYourTeam />
+          </>
         ) : null}
 
         {state.step === 5 && pkg ? (

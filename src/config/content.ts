@@ -44,6 +44,12 @@ export const faqSections: FaqSection[] = [
           "Modern Italian-inspired hospitality made mobile — generous, polished, social food that makes any gathering feel beautifully hosted. We serve the Smokies, and we'd love to feed your next gathering. The best part is usually around the table.",
       },
       {
+        id: "name",
+        question: "Is Signiorina misspelled?",
+        answer:
+          "On purpose! We tucked a little Irina into signorina—a nod to our chef and the Italian inspiration behind our food.",
+      },
+      {
         id: "aperitivo",
         question: "What does “modern aperitivo” mean?",
         answer:
