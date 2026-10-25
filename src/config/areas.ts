@@ -1,3 +1,5 @@
+import { pausedAreaIds } from "@/config/delivery";
+
 /**
  * Local landing pages. Each has unique, useful copy — no keyword stuffing.
  * Area facts (zone, fees, ZIPs) come from the delivery config.
@@ -14,7 +16,7 @@ export interface AreaPage {
   media: string;
 }
 
-export const areaPages: AreaPage[] = [
+const allAreaPages: AreaPage[] = [
   {
     slug: "gatlinburg",
     areaId: "gatlinburg",
@@ -84,6 +86,9 @@ export const areaPages: AreaPage[] = [
     media: "officeGrazing",
   },
 ];
+
+/** Pages for paused delivery areas (see pausedAreaIds) are hidden until those areas return. */
+export const areaPages: AreaPage[] = allAreaPages.filter((a) => !pausedAreaIds.includes(a.areaId));
 
 export function getAreaPage(slug: string): AreaPage | undefined {
   return areaPages.find((a) => a.slug === slug);

@@ -44,7 +44,7 @@ export const faqSections: FaqSection[] = [
         id: "what-is",
         question: "What is Signiorina?",
         answer:
-          "Modern Italian-inspired hospitality made mobile — generous, polished, social food that makes any gathering feel beautifully hosted. We serve the Smokies and Knoxville, and we'd love to feed your next gathering. The best part is usually around the table.",
+          "Modern Italian-inspired hospitality made mobile — generous, polished, social food that makes any gathering feel beautifully hosted. We serve the Smokies, and we'd love to feed your next gathering. The best part is usually around the table.",
       },
       {
         id: "aperitivo",
@@ -71,7 +71,7 @@ export const faqSections: FaqSection[] = [
       {
         id: "where",
         question: "Where do you deliver?",
-        answer: `${zoneA.label}: ${zoneA.description} ${formatDollars(zoneA.fee)}, free over ${formatDollars(zoneA.freeDeliveryAt!)}. ${zoneB.label}: ${zoneB.description} ${formatDollars(zoneB.fee)}, free over ${formatDollars(zoneB.freeDeliveryAt!)}. ${zoneC.label}: ${zoneC.description} ${formatDollars(zoneC.fee)}, or ${formatDollars(zoneC.routeDays!.fee)} on our Tuesday and Thursday Knoxville route days. Beyond that, we travel for events by quote.`,
+        answer: `${zoneA.label}: ${zoneA.description} ${formatDollars(zoneA.fee)}, free over ${formatDollars(zoneA.freeDeliveryAt!)}. ${zoneB.label}: ${zoneB.description} ${formatDollars(zoneB.fee)}, free over ${formatDollars(zoneB.freeDeliveryAt!)}. ${zoneC.label}: ${zoneC.description} ${formatDollars(zoneC.fee)}, or ${formatDollars(zoneC.routeDays!.fee)} on our Tuesday and Thursday route days. Beyond that, we travel for events by quote.`,
       },
       {
         id: "prices",
@@ -204,11 +204,6 @@ export const faqSections: FaqSection[] = [
     id: "corporate",
     title: "Corporate",
     items: [
-      {
-        id: "knoxville",
-        question: "Do you deliver to Knoxville?",
-        answer: `Yes. Our Knoxville route runs Tuesdays and Thursdays: delivery is ${formatDollars(zoneC.routeDays!.fee)}, and corporate orders over ${formatDollars(zoneC.routeDays!.corporateFreeDeliveryAt)} ship free on route days. Other days are ${formatDollars(zoneC.fee)} for orders over ${formatDollars(zoneC.offRouteMinimumSubtotal!)}.`,
-      },
       {
         id: "recurring",
         question: "Do you offer recurring lunches?",

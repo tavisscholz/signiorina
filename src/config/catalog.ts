@@ -207,9 +207,9 @@ export const products: Product[] = [
     alternatives: ["box-for-two", "pranzo-lunch-box"],
     notes: ["Delivered in sets of 4 or more — or add any number to an order over $55."],
     seo: {
-      title: "Aperitivo Box — Individual Charcuterie Box, Sevierville & Knoxville",
+      title: "Aperitivo Box — Individual Charcuterie Box, Sevierville & Pigeon Forge",
       description:
-        "An Italian-inspired charcuterie box for one: prosciutto, salame, parmigiano, olives, fruit and dolce. $18, delivered across the Smokies and Knoxville.",
+        "An Italian-inspired charcuterie box for one: prosciutto, salame, parmigiano, olives, fruit and dolce. $18, delivered across the Smokies.",
     },
   },
   {
@@ -419,7 +419,7 @@ export const products: Product[] = [
     alternatives: ["box-for-two", "aperitivo-box"],
     notes: ["Sending boxes to more than one address? Send us an inquiry and we'll quote the batch delivery."],
     seo: {
-      title: "Signiorina Gift Box — Realtor Closing & Client Gifts, Knoxville & Sevier County",
+      title: "Signiorina Gift Box — Realtor Closing & Client Gifts, Sevier County",
       description:
         "An Italian-inspired gift box with meats, cheeses and pantry favorites. $85, or $79 each for 10+. Delivered across East Tennessee.",
     },
@@ -465,9 +465,9 @@ export const products: Product[] = [
     images: ["pranzoLunchBox", "officeGathering"],
     alternatives: ["aperitivo-box", "office-grazing-spread"],
     seo: {
-      title: "Pranzo Lunch Box — Corporate Boxed Lunch Catering, Knoxville & Sevierville",
+      title: "Pranzo Lunch Box — Corporate Boxed Lunch Catering, Sevierville & Pigeon Forge",
       description:
-        "Italian-inspired boxed lunches for the office: focaccia panino, antipasti, parmigiano and fruit. $22 each, 10-box minimum, Tue/Thu Knoxville route days.",
+        "Italian-inspired boxed lunches for the office: focaccia panino, antipasti, parmigiano and fruit. $22 each, 10-box minimum.",
     },
   },
   {
@@ -500,7 +500,7 @@ export const products: Product[] = [
     images: ["officeGrazing", "officeGrazingWide"],
     alternatives: ["pranzo-lunch-box", "gathering-board-large"],
     seo: {
-      title: "Office Grazing Spread — Corporate Charcuterie Catering, Knoxville",
+      title: "Office Grazing Spread — Corporate Charcuterie Catering, Sevier County",
       description:
         "A drop-off Italian-inspired grazing spread for meetings and office celebrations. $18 per person, 15-guest minimum.",
     },

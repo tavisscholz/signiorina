@@ -22,7 +22,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Signiorina — Modern Italian-Inspired Charcuterie + Hospitality in the Smokies",
   description:
-    "Modern Italian-inspired grazing for Smoky Mountain weddings, cabin weekends, office lunches and tables worth gathering around. Published prices, delivery across Sevierville, Pigeon Forge, Gatlinburg and Knoxville.",
+    "Modern Italian-inspired grazing for Smoky Mountain weddings, cabin weekends, office lunches and tables worth gathering around. Published prices, delivery across Sevierville, Pigeon Forge and Gatlinburg.",
   path: "/",
 });
 
@@ -46,7 +46,7 @@ const pathways = [
   {
     eyebrow: "Corporate",
     title: "Office food without the office-food feeling.",
-    body: "Pranzo lunch boxes, grazing spreads for the conference room and a standing lunch program on Knoxville route days.",
+    body: "Pranzo lunch boxes, grazing spreads for the conference room and a standing lunch program for teams who order often.",
     href: "/corporate",
     cta: "Explore corporate",
     media: "pranzoLunchBox",
@@ -364,7 +364,7 @@ function ClassicHome() {
                   Corporate catering without the <span className="accent">corporate catering</span> energy.
                 </span>
               }
-              lede="Lunch your team actually looks forward to, delivered on schedule — with Tuesday and Thursday route days for Knoxville offices."
+              lede="Lunch your team actually looks forward to, delivered on schedule — with a standing lunch program for teams who order often."
             />
             <ButtonLink href="/corporate" className="mt-9" size="lg">
               Corporate ordering

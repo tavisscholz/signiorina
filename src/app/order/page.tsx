@@ -12,7 +12,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Order Online — Charcuterie Boxes, Boards + Lunch Delivery",
   description:
-    "Order Italian-inspired charcuterie boxes, boards, cabin welcome boxes, gift boxes and office lunches online. Fixed prices and delivery across Sevierville, Pigeon Forge, Gatlinburg and Knoxville.",
+    "Order Italian-inspired charcuterie boxes, boards, cabin welcome boxes, gift boxes and office lunches online. Fixed prices and delivery across Sevierville, Pigeon Forge and Gatlinburg.",
   path: "/order",
 });
 

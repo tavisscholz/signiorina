@@ -173,7 +173,7 @@ export function estimateEvent(input: EventEstimateInput): EventEstimate | null {
     deliveryQuoted = true;
     lines.push({
       id: "delivery",
-      label: "Travel beyond our metro zone",
+      label: "Travel beyond our delivery zones",
       detail: `${formatDollars(getZone("C").fee)} + ${formatDollars(beyondZoneC.perMileRoundTrip)}/mile round trip beyond the zone — quoted`,
       amount: toCents(getZone("C").fee),
       kind: "delivery",

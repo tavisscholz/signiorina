@@ -112,17 +112,17 @@ describe("priceCart — delivery, fees and tax", () => {
     expect(b3.delivery.fee).toBe(0);
   });
 
-  it("uses Knoxville route pricing on Tuesday/Thursday and blocks small off-route stops", () => {
-    const route = at({ areaId: "knoxville", date: "2026-11-10", windowId: "midday" }, [line("box-for-two", 1)]);
+  it("uses Zone C route pricing on Tuesday/Thursday and blocks small off-route stops", () => {
+    const route = at({ areaId: "newport", date: "2026-11-10", windowId: "midday" }, [line("box-for-two", 1)]);
     expect(route.delivery.fee).toBe(2500);
     expect(route.canCheckout).toBe(true);
-    expect(route.taxRate).toBe(0.0925);
+    expect(route.taxRate).toBe(0.0975);
 
-    const offRoute = at({ areaId: "knoxville", date: "2026-11-11", windowId: "midday" }, [line("box-for-two", 1)]);
+    const offRoute = at({ areaId: "newport", date: "2026-11-11", windowId: "midday" }, [line("box-for-two", 1)]);
     expect(offRoute.delivery.fee).toBe(10000);
     expect(issueCodes(offRoute)).toContain("off-route-minimum");
 
-    const corporate = at({ areaId: "knoxville", date: "2026-11-10", windowId: "midday" }, [
+    const corporate = at({ areaId: "newport", date: "2026-11-10", windowId: "midday" }, [
       line("pranzo-lunch-box", 16, { variantId: "classic" }),
     ]);
     expect(corporate.isCorporate).toBe(true);

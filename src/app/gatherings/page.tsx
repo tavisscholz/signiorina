@@ -18,7 +18,7 @@ import { pageMetadata, serviceJsonLd } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Grazing Tables + Charcuterie Boards — Showers, Birthdays + Gatherings in East Tennessee",
   description:
-    "Order a charcuterie board for 6–15 online, or book a styled grazing table for 20+ from $22 per guest. Bridal showers, birthdays, reunions and cabin groups across Sevier County and Knoxville.",
+    "Order a charcuterie board for 6–15 online, or book a styled grazing table for 20+ from $22 per guest. Bridal showers, birthdays, reunions and cabin groups across Sevier County and the Smokies.",
   path: "/gatherings",
 });
 

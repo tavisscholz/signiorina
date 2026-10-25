@@ -16,7 +16,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Everyday — Charcuterie Boxes, Boards + Lunches Delivered",
   description:
-    "Shop Italian-inspired charcuterie boxes, boards, cabin welcome boxes, gift boxes and office lunches. Fixed prices, guest checkout and delivery across Sevierville, Pigeon Forge, Gatlinburg and Knoxville.",
+    "Shop Italian-inspired charcuterie boxes, boards, cabin welcome boxes, gift boxes and office lunches. Fixed prices, guest checkout and delivery across Sevierville, Pigeon Forge and Gatlinburg.",
   path: "/everyday",
 });
 

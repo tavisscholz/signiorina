@@ -253,7 +253,7 @@ export function InquiryForm() {
           {...field("eventLocation")}
           label="Event location"
           required
-          hint="Venue, cabin or town — we serve the Smokies and Knoxville, not inside the national park."
+          hint="Venue, cabin or town — we serve the Smokies, not inside the national park."
           wrapperClassName="sm:col-span-2"
         />
         <TextField {...field("estimatedGuests")} label="Estimated guests" type="number" inputMode="numeric" min={1} optional />

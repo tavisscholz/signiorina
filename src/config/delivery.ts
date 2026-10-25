@@ -32,9 +32,9 @@ export const zones: DeliveryZone[] = [
   },
   {
     id: "C",
-    name: "Metro",
-    label: "Zone C — Metro",
-    description: "Knoxville, Farragut, Maryville and Alcoa, Townsend and Newport.",
+    name: "Newport",
+    label: "Zone C — Newport",
+    description: "Newport, in Cocke County.",
     fee: 100,
     freeDeliveryAt: null,
     routeDays: {
@@ -42,14 +42,14 @@ export const zones: DeliveryZone[] = [
       fee: 25,
       corporateFreeDeliveryAt: 350,
       windows: ["morning", "midday"],
-      label: "Tuesday + Thursday Knoxville route",
+      label: "Tuesday + Thursday route",
     },
-    /** Single off-route metro stops below this subtotal aren't economic, so they aren't offered online. */
+    /** Single off-route Zone C stops below this subtotal aren't economic, so they aren't offered online. */
     offRouteMinimumSubtotal: 350,
   },
 ];
 
-export const deliveryAreas: DeliveryArea[] = [
+const allDeliveryAreas: DeliveryArea[] = [
   { id: "sevierville", name: "Sevierville", city: "Sevierville", county: "Sevier", zone: "A", zips: ["37862", "37864", "37876"], pageSlug: "sevierville" },
   { id: "pigeon-forge", name: "Pigeon Forge", city: "Pigeon Forge", county: "Sevier", zone: "A", zips: ["37863", "37868"], cabinCountry: true, pageSlug: "pigeon-forge" },
   { id: "kodak", name: "Kodak", city: "Kodak", county: "Sevier", zone: "A", zips: ["37764"] },
@@ -74,6 +74,15 @@ export const deliveryAreas: DeliveryArea[] = [
   { id: "newport", name: "Newport", city: "Newport", county: "Cocke", zone: "C", zips: ["37821", "37822"] },
 ];
 
+/**
+ * Paused by the owner (October 2026): not offered at checkout, in the planners or on any page,
+ * and not mentioned anywhere on the site. To bring them back, remove them from this list and
+ * restore Zone C's name/description and the Knoxville copy from the commit that paused them.
+ */
+export const pausedAreaIds: readonly string[] = ["knoxville", "farragut", "maryville-alcoa", "townsend"];
+
+export const deliveryAreas: DeliveryArea[] = allDeliveryAreas.filter((a) => !pausedAreaIds.includes(a.id));
+
 /** Beyond Zone C: events only, quoted manually. Never offered as automatic delivery. */
 export const beyondZoneC = {
   quoteOnly: true,
@@ -96,7 +105,7 @@ export const deliveryWindows: DeliveryWindow[] = [
     start: "11:00",
     end: "12:30",
     display: "11:00 AM–12:30 PM",
-    uses: ["Corporate lunches", "Offices", "Knoxville route days"],
+    uses: ["Corporate lunches", "Offices", "Route days"],
   },
   {
     id: "afternoon",
@@ -142,7 +151,7 @@ export const capacity: CapacityConfig = {
   // an off-route Zone C stop takes the whole window.
   zonePoints: { A: 3, B: 6, C: 12 },
   zonePointsByWindow: { afternoon: { B: 4 } },
-  // Batched Knoxville route stops: ≈ 4 per window.
+  // Batched route-day stops: ≈ 4 per window.
   routeDayZonePoints: { C: 3 },
   // Midday capacity held for corporate orders on route days.
   routeDayCorporateReserve: { midday: 6 },

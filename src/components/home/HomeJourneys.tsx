@@ -226,7 +226,7 @@ export function HomeJourneys() {
           <Reveal delay={120} className="lg:col-span-7">
             <SectionHeading eyebrow="Who we are" title={<span id="meet-irina">Meet Chef Irina.</span>} />
             <p className="mt-6 max-w-xl text-[1.05rem] text-muted">
-              Chef Irina spent fifteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
+              Chef Irina spent eighteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
               cooking starts with paying attention.
             </p>
             <ButtonLink href="/about" variant="text" className="mt-8">

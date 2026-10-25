@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "About Chef Irina",
   description:
-    "Chef Irina spent fifteen years in the kitchens of Baltimore's Little Italy. Meet the chef behind Signiorina's Italian-inspired tables in the Smokies.",
+    "Chef Irina spent eighteen years in the kitchens of Baltimore's Little Italy. Meet the chef behind Signiorina's Italian-inspired tables in the Smokies.",
   path: "/about",
 });
 
@@ -42,7 +42,7 @@ export default function AboutPage() {
           </h1>
           <div className="mt-8 flex max-w-xl flex-col gap-5 text-[1.05rem] leading-relaxed text-espresso/85">
             <p>
-              Chef Irina spent fifteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
+              Chef Irina spent eighteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
               cooking starts with paying attention. She notices what people need, what a dish is missing, and what makes a
               table feel like home.
             </p>

@@ -103,7 +103,7 @@ describe("planner URL state", () => {
       occasion: "birthday",
       guests: 30,
       date: "2027-04-10",
-      area: "knoxville",
+      area: "newport",
       servingPieceRental: true,
       addOns: [{ id: "celebration-pack", quantity: 1 }],
       step: 3,
@@ -162,7 +162,9 @@ describe("estimate hand-off", () => {
 
   it("maps an area to its delivery zone and 'somewhere else' to quoted travel", () => {
     expect(zoneForArea("gatlinburg")).toBe("B");
-    expect(zoneForArea("knoxville")).toBe("C");
+    expect(zoneForArea("newport")).toBe("C");
+    // Paused areas are not offered anywhere.
+    expect(zoneForArea("knoxville")).toBeUndefined();
     expect(zoneForArea("other")).toBe("beyond");
     expect(zoneForArea(undefined)).toBeUndefined();
   });

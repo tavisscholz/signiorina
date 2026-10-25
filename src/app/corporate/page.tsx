@@ -19,9 +19,9 @@ import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { routeLabels, routes } from "@/config/journeys";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Knoxville Corporate Catering — Boxed Lunches + Office Grazing",
+  title: "Corporate Catering — Boxed Lunches + Office Grazing in the Smokies",
   description:
-    "Italian-inspired corporate catering for Knoxville and Sevier County offices: Pranzo Lunch Boxes $22, Office Grazing Spreads $18/guest, gift boxes and a standing lunch program with Tuesday + Thursday route days.",
+    "Italian-inspired corporate catering for Sevier County offices: Pranzo Lunch Boxes $22, Office Grazing Spreads $18/guest, gift boxes and a standing lunch program with Tuesday + Thursday route days.",
   path: "/corporate",
 });
 
@@ -83,7 +83,7 @@ export default function CorporatePage() {
       <JsonLd
         data={serviceJsonLd({
           name: "Corporate catering",
-          description: "Italian-inspired boxed lunches, office grazing spreads and corporate gift boxes for Knoxville and Sevier County.",
+          description: "Italian-inspired boxed lunches, office grazing spreads and corporate gift boxes for Sevier County and the Smokies.",
           path: "/corporate",
           priceFrom: spread.price,
         })}
@@ -97,7 +97,7 @@ export default function CorporatePage() {
             Corporate catering without the <span className="accent">corporate catering</span> energy.
           </>
         }
-        lede={`Pranzo lunch boxes, drop-off grazing spreads and gift boxes for Knoxville and Sevier County offices — with ${routeDayNames()} Knoxville route days and a standing lunch program for teams who order often.`}
+        lede="Pranzo lunch boxes, drop-off grazing spreads and gift boxes for offices across Sevier County and the Smokies — with a standing lunch program for teams who order often."
         actions={
           <>
             <ButtonLink href={`/order/${pranzo.slug}`} size="lg">
@@ -172,10 +172,10 @@ export default function CorporatePage() {
 
       <section className="container-page grid gap-12 pb-20 pt-28 md:pt-36 lg:grid-cols-12" aria-labelledby="route-title">
         <div className="lg:col-span-5">
-          <SectionHeading eyebrow="Knoxville route days" title={<span id="route-title">{routeDayNames("C", false, " & ")}.</span>} size="md" />
+          <SectionHeading eyebrow="Route days" title={<span id="route-title">{routeDayNames("C", false, " & ")}.</span>} size="md" />
           <p className="mt-5 text-muted">
-            Knoxville, Farragut and Maryville/Alcoa offices get our best metro pricing on route days, when we batch deliveries in
-            the morning and midday windows.
+            {zoneC.label} offices get our best pricing on route days, when we batch deliveries in the morning and midday
+            windows.
           </p>
           <PriceOval tone="olive" className="mt-8 px-7 py-5 text-[1.4rem]">
             {formatDollars(route.fee)} route delivery
@@ -192,7 +192,7 @@ export default function CorporatePage() {
               {
                 icon: <IconCalendar size={20} />,
                 title: "Other days",
-                body: `${formatDollars(zoneC.fee)} delivery for metro orders over ${formatDollars(zoneC.offRouteMinimumSubtotal!)}.`,
+                body: `${formatDollars(zoneC.fee)} delivery for ${zoneC.label} orders over ${formatDollars(zoneC.offRouteMinimumSubtotal!)}.`,
               },
               {
                 icon: <IconClock size={20} />,

@@ -13,8 +13,8 @@ import { formatDollars } from "@/lib/money";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Delivery Areas + Fees — Sevierville, Pigeon Forge, Gatlinburg + Knoxville",
-  description: `Every Signiorina delivery fee, published: ${zones.map((z) => `Zone ${z.id} ${formatDollars(z.fee)}`).join(", ")} or ${formatDollars(zones.find((z) => z.routeDays)!.routeDays!.fee)} on Knoxville route days. Delivery windows, lead times, holiday rules and minimums.`,
+  title: "Delivery Areas + Fees — Sevierville, Pigeon Forge + Gatlinburg",
+  description: `Every Signiorina delivery fee, published: ${zones.map((z) => `Zone ${z.id} ${formatDollars(z.fee)}`).join(", ")} or ${formatDollars(zones.find((z) => z.routeDays)!.routeDays!.fee)} on Tuesday + Thursday route days. Delivery windows, lead times, holiday rules and minimums.`,
   path: "/delivery",
 });
 
@@ -95,7 +95,7 @@ export default function DeliveryPage() {
             </table>
           </div>
           <p className="mt-4 text-[0.9rem] text-muted">
-            Metro orders under {formatDollars(zones.find((z) => z.id === "C")!.offRouteMinimumSubtotal!)} travel on our{" "}
+            Zone C orders under {formatDollars(zones.find((z) => z.id === "C")!.offRouteMinimumSubtotal!)} travel on our{" "}
             {routeDayNames()} route. We deliver to towns, cabins, venues and resorts around Great Smoky Mountains National Park —
             not inside the park.
           </p>

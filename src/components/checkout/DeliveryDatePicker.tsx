@@ -43,7 +43,7 @@ function ariaFor(day: DayAvailability | undefined, iso: ISODate): string {
     if (day.fromFee !== undefined) parts.push(day.fromFee === 0 ? "free delivery" : `delivery from ${formatCents(day.fromFee)}`);
     if (day.rush) parts.push("rush fee applies");
     if (day.holiday) parts.push(`${day.holiday.name} preorder`);
-    if (day.routeDay) parts.push("Knoxville route day");
+    if (day.routeDay) parts.push("Route day");
   }
   return parts.join(", ");
 }

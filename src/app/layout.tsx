@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s · Signiorina",
   },
   description:
-    "Modern Italian-inspired grazing for Smoky Mountain weddings, cabin weekends, office lunches and tables worth gathering around. Sevierville, Pigeon Forge, Gatlinburg and Knoxville.",
+    "Modern Italian-inspired grazing for Smoky Mountain weddings, cabin weekends, office lunches and tables worth gathering around. Sevierville, Pigeon Forge and Gatlinburg.",
   applicationName: site.name,
   openGraph: { siteName: site.name, locale: "en_US", type: "website" },
   formatDetection: { telephone: false, address: false, email: false },

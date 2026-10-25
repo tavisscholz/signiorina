@@ -113,7 +113,7 @@ function AddressStep({
             </ButtonLink>
           }
         >
-          Online delivery covers Sevier County, Knoxville and a few neighbors. For events farther out we travel by quote —
+          Online delivery covers Sevier County and a few neighbors. For events farther out we travel by quote —
           tell us where you&apos;re gathering. (We don&apos;t deliver inside the national park.)
         </Notice>
       ) : null}
@@ -239,7 +239,7 @@ function AddressStep({
               description={(() => {
                 const route = zones.find((z) => z.routeDays)?.routeDays;
                 return route
-                  ? `Corporate orders on ${routeDayNames()} Knoxville route days ship free over ${formatDollars(route.corporateFreeDeliveryAt)}.`
+                  ? `Corporate orders on ${routeDayNames()} route days ship free over ${formatDollars(route.corporateFreeDeliveryAt)}.`
                   : undefined;
               })()}
               checked={Boolean(delivery.isBusiness)}

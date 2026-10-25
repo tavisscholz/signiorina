@@ -18,8 +18,8 @@ export function StoreFacts({ className = "mt-10" }: { className?: string }) {
         <IconTruck size={20} className="mt-0.5 shrink-0 text-olive" />
         <span>
           Delivery {zones.map((z) => `${formatDollars(z.fee)}`).join(" / ")} by zone · free over{" "}
-          {formatDollars(zones[0].freeDeliveryAt!)} nearby · {formatDollars(zones[2].routeDays!.fee)} Knoxville on{" "}
-          {routeDayNames("C", true)}.{" "}
+          {formatDollars(zones[0].freeDeliveryAt!)} nearby · {formatDollars(zones[2].routeDays!.fee)} on Zone C route days (
+          {routeDayNames("C", true)}).{" "}
           <Link href="/delivery" className="text-olive underline underline-offset-4">
             See areas
           </Link>
