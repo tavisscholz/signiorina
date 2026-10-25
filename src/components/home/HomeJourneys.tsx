@@ -152,10 +152,10 @@ export function HomeJourneys() {
               eyebrow="Events"
               title={
                 <span id="events-feature">
-                  Three ways to <span className="accent">host a crowd.</span>
+                  Grazing options for <span className="accent">your event.</span>
                 </span>
               }
-              lede={`Styled grazing tables for birthdays, showers, graduations and office gatherings of ${grazingTables.minimumGuests} or more — priced per guest and set up on site.`}
+              lede="From light bites to a full meal, delivered and set up."
             />
           </Reveal>
           <Reveal delay={120}>
@@ -237,7 +237,7 @@ export function HomeJourneys() {
             />
           </Reveal>
           <Reveal delay={120} className="lg:col-span-7">
-            <SectionHeading eyebrow="Who we are" title={<span id="meet-irina">Meet Chef Irina.</span>} />
+            <SectionHeading eyebrow="Behind The Table" title={<span id="meet-irina">Meet Chef Irina.</span>} />
             <p className="mt-6 max-w-xl text-[1.05rem] text-muted">
               Chef Irina spent eighteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
               cooking starts with paying attention.
