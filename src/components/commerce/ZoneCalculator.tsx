@@ -24,7 +24,7 @@ export function ZoneCalculator({
   tone?: "light" | "dark";
   /** Analytics: where the check happened. */
   source?: string;
-  /** Hide the "shop" link where the visitor is already in the store. */
+  /** Hide the "shop" link where the visitor is already in the store (Weddings and Events always show). */
   showShopLink?: boolean;
   label?: string;
 }) {
@@ -76,11 +76,17 @@ export function ZoneCalculator({
               <li>Windows: {deliveryWindows.map((w) => w.display).join(" · ")}.</li>
               {area.cabinCountry ? <li>Cabin deliveries: we&apos;ll ask about gate codes and steep or gravel driveways.</li> : null}
             </ul>
-            {showShopLink ? (
-              <Link href={routes.store} className={clsx("mt-1 self-start underline underline-offset-4", tone === "dark" ? "text-cream" : "text-olive")}>
-                {routeLabels.store}
-              </Link>
-            ) : null}
+            <p className="mt-1 flex flex-wrap gap-x-5 gap-y-1">
+              {[
+                { href: routes.weddings, label: "Weddings" },
+                { href: routes.events, label: "Events" },
+                ...(showShopLink ? [{ href: routes.store, label: routeLabels.store }] : []),
+              ].map((l) => (
+                <Link key={l.href} href={l.href} className={clsx("underline underline-offset-4", tone === "dark" ? "text-cream" : "text-olive")}>
+                  {l.label}
+                </Link>
+              ))}
+            </p>
           </div>
         ) : areaId === "other" ? (
           <p className={clsx("text-[0.95rem]", tone === "dark" ? "text-cream/85" : "text-muted")}>

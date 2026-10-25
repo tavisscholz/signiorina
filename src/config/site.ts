@@ -35,7 +35,7 @@ export const site = {
 
   serviceArea: {
     summary:
-      "Sevierville, Pigeon Forge, Gatlinburg and the Great Smoky Mountains destination market, and selected East Tennessee communities.",
+      "Sevierville, Pigeon Forge, Gatlinburg and the Great Smoky Mountains destination market.",
     cities: [
       "Sevierville",
       "Pigeon Forge",

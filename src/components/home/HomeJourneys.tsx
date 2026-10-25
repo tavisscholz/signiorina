@@ -16,7 +16,6 @@ import { IconArrow } from "@/components/ui/Icons";
 import { Badge } from "@/components/ui/Notice";
 import { getProduct } from "@/config/catalog";
 import { faqSections } from "@/config/content";
-import { deliveryWindows, servedZones } from "@/config/delivery";
 import { grazingTables, weddingPackages, weddingRules } from "@/config/events";
 import { ambientLoops } from "@/config/media";
 import { site } from "@/config/site";
@@ -260,13 +259,6 @@ export function HomeJourneys() {
             lede={site.serviceArea.summary}
             size="md"
           />
-          <ul className="mt-8 flex flex-col gap-2 text-[0.95rem] text-muted">
-            <li>
-              Delivery {servedZones.map((z) => formatDollars(z.fee)).join(" / ")} by zone, shown before you pay.
-            </li>
-            <li>Windows: {deliveryWindows.map((w) => `${w.label.toLowerCase()} ${w.display}`).join(" · ")}.</li>
-            <li>Homes, cabins, venues and offices around the national park — never inside it.</li>
-          </ul>
           <ZoneCalculator className="mt-8" />
         </div>
         <div>
