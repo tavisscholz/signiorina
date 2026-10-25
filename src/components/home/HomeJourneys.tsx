@@ -61,21 +61,19 @@ export function HomeJourneys() {
               </p>
             </div>
             <div className="hero-enter relative hidden h-[19rem] lg:col-span-5 lg:block" style={{ ["--hero-delay" as string]: "150ms" }}>
-              <div className="arch absolute right-0 top-0 h-full w-[56%]">
-                <Photo media="boxForTwo" priority className="hero-settle h-full w-full" sizes="20vw" position="50% 45%" alt="" />
-              </div>
-              <div className="absolute bottom-0 left-[22%] w-[min(50%,15rem)] xl:left-[14%]">
+              {/* Irina's oval, full height of the hero image column. */}
+              <div className="absolute right-0 top-0 h-full w-[15.2rem]">
                 <Photo
                   media="irina"
                   shape="oval"
                   priority
-                  className="aspect-[4/5] w-full border-[6px] border-cream shadow-[var(--shadow-lift)]"
-                  sizes="15rem"
+                  className="h-full w-full border-[6px] border-cream shadow-[var(--shadow-lift)]"
+                  sizes="16rem"
                   position="50% 30%"
                 />
                 {/* A handwritten sign-off beside the oval. */}
                 <p
-                  className={`${script.className} absolute bottom-[16%] right-full mr-3 -rotate-6 whitespace-nowrap text-right text-[1.55rem] leading-[1.05] text-olive xl:text-[1.95rem]`}
+                  className={`${script.className} absolute bottom-[16%] right-full mr-3 -rotate-6 whitespace-nowrap text-right text-[1.55rem] leading-[1.05] text-olive xl:mr-5 xl:text-[1.95rem]`}
                 >
                   Con Amore
                   <span className="block pr-1 text-[0.82em]">– Chef Irina</span>
