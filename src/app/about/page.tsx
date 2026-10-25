@@ -14,6 +14,8 @@ export const metadata: Metadata = pageMetadata({
   path: "/about",
 });
 
+const smallButton = "min-h-9 px-[1.125rem] text-[0.6rem]";
+
 /** About is about Chef Irina, in the owner's words. (Signiorina's own story and standards live in the FAQ.) */
 export default function AboutPage() {
   return (
@@ -37,11 +39,6 @@ export default function AboutPage() {
           <h1 className="display-xl mt-5 text-olive">
             Meet <span className="accent">Chef Irina.</span>
           </h1>
-          <p className="lede mt-6 max-w-xl text-muted">
-            The chef behind Signiorina — modern Italian-inspired hospitality for Smoky Mountain weddings, gatherings and
-            everyday tables.
-          </p>
-
           <div className="mt-8 flex max-w-xl flex-col gap-5 text-[1.05rem] leading-relaxed text-espresso/85">
             <p>
               Chef Irina spent fifteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
@@ -57,12 +54,15 @@ export default function AboutPage() {
           <Signature className="ml-2 mt-6 inline-block text-right text-[2rem] md:text-[2.3rem]" />
 
           <p className="mt-10 text-[1.05rem] text-muted">We&apos;d love to feed your next gathering.</p>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <ButtonLink href={routes.weddingPlanner}>{routeLabels.weddingPlanner}</ButtonLink>
-            <ButtonLink href={routes.events} variant="secondary">
+          {/* A quarter smaller than the standard buttons. */}
+          <div className="mt-5 flex flex-wrap gap-2.5">
+            <ButtonLink href={routes.weddingPlanner} className={smallButton}>
+              {routeLabels.weddingPlanner}
+            </ButtonLink>
+            <ButtonLink href={routes.events} variant="secondary" className={smallButton}>
               Explore Packages
             </ButtonLink>
-            <ButtonLink href={routes.store} variant="secondary">
+            <ButtonLink href={routes.store} variant="secondary" className={smallButton}>
               {routeLabels.store}
             </ButtonLink>
           </div>
