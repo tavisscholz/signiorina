@@ -14,7 +14,8 @@ import { navigation, type NavItem } from "@/config/site";
 import { useCart } from "@/lib/cart-store";
 
 // The three-journey nav has four items, so it fits from lg; the classic six need xl.
-const desktopNav = flags.threeJourneyArchitectureV2 ? "hidden lg:block" : "hidden xl:block";
+// With the three journeys the menu sits on the right, beside the cart.
+const desktopNav = flags.threeJourneyArchitectureV2 ? "hidden lg:ml-auto lg:mr-4 lg:block" : "hidden xl:block";
 const mobileOnly = flags.threeJourneyArchitectureV2 ? "lg:hidden" : "xl:hidden";
 
 function isCurrent(item: NavItem, pathname: string): boolean {

@@ -61,19 +61,26 @@ export function HomeJourneys() {
               </p>
             </div>
             <div className="hero-enter relative hidden h-[19rem] lg:col-span-5 lg:block" style={{ ["--hero-delay" as string]: "150ms" }}>
-              {/* Irina in the arch, mirrored to face the headline. */}
-              <div className="arch absolute right-0 top-0 h-full w-[66%] -scale-x-100">
-                <Photo media="irina" priority className="hero-settle h-full w-full" sizes="24vw" position="50% 28%" />
+              <div className="arch absolute right-0 top-0 h-full w-[56%]">
+                <Photo media="boxForTwo" priority className="hero-settle h-full w-full" sizes="20vw" position="50% 45%" alt="" />
               </div>
-              <p
-                className={`${script.className} absolute left-0 top-[34%] flex w-[33%] -rotate-6 flex-col items-center text-[1.7rem] leading-tight text-olive xl:text-[2.15rem]`}
-              >
-                Chef Irina
-                <svg aria-hidden="true" viewBox="0 0 72 44" className="ml-10 mt-1 w-14 xl:w-16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 6c14-3 34 0 47 12 6 6 10 13 13 20" />
-                  <path d="M53 33l11 6 2-12" />
-                </svg>
-              </p>
+              <div className="absolute bottom-0 left-[22%] w-[min(50%,15rem)] xl:left-[14%]">
+                <Photo
+                  media="irina"
+                  shape="oval"
+                  priority
+                  className="aspect-[4/5] w-full border-[6px] border-cream shadow-[var(--shadow-lift)]"
+                  sizes="15rem"
+                  position="50% 30%"
+                />
+                {/* A handwritten sign-off beside the oval. */}
+                <p
+                  className={`${script.className} absolute bottom-[16%] right-full mr-3 -rotate-6 whitespace-nowrap text-right text-[1.55rem] leading-[1.05] text-olive xl:text-[1.95rem]`}
+                >
+                  Con Amore
+                  <span className="block pr-1 text-[0.82em]">– Chef Irina</span>
+                </p>
+              </div>
             </div>
           </div>
 
