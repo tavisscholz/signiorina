@@ -9,7 +9,7 @@ export type JourneyId = "everyday" | "events" | "weddings";
 
 export interface Journey {
   id: JourneyId;
-  /** Customer-facing name. The "everyday" journey is labelled Shop (owner's choice); its store is still Everyday. */
+  /** Customer-facing name. The "everyday" journey is labelled Shop (owner's choice); its route stays /everyday. */
   name: "Weddings" | "Events" | "Shop";
   /** The line on the journey card, written as the call to action. */
   description: string;
@@ -68,10 +68,10 @@ export const routes = flags.threeJourneyArchitectureV2
       weddingPlanner: "/inquire?type=wedding",
     };
 
-/** Labels for shared links, so "Order online" becomes "Shop Treats" with the journeys on. */
+/** Labels for shared links, so "Order online" becomes "Shop Treats" with the journeys on; `storeSection` names the section itself (breadcrumbs). */
 export const routeLabels = flags.threeJourneyArchitectureV2
-  ? { store: "Shop Treats", eventPlanner: "Plan an event", weddingPlanner: "Build Your Table" }
-  : { store: "Order online", eventPlanner: "Ask about an event", weddingPlanner: "Plan a wedding" };
+  ? { store: "Shop Treats", storeSection: "Shop", eventPlanner: "Plan an event", weddingPlanner: "Build Your Table" }
+  : { store: "Order online", storeSection: "Order online", eventPlanner: "Ask about an event", weddingPlanner: "Plan a wedding" };
 
 export interface JourneyRedirect {
   source: string;

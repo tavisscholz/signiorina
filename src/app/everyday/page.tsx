@@ -14,13 +14,13 @@ import { formatDollars } from "@/lib/money";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Everyday — Charcuterie Boxes, Boards + Lunches Delivered",
+  title: "Shop — Charcuterie Boxes, Boards & Lunches Delivered",
   description:
     "Shop Italian-inspired charcuterie boxes, boards, cabin welcome boxes, gift boxes and office lunches. Fixed prices, guest checkout and delivery across Sevierville, Pigeon Forge and Gatlinburg.",
   path: "/everyday",
 });
 
-/** Everyday (threeJourneyArchitectureV2): the online store — browse, add to cart, schedule delivery, pay. */
+/** Shop (threeJourneyArchitectureV2), served at /everyday: the online store — browse, add to cart, schedule delivery, pay. */
 export default function EverydayPage() {
   // With the flag off, next.config redirects /everyday to /order before this renders.
   if (!flags.threeJourneyArchitectureV2) notFound();

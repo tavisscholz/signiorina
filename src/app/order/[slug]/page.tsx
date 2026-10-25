@@ -60,7 +60,7 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
       <JsonLd data={productJsonLd(product, getMedia(product.images[0]).src.src)} />
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: routeLabels.store, path: routes.store },
+          { name: routeLabels.storeSection, path: routes.store },
           { name: product.name, path: `/order/${product.slug}` },
         ])}
       />
@@ -69,7 +69,7 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
           <ol className="flex flex-wrap items-center gap-2">
             <li>
               <Link href={routes.store} className="hover:text-olive hover:underline">
-                {routeLabels.store}
+                {routeLabels.storeSection}
               </Link>
             </li>
             <li aria-hidden="true">/</li>

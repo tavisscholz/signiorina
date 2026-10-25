@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader, SiteHeaderView } from "@/components/layout/SiteHeader";
 import { StoreHydrator } from "@/components/providers/StoreHydrator";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { indexable } from "@/config/indexing";
 import { site } from "@/config/site";
 import { localBusinessJsonLd, organizationJsonLd } from "@/lib/seo";
 
@@ -39,6 +40,8 @@ export const metadata: Metadata = {
   applicationName: site.name,
   openGraph: { siteName: site.name, locale: "en_US", type: "website" },
   formatDetection: { telephone: false, address: false, email: false },
+  // Preview deployments stay out of search; production leaves robots to each page.
+  ...(indexable ? {} : { robots: { index: false } }),
 };
 
 export const viewport: Viewport = {

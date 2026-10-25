@@ -147,10 +147,16 @@ Defined in `src/app/globals.css` (`@theme`) and the brand components.
 
 ## SEO
 
-- Unique titles and descriptions per page (weddings, corporate, cabin delivery, order online, gatherings, every product, local area pages).
+- Unique titles and descriptions per page (weddings, events, Shop, corporate, cabin delivery, every product, local area pages).
 - JSON-LD: Organization, LocalBusiness (service-area: cities served, **no address, hours, ratings or reviews until supplied**), Service, Product, FAQPage, BreadcrumbList.
-- Local landing pages for Gatlinburg, Pigeon Forge, Sevierville, Wears Valley and Knoxville (`/areas/*`), a published fees page (`/delivery`), `sitemap.xml`, `robots.txt` and a branded share image on every page (product pages use the product photo).
-- Canonicals, `og:url`, `og:image`, the sitemap and the robots sitemap line all use the production origin (see *Site URL* above).
+- Local landing pages for the active delivery areas (`/areas/*`; paused areas are hidden), a published fees page (`/delivery`), `sitemap.xml`, `robots.txt` and a branded share image on every page (product pages use the product photo).
+- **One origin.** Canonicals, `og:url`, the sitemap, the robots.txt sitemap line and structured-data URLs all use `site.url` (see *Site URL* above). Canonicals never carry query strings.
+- **Indexing policy** (`src/config/indexing.ts`):
+  - The planners, `/weddings/build` and `/events/plan`, are `noindex, follow` — in their page metadata and as an `X-Robots-Tag` header — for every query-string variant. They stay linked and crawlable; robots.txt doesn't block them, so crawlers can read the directive.
+  - Cart, checkout and confirmation pages are `noindex`; robots.txt also keeps crawlers out of `/api/`, `/cart` and `/checkout/`.
+  - Deployments Vercel marks as **preview** or **development** (`VERCEL_ENV`) are `noindex` site-wide. Production is decided by `VERCEL_ENV`, never by hostname.
+- **Sitemap** (`src/app/sitemap.ts`): landing, delivery, informational and legal pages, every active product and every active area page. Redirected routes (for the current flag state), the planners, cart, checkout, confirmation, API routes and filter or configuration URLs are left out. No `lastmod`, because there's no reliable per-page modification date.
+- **Custom domain (pending).** No custom domain is configured; production currently answers at the Vercel production address. To move to one: add the domain in Vercel, set `NEXT_PUBLIC_SITE_URL` to `https://<domain>` for Production and redeploy, then, if you want, point the Vercel address at it in Vercel's domain settings (a platform redirect keeps paths and query strings). The app adds no redirects of its own.
 
 ---
 

@@ -7,13 +7,16 @@ import { WeddingPlanner } from "@/components/planner/WeddingPlanner";
 import { weddingPackages } from "@/config/events";
 import { flags } from "@/config/flags";
 import { formatDollars } from "@/lib/money";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, plannerRobots } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Build Your Table — Wedding Grazing Planner + Instant Estimate",
-  description: `Plan your Smoky Mountain wedding grazing table: start from a favorite or build your own from ${formatDollars(weddingPackages[0].pricePerPerson)}/guest, see an itemized estimate as you go, and request a written proposal.`,
-  path: "/weddings/build",
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "Build Your Table — Wedding Grazing Planner + Instant Estimate",
+    description: `Plan your Smoky Mountain wedding grazing table: start from a favorite or build your own from ${formatDollars(weddingPackages[0].pricePerPerson)}/guest, see an itemized estimate as you go, and request a written proposal.`,
+    path: "/weddings/build",
+  }),
+  robots: plannerRobots,
+};
 
 /** Weddings journey (threeJourneyArchitectureV2): the guided planner. */
 export default function BuildYourTablePage() {

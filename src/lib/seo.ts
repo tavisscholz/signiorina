@@ -48,6 +48,9 @@ export function pageMetadata({
   };
 }
 
+/** The planners: crawlable from normal links, never indexed (see src/config/indexing.ts). */
+export const plannerRobots: Metadata["robots"] = { index: false, follow: true };
+
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",

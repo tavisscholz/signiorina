@@ -198,7 +198,7 @@ export default function EventsPage() {
           <div className="flex flex-col gap-6">
             <div className="rounded-[1.5rem] border border-line bg-cream p-6">
               <h3 className="display-sm text-olive">Fewer than {grazingTables.minimumGuests} guests?</h3>
-              <p className="mt-2 text-[0.95rem] text-muted">A board or two from Everyday is the better fit — fixed price, delivered.</p>
+              <p className="mt-2 text-[0.95rem] text-muted">A board or two from the Shop is the better fit — fixed price, delivered.</p>
               <ButtonLink href="/everyday?category=gather" variant="secondary" className="mt-4">
                 Shop boards
               </ButtonLink>

@@ -6,7 +6,7 @@ import { TrackView } from "@/components/journeys/Tracking";
 import { EventPlanner } from "@/components/planner/EventPlanner";
 import { flags } from "@/config/flags";
 import { site } from "@/config/site";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, plannerRobots } from "@/lib/seo";
 
 export const metadata: Metadata = {
   ...pageMetadata({
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description: "Choose a styled grazing table, add your date, place and guest count, see an itemized estimate and request a written proposal.",
     path: "/events/plan",
   }),
-  robots: { index: false, follow: true },
+  robots: plannerRobots,
 };
 
 /** Events journey (threeJourneyArchitectureV2): the package planner. */
