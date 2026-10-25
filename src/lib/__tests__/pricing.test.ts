@@ -108,18 +108,18 @@ describe("priceCart — items and minimums", () => {
 describe("priceCart — delivery, fees and tax", () => {
   const at = (delivery: DeliverySelection, lines: CartLine[]) => priceCart({ lines, delivery, now: NOW });
 
-  it("quotes Zone A at $45 and taxes food + delivery at 9.75%", () => {
+  it("quotes Zone A at $15 and taxes food + delivery at 9.75%", () => {
     const p = at({ areaId: "sevierville", date: "2026-11-06", windowId: "afternoon" }, [line("box-for-two", 1)]);
-    expect(p.delivery.fee).toBe(4500);
-    expect(p.tax).toBe(Math.round(10000 * 0.0975));
-    expect(p.total).toBe(5500 + 4500 + p.tax);
+    expect(p.delivery.fee).toBe(1500);
+    expect(p.tax).toBe(Math.round(7000 * 0.0975));
+    expect(p.total).toBe(5500 + 1500 + p.tax);
   });
 
   it("waives Zone A at $250+ and Zone B at $500+", () => {
     const a = at({ areaId: "pigeon-forge", date: "2026-11-06", windowId: "afternoon" }, [line("gathering-board-large", 2)]);
     expect(a.delivery.fee).toBe(0);
     const b = at({ areaId: "gatlinburg", date: "2026-11-06", windowId: "afternoon" }, [line("gathering-board-large", 2)]);
-    expect(b.delivery.fee).toBe(6000);
+    expect(b.delivery.fee).toBe(2500);
     const b3 = at({ areaId: "gatlinburg", date: "2026-11-06", windowId: "afternoon" }, [line("gathering-board-large", 3)]);
     expect(b3.delivery.fee).toBe(0);
   });
@@ -128,7 +128,7 @@ describe("priceCart — delivery, fees and tax", () => {
     const tuesday = at({ areaId: "newport", date: "2026-11-10", windowId: "midday" }, [line("box-for-two", 1)]);
     const wednesday = at({ areaId: "newport", date: "2026-11-11", windowId: "midday" }, [line("box-for-two", 1)]);
     for (const p of [tuesday, wednesday]) {
-      expect(p.delivery.fee).toBe(6000);
+      expect(p.delivery.fee).toBe(2500);
       expect(p.canCheckout).toBe(true);
       expect(p.taxRate).toBe(0.0975);
     }
@@ -136,7 +136,7 @@ describe("priceCart — delivery, fees and tax", () => {
       line("pranzo-lunch-box", 16, { variantId: "classic" }),
     ]);
     expect(corporate.isCorporate).toBe(true);
-    expect(corporate.delivery.fee).toBe(6000);
+    expect(corporate.delivery.fee).toBe(2500);
   });
 
   it("adds the rush fee inside 48 hours and the holiday fee on holiday dates", () => {

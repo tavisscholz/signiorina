@@ -60,7 +60,7 @@ describe("wedding presets", () => {
     // Gathering Table, 60 guests, peak Saturday (min $1,500 < $1,920), Zone A, next-day pickup, 1 Dolce Board.
     expect(a.lines.find((l) => l.id === "food")?.amount).toBe(192000);
     expect(a.lines.find((l) => l.id === "addon-dolce-board")?.amount).toBe(4500);
-    expect(a.lines.find((l) => l.id === "delivery")?.amount).toBe(4500);
+    expect(a.lines.find((l) => l.id === "delivery")?.amount).toBe(1500);
     expect(a.lines.find((l) => l.id === "pickup")?.amount).toBe(7500);
   });
 });

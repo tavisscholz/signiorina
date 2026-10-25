@@ -134,7 +134,9 @@ export function productJsonLd(product: Product, imageUrl?: string) {
   };
 }
 
-export function faqJsonLd(items: Array<{ question: string; answer: string; points?: Array<{ lead: string; text: string }> }>) {
+export function faqJsonLd(
+  items: Array<{ question: string; answer?: string; points?: Array<{ lead: string; text: string; block?: boolean }> }>,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -143,7 +145,7 @@ export function faqJsonLd(items: Array<{ question: string; answer: string; point
       name: i.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: [...(i.points ?? []).map((p) => `${p.lead}: ${p.text}`), i.answer].join(" "),
+        text: [...(i.points ?? []).map((p) => `${p.lead}${p.block ? "." : ":"} ${p.text}`), i.answer].filter(Boolean).join(" "),
       },
     })),
   };

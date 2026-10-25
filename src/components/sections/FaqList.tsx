@@ -29,12 +29,16 @@ export function FaqList({ items, className }: { items: FaqItem[]; className?: st
               <ul className="mb-3 list-disc space-y-1.5 pl-5 marker:text-olive/50">
                 {item.points.map((p) => (
                   <li key={p.lead}>
-                    <span className="font-medium text-espresso">{p.lead}:</span> {p.text}
+                    <span className="font-medium text-espresso">
+                      {p.lead}
+                      {p.block ? "" : ":"}
+                    </span>
+                    {p.block ? <span className="block">{p.text}</span> : <> {p.text}</>}
                   </li>
                 ))}
               </ul>
             ) : null}
-            <p>{item.answer}</p>
+            {item.answer ? <p>{item.answer}</p> : null}
           </div>
         </details>
       ))}

@@ -12,9 +12,10 @@ import { formatDollars } from "@/lib/money";
 export interface FaqItem {
   id: string;
   question: string;
-  answer: string;
-  /** Optional list shown above `answer`, e.g. lead times ("48 hours: …"). */
-  points?: Array<{ lead: string; text: string }>;
+  /** Closing paragraph; optional when `points` say it all. */
+  answer?: string;
+  /** Optional list shown above `answer`: "lead: text", or with `block` the text on its own line. */
+  points?: Array<{ lead: string; text: string; block?: boolean }>;
   clientInput?: boolean;
 }
 
@@ -84,7 +85,15 @@ export const faqSections: FaqSection[] = [
       {
         id: "where",
         question: "Where do you deliver?",
-        answer: `${servedZones.map((z) => `${z.label}: ${z.description} ${formatDollars(z.fee)}${z.freeDeliveryAt ? `, free over ${formatDollars(z.freeDeliveryAt)}` : ""}.`).join(" ")} Beyond that, we travel for events by quote.`,
+        points: [
+          ...servedZones.map((z) => ({
+            lead: `${z.name} — ${formatDollars(z.fee)} delivery${z.freeDeliveryAt ? ` · Free over ${formatDollars(z.freeDeliveryAt)}` : ""}`,
+            // "Kodak & Seymour": an ampersand before the last area in each list.
+            text: z.description.replace(/ and (?!.* and )/, " & "),
+            block: true,
+          })),
+          { lead: "Beyond these areas", text: "Event travel quoted separately." },
+        ],
       },
       {
         id: "prices",

@@ -19,7 +19,7 @@ export const zones: DeliveryZone[] = [
     name: "Core",
     label: "Zone A — Core",
     description: "Sevierville, Pigeon Forge, Kodak and Seymour.",
-    fee: 45,
+    fee: 15,
     freeDeliveryAt: 250,
   },
   {
@@ -27,7 +27,7 @@ export const zones: DeliveryZone[] = [
     name: "Mountain",
     label: "Zone B — Mountain",
     description: "Gatlinburg, Wears Valley, Cobbly Nob and the Cosby side, Chalet Village, Dandridge and Newport.",
-    fee: 60,
+    fee: 25,
     freeDeliveryAt: 500,
   },
   {
