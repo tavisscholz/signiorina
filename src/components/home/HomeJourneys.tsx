@@ -61,9 +61,15 @@ export function HomeJourneys() {
                 Italian-inspired, delivered for everyday enjoyment, celebrations and weddings.
               </p>
             </div>
-            <div className="hero-enter relative hidden h-[19rem] lg:col-span-5 lg:block" style={{ ["--hero-delay" as string]: "150ms" }}>
-              {/* Irina's oval, full height of the hero image column. */}
-              <div className="absolute right-0 top-0 h-full w-[15.2rem]">
+            <div
+              className="hero-enter relative hidden h-[19rem] lg:col-span-5 lg:block"
+              style={{ ["--hero-delay" as string]: "150ms" }}
+            >
+              {/* Irina's oval, full height of the hero image column. On smaller laptops it sits on the right edge; from
+                  xl the sign-off starts 8rem after "Beautifully Done" and the oval follows it. The offset is measured
+                  from this column's start: headline width (7em of the clamped h1 size) + 8rem gap + sign-off and its
+                  margin (10.2rem), minus where this column begins (7/12 of the 88rem container, gaps included). */}
+              <div className="absolute right-0 top-0 h-full w-[15.2rem] xl:left-[calc(min(44.8vw,39.2rem)_+_18.2rem_-_(min(100vw,88rem)_-_33.5rem)_*_7_/_12_-_17.5rem)] xl:right-auto">
                 <Photo
                   media="irina"
                   shape="oval"
