@@ -58,7 +58,7 @@ export const faqSections: FaqSection[] = [
       {
         id: "notice",
         question: "How much notice do you need?",
-        answer: `Boxes and boards need 48 hours — order by noon two days before delivery. The Cabin Welcome Box, Large Gathering Board and Gift Box need 72 hours. Corporate lunches need 48 hours. Styled grazing tables need ${grazingTables.leadTimeDays} days. Weddings book ${weddingRules.bookingLeadDays}+ days ahead with a final guest count ${weddingRules.finalCountDays} days before. Bridal Suite and Groom's Room Boards need 14 days, and Wedding Welcome Boxes need 21.`,
+        answer: `Boxes and boards need 48 hours — order by noon two days before delivery. The Cabin Welcome Box, Large Gathering Board and Gift Box need 72 hours. Corporate lunches need 48 hours. Styled grazing tables need ${grazingTables.leadTimeDays} days. Weddings book ${weddingRules.bookingLeadDays}+ days ahead with a final guest count ${weddingRules.finalCountDays} days before. Bridal Suite and Groom's Room Boards need 14 days, and Guest Welcome Boxes need 21.`,
       },
       {
         id: "deliver",

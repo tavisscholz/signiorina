@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -92,7 +93,15 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
               {leadTimeLabel(product.leadTimeDays)}
             </Badge>
           </div>
-          <h1 className="display-lg mt-5 text-olive">{product.name}</h1>
+          {product.kicker ? (
+            <p aria-hidden="true" className="mt-5 text-[0.8rem] uppercase tracking-[0.2em] text-olive-soft">
+              {product.kicker}
+            </p>
+          ) : null}
+          <h1 className={clsx("display-lg text-olive", product.kicker ? "mt-1" : "mt-5")}>
+            {product.kicker ? <span className="sr-only">{product.kicker} </span> : null}
+            {product.shortName ?? product.name}
+          </h1>
           <p className="mt-3 accent text-[1.35rem] text-olive-soft">{product.tagline}</p>
           <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-y border-line py-4">
             <span className="price text-[2.4rem] leading-none text-olive">{priceLabel(product)}</span>

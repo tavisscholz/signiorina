@@ -569,7 +569,9 @@ export const products: Product[] = [
   {
     id: "wedding-welcome-box",
     slug: "wedding-welcome-box",
-    name: "Wedding Welcome Box",
+    name: "Fresh Guest Welcome Box",
+    kicker: "Fresh",
+    shortName: "Guest Welcome Box",
     status: "active",
     categories: ["wedding-weekend", "gifts"],
     price: 20,
@@ -600,14 +602,16 @@ export const products: Product[] = [
     images: ["aperitivoBox", "waxSeal"],
     alternatives: ["pantry-welcome-box"],
     seo: {
-      title: "Wedding Welcome Boxes — Guest Boxes for Smoky Mountain Weddings",
+      title: "Fresh Guest Welcome Boxes — Smoky Mountain Wedding Guest Boxes",
       description: "Aperitivo-style welcome boxes tagged with your names. $20 each, 12-box minimum, order 21 days ahead.",
     },
   },
   {
     id: "pantry-welcome-box",
     slug: "pantry-welcome-box",
-    name: "Pantry Welcome Box",
+    name: "Pantry Guest Welcome Box",
+    kicker: "Pantry",
+    shortName: "Guest Welcome Box",
     status: "active",
     categories: ["wedding-weekend", "gifts"],
     price: 16,
@@ -637,7 +641,7 @@ export const products: Product[] = [
     images: ["giftBoxes", "waxSeal"],
     alternatives: ["wedding-welcome-box"],
     seo: {
-      title: "Pantry Welcome Boxes — Shelf-Stable Wedding Guest Boxes",
+      title: "Pantry Guest Welcome Boxes — Shelf-Stable Wedding Guest Boxes",
       description: "Shelf-stable welcome boxes with taralli, biscotti, olives and jam. $16 each, 12-box minimum.",
     },
   },

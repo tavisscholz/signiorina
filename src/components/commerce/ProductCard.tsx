@@ -64,10 +64,17 @@ export function ProductCard({
         ) : null}
         <PriceOval className="absolute -bottom-5 right-5 shadow-[var(--shadow-card)]">{priceLabel(product)}</PriceOval>
       </div>
-      <div className="flex flex-1 flex-col gap-2 pt-7">
+      {/* The kicker sits in the space under the photo, so titles line up across a row whether or not a card has one. */}
+      <div className="relative flex flex-1 flex-col gap-2 pt-8">
+        {product.kicker ? (
+          <p aria-hidden="true" className="absolute left-0 top-2 text-[0.75rem] uppercase tracking-[0.2em] text-olive-soft">
+            {product.kicker}
+          </p>
+        ) : null}
         <Heading className="display-sm text-olive">
           <Link href={`/order/${product.slug}`} className="hover:underline hover:decoration-1 hover:underline-offset-4">
-            {product.name}
+            {product.kicker ? <span className="sr-only">{product.kicker} </span> : null}
+            {product.shortName ?? product.name}
           </Link>
         </Heading>
         <p className="text-[0.8rem] uppercase tracking-[0.14em] text-olive-soft">

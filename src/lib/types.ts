@@ -55,7 +55,12 @@ export type ProductStatus = "active" | "hidden" | "test";
 export interface Product {
   id: string;
   slug: string;
+  /** Full, unique name — used in the cart, checkout, orders and search titles. */
   name: string;
+  /** Optional label shown above the display name on cards and the product page, e.g. "Fresh". */
+  kicker?: string;
+  /** Shorter name shown under the kicker when two products share one (e.g. "Guest Welcome Box"). */
+  shortName?: string;
   status: ProductStatus;
   categories: CategoryId[];
   /** Whole-dollar unit price. */
