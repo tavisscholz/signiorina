@@ -12,6 +12,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { FaqList } from "@/components/sections/FaqList";
 import { Testimonials } from "@/components/sections/Sections";
 import { ButtonLink } from "@/components/ui/Button";
+import { IconArrow } from "@/components/ui/Icons";
 import { Badge } from "@/components/ui/Notice";
 import { getProduct } from "@/config/catalog";
 import { faqSections } from "@/config/content";
@@ -118,15 +119,25 @@ export function HomeJourneys() {
           </Reveal>
           <Reveal delay={150} as="ul" className="flex flex-col divide-y divide-white/20 border-y border-white/20 lg:col-span-5">
             {weddingPackages.map((pkg) => (
-              <li key={pkg.id} className="flex items-baseline justify-between gap-4 py-4">
-                <span>
-                  <span className="block font-display text-[1.35rem] text-white">{pkg.name}</span>
-                  <span className="text-[0.88rem] text-white/80">{pkg.bestFor.slice(0, 2).join(" · ")}</span>
-                </span>
-                <span className="price shrink-0 text-[1.35rem] text-white">
-                  {formatDollars(pkg.pricePerPerson)}
-                  <span className="text-[0.85rem] text-white/80">/guest</span>
-                </span>
+              <li key={pkg.id}>
+                <Link href={`/weddings#package-${pkg.id}`} className="group flex items-baseline justify-between gap-4 py-4">
+                  <span>
+                    <span className="block font-display text-[1.35rem] text-white decoration-white/50 underline-offset-4 group-hover:underline">
+                      {pkg.name}
+                    </span>
+                    <span className="text-[0.88rem] text-white/80">{pkg.bestFor.slice(0, 2).join(" · ")}</span>
+                  </span>
+                  <span className="flex shrink-0 items-baseline gap-3">
+                    <span className="price text-[1.35rem] text-white">
+                      {formatDollars(pkg.pricePerPerson)}
+                      <span className="text-[0.85rem] text-white/80">/guest</span>
+                    </span>
+                    <IconArrow
+                      size={18}
+                      className="self-center text-white/70 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-white"
+                    />
+                  </span>
+                </Link>
               </li>
             ))}
           </Reveal>

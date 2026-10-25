@@ -25,8 +25,9 @@ export function WeddingPackageCard({
   const dark = tone === "dark";
   return (
     <article
+      id={`package-${pkg.id}`}
       className={clsx(
-        "relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border",
+        "relative flex h-full scroll-mt-32 flex-col overflow-hidden rounded-[1.75rem] border",
         dark ? "border-cream/15 bg-olive-deep/60 text-cream" : "border-line bg-paper",
         featured && !dark && "ring-1 ring-olive/40",
         className,
