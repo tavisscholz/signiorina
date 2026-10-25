@@ -192,12 +192,13 @@ export function HomeJourneys() {
         </ul>
       </section>
 
-      {/* EVERYDAY: FEATURED PRODUCTS -------------------------------- */}
-      <section className="border-y border-line bg-paper" aria-labelledby="everyday-feature">
+      {/* SHOP: FEATURED PRODUCTS (olive band) ----------------------- */}
+      <section className="on-dark bg-olive text-cream" aria-labelledby="everyday-feature">
         <div className="container-page py-20 md:py-28">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <Reveal>
               <SectionHeading
+                tone="light"
                 eyebrow="Shop"
                 title={
                   <span id="everyday-feature">
@@ -208,7 +209,7 @@ export function HomeJourneys() {
               />
             </Reveal>
             <Reveal delay={120}>
-              <ButtonLink href="/everyday" variant="secondary">
+              <ButtonLink href="/everyday" variant="outline-light">
                 Shop Treats
               </ButtonLink>
             </Reveal>
@@ -216,7 +217,7 @@ export function HomeJourneys() {
           <div className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 xl:grid-cols-4">
             {featured.map((p, i) => (
               <Reveal key={p.id} delay={i * 90}>
-                <ProductCard product={p} />
+                <ProductCard product={p} tone="dark" />
               </Reveal>
             ))}
           </div>
@@ -255,7 +256,7 @@ export function HomeJourneys() {
         <div>
           <SectionHeading
             eyebrow="Service area"
-            title={<span id="where-we-deliver">Where we deliver.</span>}
+            title={<span id="where-we-deliver">We deliver across the Smokies.</span>}
             lede={site.serviceArea.summary}
             size="md"
           />

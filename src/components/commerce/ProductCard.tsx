@@ -9,10 +9,10 @@ import { getDietaryOption } from "@/config/catalog";
 import { leadTimeLabel, priceLabel } from "@/lib/format";
 import type { Product } from "@/lib/types";
 
-export function DietaryIndicator({ product, className }: { product: Product; className?: string }) {
+export function DietaryIndicator({ product, className, dark = false }: { product: Product; className?: string; dark?: boolean }) {
   if (product.dietaryOptions.length === 0) return null;
   return (
-    <p className={clsx("flex flex-wrap items-center gap-1.5 text-[0.75rem] text-muted", className)}>
+    <p className={clsx("flex flex-wrap items-center gap-1.5 text-[0.75rem]", dark ? "text-cream/80" : "text-muted", className)}>
       <span className="sr-only">Dietary versions available: </span>
       {product.dietaryOptions.map((id) => {
         const option = getDietaryOption(id)!;
@@ -37,13 +37,17 @@ export function ProductCard({
   priority = false,
   className,
   headingLevel = "h3",
+  tone = "light",
 }: {
   product: Product;
   priority?: boolean;
   className?: string;
   headingLevel?: "h2" | "h3";
+  /** "dark" on olive sections: cream type, prosecco details, light button. */
+  tone?: "light" | "dark";
 }) {
   const Heading = headingLevel;
+  const dark = tone === "dark";
   const minNote = product.minimumQuantity ? `${product.minimumQuantity} ${product.quantityLabel.toLowerCase()} min` : undefined;
   return (
     <article className={clsx("group relative flex flex-col", className)}>
@@ -67,17 +71,17 @@ export function ProductCard({
       {/* The kicker sits in the space under the photo, so titles line up across a row whether or not a card has one. */}
       <div className="relative flex flex-1 flex-col gap-2 pt-8">
         {product.kicker ? (
-          <p aria-hidden="true" className="absolute left-0 top-2 text-[0.75rem] uppercase tracking-[0.2em] text-olive-soft">
+          <p aria-hidden="true" className={clsx("absolute left-0 top-2 text-[0.75rem] uppercase tracking-[0.2em]", dark ? "text-prosecco" : "text-olive-soft")}>
             {product.kicker}
           </p>
         ) : null}
-        <Heading className="display-sm text-olive">
+        <Heading className={clsx("display-sm", dark ? "text-cream" : "text-olive")}>
           <Link href={`/order/${product.slug}`} className="hover:underline hover:decoration-1 hover:underline-offset-4">
             {product.kicker ? <span className="sr-only">{product.kicker} </span> : null}
             {product.shortName ?? product.name}
           </Link>
         </Heading>
-        <p className="text-[0.8rem] uppercase tracking-[0.14em] text-olive-soft">
+        <p className={clsx("text-[0.8rem] uppercase tracking-[0.14em]", dark ? "text-prosecco" : "text-olive-soft")}>
           {product.serves.split(" · ")[0]}
           <span aria-hidden="true"> · </span>
           {leadTimeLabel(product.leadTimeDays)}
@@ -88,11 +92,17 @@ export function ProductCard({
             </>
           ) : null}
         </p>
-        <p className="text-[0.98rem] text-muted">{product.tagline}</p>
-        <DietaryIndicator product={product} />
+        <p className={clsx("text-[0.98rem]", dark ? "text-cream/80" : "text-muted")}>{product.tagline}</p>
+        <DietaryIndicator product={product} dark={dark} />
         <div className="mt-auto flex flex-wrap items-center gap-4 pt-3">
-          <QuickAddButton productId={product.id} />
-          <Link href={`/order/${product.slug}`} className="label-caps text-[0.68rem] text-olive underline decoration-olive/40 underline-offset-[6px] hover:decoration-olive">
+          <QuickAddButton productId={product.id} variant={dark ? "light" : "primary"} />
+          <Link
+            href={`/order/${product.slug}`}
+            className={clsx(
+              "label-caps text-[0.68rem] underline underline-offset-[6px]",
+              dark ? "text-cream decoration-cream/40 hover:decoration-cream" : "text-olive decoration-olive/40 hover:decoration-olive",
+            )}
+          >
             View details<span className="sr-only"> for {product.name}</span>
           </Link>
         </div>

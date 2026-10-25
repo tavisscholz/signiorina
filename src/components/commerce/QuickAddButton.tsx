@@ -9,7 +9,16 @@ import { track } from "@/lib/analytics";
 import { useCart } from "@/lib/cart-store";
 import { needsConfiguration, quickAddQuantity } from "@/lib/format";
 
-export function QuickAddButton({ productId, className }: { productId: string; className?: string }) {
+export function QuickAddButton({
+  productId,
+  className,
+  variant,
+}: {
+  productId: string;
+  className?: string;
+  /** "light" on dark sections. */
+  variant?: "primary" | "light";
+}) {
   const product = getProduct(productId)!;
   const addLine = useCart((s) => s.addLine);
   const openDrawer = useCart((s) => s.openDrawer);
@@ -17,7 +26,7 @@ export function QuickAddButton({ productId, className }: { productId: string; cl
 
   if (needsConfiguration(product)) {
     return (
-      <ButtonLink href={`/order/${product.slug}`} size="sm" className={className}>
+      <ButtonLink href={`/order/${product.slug}`} size="sm" variant={variant} className={className}>
         Choose options
       </ButtonLink>
     );
@@ -27,6 +36,7 @@ export function QuickAddButton({ productId, className }: { productId: string; cl
   return (
     <Button
       size="sm"
+      variant={variant}
       className={className}
       onClick={() => {
         addLine({
