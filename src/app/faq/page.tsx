@@ -30,7 +30,7 @@ export default function FaqPage() {
               Good <span className="accent">questions.</span>
             </>
           }
-          lede="Everything about ordering, delivery, weddings and office lunches. Still wondering? Send us a note."
+          lede="Who we are, ordering, delivery, weddings and office lunches. Still wondering? Send us a note."
         />
         <nav aria-label="FAQ sections" className="mt-10">
           <ul className="flex flex-wrap gap-2">

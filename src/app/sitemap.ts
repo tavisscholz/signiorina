@@ -6,8 +6,8 @@ import { flags } from "@/config/flags";
 import { site } from "@/config/site";
 
 // Only routes that answer 200 for the current flag state; redirected ones are left out.
-const classicPages = ["", "/weddings", "/gatherings", "/corporate", "/cabin-delivery", "/order", "/about", "/faq", "/inquire", "/delivery"];
-const journeyPages = ["", "/everyday", "/events", "/weddings", "/weddings/build", "/corporate", "/cabin-delivery", "/about", "/faq", "/inquire", "/delivery"];
+const classicPages = ["", "/weddings", "/gatherings", "/corporate", "/cabin-delivery", "/order", "/about", "/faq", "/inquire", "/delivery", "/privacy", "/terms"];
+const journeyPages = ["", "/everyday", "/events", "/weddings", "/weddings/build", "/corporate", "/cabin-delivery", "/about", "/faq", "/inquire", "/delivery", "/privacy", "/terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = flags.threeJourneyArchitectureV2 ? journeyPages : classicPages;

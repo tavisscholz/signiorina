@@ -223,7 +223,7 @@ export function HomeJourneys() {
             />
           </Reveal>
           <Reveal delay={120} className="lg:col-span-7">
-            <SectionHeading eyebrow="Who we are" title={<span id="meet-irina">Meet Irina.</span>} />
+            <SectionHeading eyebrow="Who we are" title={<span id="meet-irina">Meet Chef Irina.</span>} />
             {site.showPlaceholders ? (
               <div className="relative mt-8 rounded-[1.5rem] border border-dashed border-olive/30 bg-paper p-7">
                 <Badge tone="fig" className="absolute -top-3 left-6">
@@ -241,7 +241,7 @@ export function HomeJourneys() {
               </p>
             )}
             <ButtonLink href="/about" variant="text" className="mt-8">
-              About Signiorina
+              About Chef Irina
             </ButtonLink>
           </Reveal>
         </div>

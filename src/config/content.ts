@@ -32,9 +32,28 @@ const allergenStatement =
 export const ALLERGEN_STATEMENT = allergenStatement;
 
 const [aperitivo, gathering, hosted] = weddingPackages;
+const smallestBox = getProduct("aperitivo-box");
 const attendant = addOns.find((a) => a.id === "event-attendant")!;
 
 export const faqSections: FaqSection[] = [
+  {
+    id: "about",
+    title: "About Signiorina",
+    items: [
+      {
+        id: "what-is",
+        question: "What is Signiorina?",
+        answer:
+          "Modern Italian-inspired hospitality made mobile — generous, polished, social food that makes any gathering feel beautifully hosted. We serve the Smokies and Knoxville, and we'd love to feed your next gathering. The best part is usually around the table.",
+      },
+      {
+        id: "aperitivo",
+        question: "What does “modern aperitivo” mean?",
+        answer:
+          "A ritual, more than a menu. In Italy, aperitivo is the hour between the day and the evening — a drink in hand, something good on a small plate, nobody in a hurry. It's less about any particular dish than about the ritual: slowing down, sharing good things, making people feel looked after. That's what we bring to the Smokies: to the wedding between the vows and the dancing, to the cabin on the first night, to the conference room at noon on a Tuesday. Pranzo, aperitivo, the long table — we borrow the rituals, not the clichés.",
+      },
+    ],
+  },
   {
     id: "ordering",
     title: "Ordering",
@@ -53,6 +72,18 @@ export const faqSections: FaqSection[] = [
         id: "where",
         question: "Where do you deliver?",
         answer: `${zoneA.label}: ${zoneA.description} ${formatDollars(zoneA.fee)}, free over ${formatDollars(zoneA.freeDeliveryAt!)}. ${zoneB.label}: ${zoneB.description} ${formatDollars(zoneB.fee)}, free over ${formatDollars(zoneB.freeDeliveryAt!)}. ${zoneC.label}: ${zoneC.description} ${formatDollars(zoneC.fee)}, or ${formatDollars(zoneC.routeDays!.fee)} on our Tuesday and Thursday Knoxville route days. Beyond that, we travel for events by quote.`,
+      },
+      {
+        id: "prices",
+        question: "Are your prices published?",
+        answer:
+          "Yes. Fixed prices for everything we deliver, and per-guest prices for events — published, not hidden behind a form.",
+      },
+      {
+        id: "fees",
+        question: "Are there any hidden fees?",
+        answer:
+          "No. Delivery, rush and holiday fees are shown before checkout. No service charge, no mandatory gratuity, no card surcharge.",
       },
       {
         id: "times",
@@ -96,8 +127,7 @@ export const faqSections: FaqSection[] = [
       {
         id: "contents",
         question: "What comes in the boxes?",
-        answer:
-          "Every box and board follows our signature build: prosciutto and a salame, parmigiano and a soft cheese, focaccia or grissini, antipasti, and something sweet with seasonal fruit and herbs. Each product page lists what's typically inside — fruit and a few pieces change with the season.",
+        answer: `Whether it's ${smallestBox ? `a ${formatDollars(smallestBox.price)} box` : "a box for one"} or a wedding for eighty, every build carries the same five signatures, so it always tastes — and looks — like us: prosciutto and a salame (finocchiona or soppressata alongside the prosciutto); parmigiano and a soft cheese (chunks of the good stuff, and something creamy beside it); focaccia or grissini (bread worth tearing, next to the crackers); antipasti (Castelvetrano olives, marinated artichoke, roasted peppers); and dolce, fruit and herbs (amaretti, biscotti or chocolate, with seasonal fruit, rosemary and basil). Each product page lists what's typically inside — fruit and a few pieces change with the season.`,
       },
       {
         id: "customize",
@@ -123,7 +153,8 @@ export const faqSections: FaqSection[] = [
       {
         id: "alcohol",
         question: "Do you provide drinks or alcohol?",
-        answer: "No. Signiorina doesn't sell, serve or deliver alcohol. Any glassware in our photos is the host's own.",
+        answer:
+          "No. Signiorina doesn't sell, serve or deliver alcohol — the table is ours; the glasses are yours. Any glassware in our photos is the host's own.",
       },
     ],
   },

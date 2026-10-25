@@ -134,7 +134,17 @@ export function SiteFooter() {
             <p>Prices in USD. Sales tax calculated at checkout.</p>
           </div>
         </div>
-        <p className="mt-10 text-[0.8rem] text-cream/75">© Signiorina. Good people, beautiful food, anywhere.</p>
+        <p className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8rem] text-cream/75">
+          <span>© Signiorina. Good people, beautiful food, anywhere.</span>
+          <span aria-hidden="true">·</span>
+          <Link href="/privacy" className="underline decoration-cream/30 underline-offset-4 hover:text-cream hover:decoration-cream">
+            Privacy Policy
+          </Link>
+          <span aria-hidden="true">·</span>
+          <Link href="/terms" className="underline decoration-cream/30 underline-offset-4 hover:text-cream hover:decoration-cream">
+            Terms of Use
+          </Link>
+        </p>
       </div>
     </footer>
   );

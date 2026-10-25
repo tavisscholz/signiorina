@@ -123,7 +123,7 @@ export function SiteHeaderView({ pathname: currentPath }: { pathname: string | n
           <p className="container-page flex h-9 items-center justify-center gap-3 text-center text-[0.64rem] font-medium uppercase tracking-[0.1em] xs:text-[0.7rem] xs:tracking-[0.2em]">
             <span className="hidden md:inline">Published prices</span>
             <span aria-hidden="true" className="hidden text-prosecco md:inline">·</span>
-            <span>Delivering across the Smokies + Knoxville</span>
+            <span>Delivering across the Smokies</span>
             <span aria-hidden="true" className="hidden text-prosecco lg:inline">·</span>
             <span className="hidden lg:inline">Order by noon, two days ahead</span>
           </p>
