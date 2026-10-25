@@ -47,10 +47,10 @@ export function HomeJourneys() {
             <div className="hero-enter lg:col-span-7">
               <h1
                 id="home-title"
-                className="font-display text-[min(12vw,3rem)] leading-[0.98] tracking-[-0.01em] text-olive sm:text-[clamp(2.8rem,7.4vw,6.6rem)]"
+                className="font-display text-[min(12vw,3rem)] leading-[0.98] tracking-[-0.01em] text-olive sm:text-[clamp(2.8rem,6.8vw,6.2rem)]"
               >
                 Charcuterie{" "}
-                <span className={`${script.className} block text-[1.02em] leading-[1.18] tracking-normal`}>Beautifully Done</span>
+                <span className={`${script.className} block whitespace-nowrap text-[1.02em] leading-[1.18] tracking-normal`}>Beautifully Done</span>
               </h1>
               <p className="mt-3 max-w-xl text-[0.95rem] leading-normal text-muted sm:mt-5 sm:text-[1.15rem] sm:leading-relaxed">
                 Italian-inspired, delivered for everyday enjoyment, celebrations and weddings.
@@ -65,7 +65,7 @@ export function HomeJourneys() {
                   from this column's start: headline width (7em of the clamped h1 size) + 6rem gap + sign-off and its
                   margin (10.2rem), minus where this column begins (7/12 of the 88rem container, gaps included). Keep
                   the 7em term in step with the h1's font size. */}
-              <div className="absolute right-0 top-0 h-full w-[15.2rem] xl:left-[min(calc(min(51.8vw,46.2rem)_+_16.2rem_-_(min(100vw,88rem)_-_33.5rem)_*_7_/_12_-_17.5rem),calc(100%_-_15.2rem))] xl:right-auto">
+              <div className="absolute right-0 top-0 h-full w-[15.2rem] xl:left-[min(calc(min(47.6vw,43.4rem)_+_16.2rem_-_(min(100vw,88rem)_-_33.5rem)_*_7_/_12_-_17.5rem),calc(100%_-_15.2rem))] xl:right-auto">
                 <Photo
                   media="irina"
                   shape="oval"
