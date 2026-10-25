@@ -96,7 +96,6 @@ export const faqSections: FaqSection[] = [
         id: "same-day",
         question: "Can I order same-day?",
         answer: `Same-day orders aren't available online. If you're inside our usual 48-hour notice, the calendar shows any dates we can still rush for a ${formatDollars(scheduling.rush.fee)} fee — only when there's room in the schedule.`,
-        clientInput: true,
       },
       {
         id: "pickup",

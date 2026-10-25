@@ -135,7 +135,7 @@ export const scheduling = {
   },
   rush: {
     enabled: true,
-    fee: 25,
+    fee: 100,
     /** Rush orders still need to be in by the cutoff this many days before delivery. */
     minimumLeadDays: 1,
   },

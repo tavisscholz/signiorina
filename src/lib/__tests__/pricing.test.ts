@@ -135,7 +135,7 @@ describe("priceCart — delivery, fees and tax", () => {
       now: rushNow,
     });
     expect(rush.rushRequired).toBe(true);
-    expect(rush.rushFee).toBe(2500);
+    expect(rush.rushFee).toBe(10000);
 
     const holiday = at({ areaId: "sevierville", date: "2026-12-23", windowId: "afternoon" }, [line("box-for-two", 1)]);
     expect(holiday.holidayFee).toBe(1500);

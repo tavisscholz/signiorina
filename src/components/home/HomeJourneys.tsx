@@ -26,7 +26,7 @@ import { formatDollars } from "@/lib/money";
 const script = Parisienne({ weight: "400", subsets: ["latin"], display: "swap" });
 
 const featured = ["box-for-two", "gathering-board-small", "cabin-welcome-box", "gift-box"].map((id) => getProduct(id)!);
-const homeFaq = ["notice", "where", "cabins", "allergies"]
+const homeFaq = ["cabins", "notice", "where", "allergies"]
   .map((id) => faqSections.flatMap((s) => s.items).find((i) => i.id === id))
   .filter((i) => i !== undefined);
 
