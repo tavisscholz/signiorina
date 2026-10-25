@@ -84,7 +84,7 @@ export function ZoneCalculator({
           </div>
         ) : areaId === "other" ? (
           <p className={clsx("text-[0.95rem]", tone === "dark" ? "text-cream/85" : "text-muted")}>
-            Looks like this one is outside our usual route. For events we travel by quote — the Zone C fee plus{" "}
+            Looks like this one is outside our usual route. For events we travel by quote — {formatDollars(zones.find((z) => z.id === "C")!.fee)} plus{" "}
             {formatDollars(beyondZoneC.perMileRoundTrip)} a mile round trip beyond it.{" "}
             <Link href={routes.eventPlanner} className={tone === "dark" ? "text-cream underline" : "text-olive underline"}>
               Ask about an event

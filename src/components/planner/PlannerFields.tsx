@@ -7,7 +7,7 @@ import { Checkbox, Fieldset, SelectField, TextField } from "@/components/ui/Fiel
 import { Badge } from "@/components/ui/Notice";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { getAddOn } from "@/config/catalog";
-import { deliveryAreas, zones } from "@/config/delivery";
+import { deliveryAreas, servedZones } from "@/config/delivery";
 import { eventFees, getWeddingPackage, weddingRules } from "@/config/events";
 import { formatDollars } from "@/lib/money";
 import { plannerAddOnIds, type PlannerState } from "@/lib/planner";
@@ -129,7 +129,7 @@ export function DetailsFields({
           wrapperClassName="sm:col-span-2"
         >
           <option value="">Not sure yet</option>
-          {zones.map((z) => (
+          {servedZones.map((z) => (
             <optgroup key={z.id} label={`${z.label} · ${formatDollars(z.fee)} delivery`}>
               {deliveryAreas
                 .filter((a) => a.zone === z.id)

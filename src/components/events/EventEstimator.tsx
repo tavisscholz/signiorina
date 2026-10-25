@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox, Fieldset, SelectField, TextField } from "@/components/ui/Field";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { addOns } from "@/config/catalog";
-import { beyondZoneC, zones } from "@/config/delivery";
+import { beyondZoneC, servedZones } from "@/config/delivery";
 import { eventFees, grazingTables, weddingPackages, weddingRules } from "@/config/events";
 import { track } from "@/lib/analytics";
 import { businessNow } from "@/lib/dates";
@@ -149,12 +149,12 @@ export function EventEstimator({
             wrapperClassName="sm:col-span-2"
           >
             <option value="">Not sure yet</option>
-            {zones.map((z) => (
+            {servedZones.map((z) => (
               <option key={z.id} value={z.id}>
                 {z.label}: {z.description}
               </option>
             ))}
-            <option value="beyond">Farther afield (travel quoted at {formatDollars(beyondZoneC.perMileRoundTrip)}/mile beyond Zone C)</option>
+            <option value="beyond">Farther afield (travel quoted at {formatDollars(beyondZoneC.perMileRoundTrip)}/mile beyond our zones)</option>
           </SelectField>
         </div>
 

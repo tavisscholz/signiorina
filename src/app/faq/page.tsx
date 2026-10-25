@@ -11,7 +11,7 @@ import { faqJsonLd, pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "FAQ — Ordering, Delivery, Weddings + Corporate",
   description:
-    "How much notice Signiorina needs, where we deliver, delivery windows, cabin delivery, allergies, wedding minimums and corporate route days.",
+    "How much notice Signiorina needs, where we deliver, delivery windows, cabin delivery, allergies, wedding minimums and office lunches.",
   path: "/faq",
 });
 

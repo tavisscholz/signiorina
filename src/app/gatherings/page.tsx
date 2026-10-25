@@ -122,7 +122,7 @@ export default function GatheringsPage() {
             </ul>
             <ul className="mt-6 flex flex-col gap-2 text-[0.92rem] text-cream/80">
               <li className="flex gap-2"><IconCheck size={18} className="mt-0.5 text-prosecco" /> {formatDollars(grazingTables.minimumFood)} food minimum · {grazingTables.leadTimeDays} days&apos; notice</li>
-              <li className="flex gap-2"><IconCheck size={18} className="mt-0.5 text-prosecco" /> Setup {formatDollars(grazingTables.setupFee.A)} (Zones A + B) or {formatDollars(grazingTables.setupFee.C)} (Zone C)</li>
+              <li className="flex gap-2"><IconCheck size={18} className="mt-0.5 text-prosecco" /> Setup {formatDollars(grazingTables.setupFee.A)} in our delivery zones, or {formatDollars(grazingTables.setupFee.C)} beyond them</li>
               <li className="flex gap-2"><IconCheck size={18} className="mt-0.5 text-prosecco" /> Eco plates, napkins, picks, menu + allergen card</li>
             </ul>
             <ButtonLink href="/inquire?type=event&service=generous" variant="light" className="mt-8 self-start" size="lg">

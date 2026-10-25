@@ -1,5 +1,5 @@
 import { addOns, getProduct } from "@/config/catalog";
-import { deliveryWindows, scheduling, zones } from "@/config/delivery";
+import { deliveryWindows, scheduling, servedZones } from "@/config/delivery";
 import { eventFees, grazingTables, weddingPackages, weddingRules } from "@/config/events";
 import { formatDollars } from "@/lib/money";
 
@@ -22,9 +22,6 @@ export interface FaqSection {
   items: FaqItem[];
 }
 
-const zoneA = zones.find((z) => z.id === "A")!;
-const zoneB = zones.find((z) => z.id === "B")!;
-const zoneC = zones.find((z) => z.id === "C")!;
 const windowsText = deliveryWindows.map((w) => `${w.label} (${w.display})`).join(", ");
 const allergenStatement =
   "Vegetarian, pork-free, gluten-conscious and nut-free versions are available on request. Our kitchen handles milk, wheat, tree nuts, peanuts, sesame, soy, eggs and fish, and every product is assembled on shared surfaces with shared equipment. We can leave ingredients off your order, but we can't promise any product is free of allergens. If anyone in your group has a severe allergy, please contact us before you order.";
@@ -71,7 +68,7 @@ export const faqSections: FaqSection[] = [
       {
         id: "where",
         question: "Where do you deliver?",
-        answer: `${zoneA.label}: ${zoneA.description} ${formatDollars(zoneA.fee)}, free over ${formatDollars(zoneA.freeDeliveryAt!)}. ${zoneB.label}: ${zoneB.description} ${formatDollars(zoneB.fee)}, free over ${formatDollars(zoneB.freeDeliveryAt!)}. ${zoneC.label}: ${zoneC.description} ${formatDollars(zoneC.fee)}, or ${formatDollars(zoneC.routeDays!.fee)} on our Tuesday and Thursday route days. Beyond that, we travel for events by quote.`,
+        answer: `${servedZones.map((z) => `${z.label}: ${z.description} ${formatDollars(z.fee)}${z.freeDeliveryAt ? `, free over ${formatDollars(z.freeDeliveryAt)}` : ""}.`).join(" ")} Beyond that, we travel for events by quote.`,
       },
       {
         id: "prices",

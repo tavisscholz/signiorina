@@ -96,23 +96,12 @@ describe("computeDay — capacity", () => {
     expect(core.windows.find((w) => w.id === "morning")?.status).toBe("few-left");
   });
 
-  it("restricts small metro orders to route days and reserves midday for corporate", () => {
-    const wednesday = computeDay("2026-11-11", req({ zoneId: "C" }), ctx());
-    expect(wednesday.status).toBe("route-only");
-    const tuesday = computeDay("2026-11-10", req({ zoneId: "C" }), ctx());
-    expect(tuesday.status).toBe("available");
-    expect(tuesday.windows.find((w) => w.id === "midday")).toMatchObject({ routeStop: true, fee: 2500 });
-    expect(tuesday.windows.find((w) => w.id === "afternoon")?.status).toBe("not-offered");
-
-    const consumerMidday = [booking("2026-11-10", "midday", 3, { zoneId: "C" }), booking("2026-11-10", "midday", 3, { zoneId: "C" })];
-    const consumer = computeDay("2026-11-10", req({ zoneId: "C" }), ctx(consumerMidday));
-    expect(consumer.windows.find((w) => w.id === "midday")?.status).toBe("sold-out");
-    const corporate = computeDay(
-      "2026-11-10",
-      req({ zoneId: "C", isCorporate: true, lines: [{ productId: "pranzo-lunch-box", quantity: 20 }], merchandiseSubtotal: 44000 }),
-      ctx(consumerMidday),
-    );
-    expect(corporate.windows.find((w) => w.id === "midday")).toMatchObject({ status: "few-left", fee: 0 });
+  it("has no route days while they're turned off", () => {
+    for (const zoneId of ["A", "B"] as const) {
+      const tuesday = computeDay("2026-11-10", req({ zoneId }), ctx());
+      expect(tuesday.routeDay).toBe(false);
+      expect(tuesday.windows.some((w) => w.routeStop)).toBe(false);
+    }
   });
 });
 

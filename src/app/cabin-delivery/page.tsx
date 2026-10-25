@@ -10,7 +10,7 @@ import { CTABand, PageHero, ProcessSteps } from "@/components/sections/Sections"
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
 import { getAddOn, getProduct } from "@/config/catalog";
-import { deliveryAreas, deliveryWindows, zones } from "@/config/delivery";
+import { deliveryAreas, deliveryWindows, servedZones } from "@/config/delivery";
 import { leadTimeLabel } from "@/lib/format";
 import { formatDollars } from "@/lib/money";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
@@ -182,7 +182,7 @@ export default function CabinDeliveryPage() {
             lede="We deliver to the cabins, rentals, resorts and towns that surround Great Smoky Mountains National Park. We don't deliver inside the park itself."
           />
           <ul className="mt-8 flex flex-col gap-3 text-[0.95rem]">
-            {zones.map((z) => (
+            {servedZones.map((z) => (
               <li key={z.id} className="border-b border-line pb-3">
                 <span className="font-medium text-olive">{z.label}</span> · {formatDollars(z.fee)}
                 {z.freeDeliveryAt ? `, free over ${formatDollars(z.freeDeliveryAt)}` : ""}

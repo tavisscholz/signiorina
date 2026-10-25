@@ -12,7 +12,7 @@ import { Checkbox, Fieldset, SelectField, TextAreaField, TextField } from "@/com
 import { IconCheck, IconInfo, IconPin } from "@/components/ui/Icons";
 import { Notice } from "@/components/ui/Notice";
 import { getProduct } from "@/config/catalog";
-import { deliveryAreas, deliveryWindows, getArea, scheduling, zones } from "@/config/delivery";
+import { deliveryAreas, deliveryWindows, getArea, scheduling, servedZones, zones } from "@/config/delivery";
 import { track } from "@/lib/analytics";
 import { isBookable, type DayAvailability } from "@/lib/availability";
 import { useCart } from "@/lib/cart-store";
@@ -88,7 +88,7 @@ function AddressStep({
         }}
       >
         <option value="">Choose your area</option>
-        {zones.map((z) => (
+        {servedZones.map((z) => (
           <optgroup key={z.id} label={`${z.label} · ${formatDollars(z.fee)}${z.freeDeliveryAt ? `, free over ${formatDollars(z.freeDeliveryAt)}` : ""}`}>
             {deliveryAreas
               .filter((a) => a.zone === z.id)

@@ -8,11 +8,10 @@ import { FaqList } from "@/components/sections/FaqList";
 import { CTABand, FactList, PageHero } from "@/components/sections/Sections";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
-import { IconCalendar, IconCheck, IconClock, IconTruck } from "@/components/ui/Icons";
+import { IconCheck, IconClock, IconTruck } from "@/components/ui/Icons";
 import { getProduct } from "@/config/catalog";
 import { faqSections } from "@/config/content";
 import { deliveryWindows, zones } from "@/config/delivery";
-import { routeDayNames } from "@/lib/delivery-fees";
 import { leadTimeLabel } from "@/lib/format";
 import { formatDollars } from "@/lib/money";
 import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
@@ -21,7 +20,7 @@ import { routeLabels, routes } from "@/config/journeys";
 export const metadata: Metadata = pageMetadata({
   title: "Corporate Catering — Boxed Lunches + Office Grazing in the Smokies",
   description:
-    "Italian-inspired corporate catering for Sevier County offices: Pranzo Lunch Boxes $22, Office Grazing Spreads $18/guest, gift boxes and a standing lunch program with Tuesday + Thursday route days.",
+    "Italian-inspired corporate catering for Sevier County offices: Pranzo Lunch Boxes $22, Office Grazing Spreads $18/guest, gift boxes and a standing lunch program for teams who order often.",
   path: "/corporate",
 });
 
@@ -44,8 +43,7 @@ export default function CorporatePage() {
   const large = getProduct("gathering-board-large")!;
   const gift = getProduct("gift-box")!;
   const zoneA = zones.find((z) => z.id === "A")!;
-  const zoneC = zones.find((z) => z.id === "C")!;
-  const route = zoneC.routeDays!;
+  const zoneB = zones.find((z) => z.id === "B")!;
   const midday = deliveryWindows.find((w) => w.id === "midday")!;
   const corporateFaq = faqSections.find((s) => s.id === "corporate")!.items;
 
@@ -170,30 +168,19 @@ export default function CorporatePage() {
         <div className="platter-bottom absolute inset-x-0 -bottom-10 h-12 bg-olive" aria-hidden="true" />
       </section>
 
-      <section className="container-page grid gap-12 pb-20 pt-28 md:pt-36 lg:grid-cols-12" aria-labelledby="route-title">
+      <section className="container-page grid gap-12 pb-20 pt-28 md:pt-36 lg:grid-cols-12" aria-labelledby="office-delivery-title">
         <div className="lg:col-span-5">
-          <SectionHeading eyebrow="Route days" title={<span id="route-title">{routeDayNames("C", false, " & ")}.</span>} size="md" />
+          <SectionHeading eyebrow="Office delivery" title={<span id="office-delivery-title">Delivered for lunch.</span>} size="md" />
           <p className="mt-5 text-muted">
-            {zoneC.label} offices get our best pricing on route days, when we batch deliveries in the morning and midday
-            windows.
+            Boxed lunches and spreads arrive in the midday window, any weekday, with every delivery fee shown before you pay.
           </p>
           <PriceOval tone="olive" className="mt-8 px-7 py-5 text-[1.4rem]">
-            {formatDollars(route.fee)} route delivery
+            Delivery from {formatDollars(zoneA.fee)}
           </PriceOval>
         </div>
         <div className="lg:col-span-7">
           <FactList
             facts={[
-              {
-                icon: <IconTruck size={20} />,
-                title: `Free over ${formatDollars(route.corporateFreeDeliveryAt)}`,
-                body: `Corporate orders on ${routeDayNames()} route days ship free at ${formatDollars(route.corporateFreeDeliveryAt)}+. Otherwise ${formatDollars(route.fee)}.`,
-              },
-              {
-                icon: <IconCalendar size={20} />,
-                title: "Other days",
-                body: `${formatDollars(zoneC.fee)} delivery for ${zoneC.label} orders over ${formatDollars(zoneC.offRouteMinimumSubtotal!)}.`,
-              },
               {
                 icon: <IconClock size={20} />,
                 title: "Lunch window",
@@ -201,8 +188,13 @@ export default function CorporatePage() {
               },
               {
                 icon: <IconTruck size={20} />,
-                title: "Sevier County offices",
-                body: `${zoneA.label}: ${formatDollars(zoneA.fee)}, free over ${formatDollars(zoneA.freeDeliveryAt!)}, any weekday.`,
+                title: zoneA.label,
+                body: `${zoneA.description} ${formatDollars(zoneA.fee)}, free over ${formatDollars(zoneA.freeDeliveryAt!)}.`,
+              },
+              {
+                icon: <IconTruck size={20} />,
+                title: zoneB.label,
+                body: `${zoneB.description} ${formatDollars(zoneB.fee)}, free over ${formatDollars(zoneB.freeDeliveryAt!)}.`,
               },
             ]}
           />

@@ -12,7 +12,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui/Notice";
 import { activeProducts, getProduct, getProductBySlug } from "@/config/catalog";
 import { ALLERGEN_STATEMENT } from "@/config/content";
-import { deliveryWindows, zones } from "@/config/delivery";
+import { deliveryWindows, servedZones } from "@/config/delivery";
 import { getMedia } from "@/config/media";
 import { routeDayNames } from "@/lib/delivery-fees";
 import { leadTimeLabel, priceLabel } from "@/lib/format";
@@ -139,7 +139,7 @@ async function ProductDetail({ params }: { params: PageProps<"/order/[slug]">["p
             </ul>
             <h2 className="display-sm mt-10 text-olive">Delivery</h2>
             <ul className="mt-4 space-y-2 text-[0.95rem] text-muted">
-              {zones.map((z) => (
+              {servedZones.map((z) => (
                 <li key={z.id}>
                   <span className="text-espresso">{z.label}:</span> {formatDollars(z.fee)}
                   {z.freeDeliveryAt ? `, free over ${formatDollars(z.freeDeliveryAt)}` : ""}

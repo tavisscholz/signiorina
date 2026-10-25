@@ -26,26 +26,21 @@ export const zones: DeliveryZone[] = [
     id: "B",
     name: "Mountain",
     label: "Zone B — Mountain",
-    description: "Gatlinburg, Wears Valley, Cobbly Nob and the Cosby side, Chalet Village and Dandridge.",
+    description: "Gatlinburg, Wears Valley, Cobbly Nob and the Cosby side, Chalet Village, Dandridge and Newport.",
     fee: 60,
     freeDeliveryAt: 500,
   },
   {
+    // Not served while its areas are paused (see pausedAreaIds), so it's hidden from every
+    // customer-facing list (servedZones). Its fee still prices event travel beyond our zones.
+    // The Tue + Thu route days ($25; corporate free over $350; off-route minimum $350) were
+    // turned off with the pause — restore them from git history along with the areas.
     id: "C",
-    name: "Newport",
-    label: "Zone C — Newport",
-    description: "Newport, in Cocke County.",
+    name: "Zone C",
+    label: "Zone C",
+    description: "",
     fee: 100,
     freeDeliveryAt: null,
-    routeDays: {
-      weekdays: [2, 4],
-      fee: 25,
-      corporateFreeDeliveryAt: 350,
-      windows: ["morning", "midday"],
-      label: "Tuesday + Thursday route",
-    },
-    /** Single off-route Zone C stops below this subtotal aren't economic, so they aren't offered online. */
-    offRouteMinimumSubtotal: 350,
   },
 ];
 
@@ -71,7 +66,7 @@ const allDeliveryAreas: DeliveryArea[] = [
   { id: "farragut", name: "Farragut", city: "Farragut", county: "Knox", zone: "C", zips: ["37922", "37934"] },
   { id: "maryville-alcoa", name: "Maryville / Alcoa", city: "Maryville", county: "Blount", zone: "C", zips: ["37701", "37801", "37802", "37803", "37804"] },
   { id: "townsend", name: "Townsend", city: "Townsend", county: "Blount", zone: "C", zips: ["37882"], cabinCountry: true },
-  { id: "newport", name: "Newport", city: "Newport", county: "Cocke", zone: "C", zips: ["37821", "37822"] },
+  { id: "newport", name: "Newport", city: "Newport", county: "Cocke", zone: "B", zips: ["37821", "37822"] },
 ];
 
 /**
@@ -82,6 +77,9 @@ const allDeliveryAreas: DeliveryArea[] = [
 export const pausedAreaIds: readonly string[] = ["knoxville", "farragut", "maryville-alcoa", "townsend"];
 
 export const deliveryAreas: DeliveryArea[] = allDeliveryAreas.filter((a) => !pausedAreaIds.includes(a.id));
+
+/** Zones with at least one area we deliver to — the only ones customers see. */
+export const servedZones: DeliveryZone[] = zones.filter((z) => deliveryAreas.some((a) => a.zone === z.id));
 
 /** Beyond Zone C: events only, quoted manually. Never offered as automatic delivery. */
 export const beyondZoneC = {
@@ -105,7 +103,7 @@ export const deliveryWindows: DeliveryWindow[] = [
     start: "11:00",
     end: "12:30",
     display: "11:00 AM–12:30 PM",
-    uses: ["Corporate lunches", "Offices", "Route days"],
+    uses: ["Corporate lunches", "Offices"],
   },
   {
     id: "afternoon",

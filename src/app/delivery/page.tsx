@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/brand/SectionHeading";
 import { ZoneCalculator } from "@/components/commerce/ZoneCalculator";
 import { CTABand } from "@/components/sections/Sections";
 import { activeProducts } from "@/config/catalog";
-import { beyondZoneC, deliveryAreas, deliveryWindows, holidays, scheduling, zones } from "@/config/delivery";
+import { beyondZoneC, deliveryAreas, deliveryWindows, getZone, holidays, scheduling, servedZones } from "@/config/delivery";
 import { eventFees, grazingTables } from "@/config/events";
 import { routeDayNames } from "@/lib/delivery-fees";
 import { leadTimeLabel } from "@/lib/format";
@@ -14,7 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Delivery Areas + Fees — Sevierville, Pigeon Forge + Gatlinburg",
-  description: `Every Signiorina delivery fee, published: ${zones.map((z) => `Zone ${z.id} ${formatDollars(z.fee)}`).join(", ")} or ${formatDollars(zones.find((z) => z.routeDays)!.routeDays!.fee)} on Tuesday + Thursday route days. Delivery windows, lead times, holiday rules and minimums.`,
+  description: `Every Signiorina delivery fee, published: ${servedZones.map((z) => `Zone ${z.id} ${formatDollars(z.fee)}`).join(", ")}. Delivery windows, lead times, holiday rules and minimums.`,
   path: "/delivery",
 });
 
@@ -58,7 +58,7 @@ export default function DeliveryPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
-                {zones.map((z) => (
+                {servedZones.map((z) => (
                   <tr key={z.id} className="align-top">
                     <th scope="row" className="px-5 py-4 font-normal">
                       <span className="font-display text-[1.2rem] text-olive">{z.label}</span>
@@ -84,20 +84,18 @@ export default function DeliveryPage() {
                 ))}
                 <tr className="align-top">
                   <th scope="row" className="px-5 py-4 font-normal">
-                    <span className="font-display text-[1.2rem] text-olive">Beyond Zone C</span>
+                    <span className="font-display text-[1.2rem] text-olive">Beyond our zones</span>
                     <span className="mt-1 block text-[0.88rem] text-muted">Events only, by quote</span>
                   </th>
                   <td className="px-5 py-4" colSpan={2}>
-                    Zone C fee + {formatDollars(beyondZoneC.perMileRoundTrip)}/mile round trip beyond the boundary
+                    {formatDollars(getZone("C").fee)} + {formatDollars(beyondZoneC.perMileRoundTrip)}/mile round trip beyond the boundary
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="mt-4 text-[0.9rem] text-muted">
-            Zone C orders under {formatDollars(zones.find((z) => z.id === "C")!.offRouteMinimumSubtotal!)} travel on our{" "}
-            {routeDayNames()} route. We deliver to towns, cabins, venues and resorts around Great Smoky Mountains National Park —
-            not inside the park.
+            We deliver to towns, cabins, venues and resorts around Great Smoky Mountains National Park — not inside the park.
           </p>
         </div>
         <div className="lg:col-span-5">
@@ -157,7 +155,7 @@ export default function DeliveryPage() {
             ["Online delivery minimum", formatDollars(scheduling.minimumOrder)],
             ["Rush (inside 48 hours, if there's room)", formatDollars(scheduling.rush.fee)],
             ["Holiday preorder fee", formatDollars(holidays[0].directOrderFee)],
-            ["Grazing table setup (Zones A + B / Zone C)", `${formatDollars(grazingTables.setupFee.A)} / ${formatDollars(grazingTables.setupFee.C)}`],
+            ["Grazing table setup (our zones / beyond)", `${formatDollars(grazingTables.setupFee.A)} / ${formatDollars(grazingTables.setupFee.C)}`],
             ["Serving-piece pickup (next day / same night)", `${formatDollars(eventFees.pickup.nextDay)} / ${formatDollars(eventFees.pickup.sameNight)}`],
             ["Event attendant", `${formatDollars(eventFees.attendant.hourly)}/hr, ${eventFees.attendant.minimumHours}-hr minimum`],
             ["Events on federal holidays", `+${eventFees.federalHolidayFoodPercent}% food`],

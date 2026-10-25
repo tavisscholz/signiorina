@@ -11,7 +11,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { IconCheck, IconPlus } from "@/components/ui/Icons";
 import { Badge } from "@/components/ui/Notice";
 import { getAddOn } from "@/config/catalog";
-import { zones } from "@/config/delivery";
+import { servedZones } from "@/config/delivery";
 import { eventFees, eventPackages, grazingTables } from "@/config/events";
 import { flags } from "@/config/flags";
 import { eventPackageViews } from "@/lib/event-packages";
@@ -107,11 +107,11 @@ export default function EventsPage() {
                   <ul className="mt-2 flex flex-col gap-1.5 text-[0.9rem] text-muted">
                     <li className="flex gap-2">
                       <IconPlus size={16} className="mt-0.5 shrink-0" /> Setup + styling {formatDollars(grazingTables.setupFee.A)}{" "}
-                      (Zones A + B) or {formatDollars(grazingTables.setupFee.C)} (Zone C)
+                      in our delivery zones, or {formatDollars(grazingTables.setupFee.C)} beyond them
                     </li>
                     <li className="flex gap-2">
                       <IconPlus size={16} className="mt-0.5 shrink-0" /> Delivery{" "}
-                      {zones.map((z) => formatDollars(z.fee)).join(" / ")} by zone, plus tax
+                      {servedZones.map((z) => formatDollars(z.fee)).join(" / ")} by zone, plus tax
                     </li>
                   </ul>
 

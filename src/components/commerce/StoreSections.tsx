@@ -6,8 +6,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { IconCalendar, IconClock, IconTruck } from "@/components/ui/Icons";
 import { addOns } from "@/config/catalog";
 import { ALLERGEN_STATEMENT } from "@/config/content";
-import { deliveryWindows, scheduling, zones } from "@/config/delivery";
-import { routeDayNames } from "@/lib/delivery-fees";
+import { deliveryWindows, scheduling, servedZones } from "@/config/delivery";
 import { formatDollars } from "@/lib/money";
 
 /** Delivery fees, windows and lead time — the store's three facts. */
@@ -17,9 +16,8 @@ export function StoreFacts({ className = "mt-10" }: { className?: string }) {
       <li className="flex items-start gap-3">
         <IconTruck size={20} className="mt-0.5 shrink-0 text-olive" />
         <span>
-          Delivery {zones.map((z) => `${formatDollars(z.fee)}`).join(" / ")} by zone · free over{" "}
-          {formatDollars(zones[0].freeDeliveryAt!)} nearby · {formatDollars(zones[2].routeDays!.fee)} on Zone C route days (
-          {routeDayNames("C", true)}).{" "}
+          Delivery {servedZones.map((z) => `${formatDollars(z.fee)}`).join(" / ")} by zone · free over{" "}
+          {formatDollars(servedZones[0].freeDeliveryAt!)} nearby.{" "}
           <Link href="/delivery" className="text-olive underline underline-offset-4">
             See areas
           </Link>

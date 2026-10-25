@@ -162,7 +162,7 @@ describe("estimate hand-off", () => {
 
   it("maps an area to its delivery zone and 'somewhere else' to quoted travel", () => {
     expect(zoneForArea("gatlinburg")).toBe("B");
-    expect(zoneForArea("newport")).toBe("C");
+    expect(zoneForArea("newport")).toBe("B");
     // Paused areas are not offered anywhere.
     expect(zoneForArea("knoxville")).toBeUndefined();
     expect(zoneForArea("other")).toBe("beyond");

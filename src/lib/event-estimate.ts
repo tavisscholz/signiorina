@@ -1,5 +1,5 @@
 import { getAddOn } from "@/config/catalog";
-import { beyondZoneC, getZone, tax, zones } from "@/config/delivery";
+import { beyondZoneC, getZone, servedZones, tax } from "@/config/delivery";
 import { eventFees, getWeddingPackage, grazingTables, weddingRules } from "@/config/events";
 import { daysBetween, monthOf, weekdayOf } from "@/lib/dates";
 import { federalHolidayOn } from "@/lib/holidays";
@@ -182,7 +182,7 @@ export function estimateEvent(input: EventEstimateInput): EventEstimate | null {
   } else if (zone) {
     lines.push({ id: "delivery", label: `Delivery · ${getZone(zone).label}`, amount: toCents(getZone(zone).fee), kind: "delivery" });
   } else {
-    const fees = zones.map((z) => z.fee);
+    const fees = servedZones.map((z) => z.fee);
     notes.push(`Delivery is ${formatDollars(Math.min(...fees))}–${formatDollars(Math.max(...fees))} depending on where you're gathering.`);
   }
 
@@ -197,7 +197,7 @@ export function estimateEvent(input: EventEstimateInput): EventEstimate | null {
       });
     } else {
       notes.push(
-        `Setup is ${formatDollars(grazingTables.setupFee.A)} in Zones A and B, ${formatDollars(grazingTables.setupFee.C)} in Zone C.`,
+        `Setup is ${formatDollars(grazingTables.setupFee.A)} in our delivery zones, ${formatDollars(grazingTables.setupFee.C)} beyond them.`,
       );
     }
     if (input.servingPieceRental) {

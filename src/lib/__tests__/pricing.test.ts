@@ -112,21 +112,19 @@ describe("priceCart — delivery, fees and tax", () => {
     expect(b3.delivery.fee).toBe(0);
   });
 
-  it("uses Zone C route pricing on Tuesday/Thursday and blocks small off-route stops", () => {
-    const route = at({ areaId: "newport", date: "2026-11-10", windowId: "midday" }, [line("box-for-two", 1)]);
-    expect(route.delivery.fee).toBe(2500);
-    expect(route.canCheckout).toBe(true);
-    expect(route.taxRate).toBe(0.0975);
-
-    const offRoute = at({ areaId: "newport", date: "2026-11-11", windowId: "midday" }, [line("box-for-two", 1)]);
-    expect(offRoute.delivery.fee).toBe(10000);
-    expect(issueCodes(offRoute)).toContain("off-route-minimum");
-
+  it("delivers Newport as Zone B on any weekday, with no route-day pricing", () => {
+    const tuesday = at({ areaId: "newport", date: "2026-11-10", windowId: "midday" }, [line("box-for-two", 1)]);
+    const wednesday = at({ areaId: "newport", date: "2026-11-11", windowId: "midday" }, [line("box-for-two", 1)]);
+    for (const p of [tuesday, wednesday]) {
+      expect(p.delivery.fee).toBe(6000);
+      expect(p.canCheckout).toBe(true);
+      expect(p.taxRate).toBe(0.0975);
+    }
     const corporate = at({ areaId: "newport", date: "2026-11-10", windowId: "midday" }, [
       line("pranzo-lunch-box", 16, { variantId: "classic" }),
     ]);
     expect(corporate.isCorporate).toBe(true);
-    expect(corporate.delivery.fee).toBe(0);
+    expect(corporate.delivery.fee).toBe(6000);
   });
 
   it("adds the rush fee inside 48 hours and the holiday fee on holiday dates", () => {
