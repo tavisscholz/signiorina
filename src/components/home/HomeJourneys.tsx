@@ -45,14 +45,9 @@ export function HomeJourneys() {
           <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-10">
             {/* Visible from the first frame (see .hero-enter). */}
             <div className="hero-enter lg:col-span-7">
-              <p className="eyebrow hidden items-center gap-3 text-olive-soft sm:flex">
-                <span>Modern Aperitivo</span>
-                <span aria-hidden="true" className="h-px w-6 bg-olive/40" />
-                <span>Mobile charcuterie + hospitality</span>
-              </p>
               <h1
                 id="home-title"
-                className="font-display text-[min(12vw,3rem)] leading-[0.98] tracking-[-0.01em] text-olive sm:mt-5 sm:text-[clamp(2.8rem,6.4vw,5.6rem)]"
+                className="font-display text-[min(12vw,3rem)] leading-[0.98] tracking-[-0.01em] text-olive sm:text-[clamp(2.8rem,7.4vw,6.6rem)]"
               >
                 Charcuterie{" "}
                 <span className={`${script.className} block text-[1.02em] leading-[1.18] tracking-normal`}>Beautifully Done</span>
@@ -66,10 +61,11 @@ export function HomeJourneys() {
               style={{ ["--hero-delay" as string]: "150ms" }}
             >
               {/* Irina's oval, full height of the hero image column. On smaller laptops it sits on the right edge; from
-                  xl the sign-off starts 8rem after "Beautifully Done" and the oval follows it. The offset is measured
-                  from this column's start: headline width (7em of the clamped h1 size) + 8rem gap + sign-off and its
-                  margin (10.2rem), minus where this column begins (7/12 of the 88rem container, gaps included). */}
-              <div className="absolute right-0 top-0 h-full w-[15.2rem] xl:left-[calc(min(44.8vw,39.2rem)_+_18.2rem_-_(min(100vw,88rem)_-_33.5rem)_*_7_/_12_-_17.5rem)] xl:right-auto">
+                  xl the sign-off starts 6rem after "Beautifully Done" and the oval follows it. The offset is measured
+                  from this column's start: headline width (7em of the clamped h1 size) + 6rem gap + sign-off and its
+                  margin (10.2rem), minus where this column begins (7/12 of the 88rem container, gaps included). Keep
+                  the 7em term in step with the h1's font size. */}
+              <div className="absolute right-0 top-0 h-full w-[15.2rem] xl:left-[min(calc(min(51.8vw,46.2rem)_+_16.2rem_-_(min(100vw,88rem)_-_33.5rem)_*_7_/_12_-_17.5rem),calc(100%_-_15.2rem))] xl:right-auto">
                 <Photo
                   media="irina"
                   shape="oval"
