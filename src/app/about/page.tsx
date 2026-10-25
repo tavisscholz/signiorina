@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
 
 import { Photo } from "@/components/brand/Photo";
+import { Signature } from "@/components/brand/Signature";
 import { CTABand } from "@/components/sections/Sections";
 import { ButtonLink } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Notice";
 import { routeLabels, routes } from "@/config/journeys";
-import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "About Chef Irina",
   description:
-    "Meet Chef Irina, the chef behind Signiorina — modern Italian-inspired hospitality for Smoky Mountain weddings, gatherings and everyday tables.",
+    "Chef Irina spent fifteen years in the kitchens of Baltimore's Little Italy. Meet the chef behind Signiorina's Italian-inspired tables in the Smokies.",
   path: "/about",
 });
 
-/**
- * About is about Chef Irina. The story is Irina's to tell: until it's supplied, the live page
- * introduces Irina and nothing more, and the story block shows only as a labelled placeholder
- * in development. (Signiorina's own story and standards now live in the FAQ.)
- */
+/** About is about Chef Irina, in the owner's words. (Signiorina's own story and standards live in the FAQ.) */
 export default function AboutPage() {
   return (
     <>
@@ -47,18 +42,19 @@ export default function AboutPage() {
             everyday tables.
           </p>
 
-          {site.showPlaceholders ? (
-            <div className="relative mt-10 rounded-[1.5rem] border border-dashed border-olive/30 bg-paper p-7">
-              <Badge tone="fig" className="absolute -top-3 left-6">
-                Placeholder — Irina&apos;s story to come
-              </Badge>
-              <p className="text-muted">
-                Reserved for Irina&apos;s story, in Irina&apos;s own words: how the cooking started, the hospitality background,
-                why Italian hosting, why the Smokies, any training or credentials worth sharing, and a favorite thing to put on
-                the table. Hidden on the live site until supplied.
-              </p>
-            </div>
-          ) : null}
+          <div className="mt-8 flex max-w-xl flex-col gap-5 text-[1.05rem] leading-relaxed text-espresso/85">
+            <p>
+              Chef Irina spent fifteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
+              cooking starts with paying attention. She notices what people need, what a dish is missing, and what makes a
+              table feel like home.
+            </p>
+            <p>
+              Her palate is patient and precise, built on years of tasting, adjusting, and tasting again. She trusts simple
+              ingredients treated with respect, and she cooks with the person on the other side of the plate in mind. Every
+              bite is meant to feel intentional and cared for, so guests leave feeling looked after.
+            </p>
+          </div>
+          <Signature className="ml-2 mt-6 inline-block text-right text-[2rem] md:text-[2.3rem]" />
 
           <p className="mt-10 text-[1.05rem] text-muted">We&apos;d love to feed your next gathering.</p>
           <div className="mt-5 flex flex-wrap gap-3">

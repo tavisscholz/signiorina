@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Photo } from "@/components/brand/Photo";
 import { SectionHeading } from "@/components/brand/SectionHeading";
+import { Signature } from "@/components/brand/Signature";
 import { ProductCard } from "@/components/commerce/ProductCard";
 import { ZoneCalculator } from "@/components/commerce/ZoneCalculator";
 import { JourneyCards } from "@/components/journeys/JourneyCards";
@@ -72,12 +73,7 @@ export function HomeJourneys() {
                   position="50% 30%"
                 />
                 {/* A handwritten sign-off beside the oval. */}
-                <p
-                  className={`${script.className} absolute bottom-[16%] right-full mr-3 -rotate-6 whitespace-nowrap text-right text-[1.55rem] leading-[1.05] text-olive xl:mr-5 xl:text-[1.95rem]`}
-                >
-                  Con Amore
-                  <span className="block pr-1 text-[0.82em]">– Chef Irina</span>
-                </p>
+                <Signature className="absolute bottom-[16%] right-full mr-3 text-right text-[1.8rem] xl:mr-5 xl:text-[2.2rem]" />
               </div>
             </div>
           </div>
@@ -229,22 +225,10 @@ export function HomeJourneys() {
           </Reveal>
           <Reveal delay={120} className="lg:col-span-7">
             <SectionHeading eyebrow="Who we are" title={<span id="meet-irina">Meet Chef Irina.</span>} />
-            {site.showPlaceholders ? (
-              <div className="relative mt-8 rounded-[1.5rem] border border-dashed border-olive/30 bg-paper p-7">
-                <Badge tone="fig" className="absolute -top-3 left-6">
-                  Placeholder — story + credentials to come
-                </Badge>
-                <p className="text-muted">
-                  Reserved for Irina&apos;s story, in Irina&apos;s own words — the hospitality background, why Italian
-                  hosting, why the Smokies — plus any training or credentials worth sharing. Hidden on the live site until
-                  supplied.
-                </p>
-              </div>
-            ) : (
-              <p className="mt-6 text-[1.05rem] text-muted">
-                Signiorina serves the Smokies and Knoxville. We&apos;d love to feed your next gathering.
-              </p>
-            )}
+            <p className="mt-6 max-w-xl text-[1.05rem] text-muted">
+              Chef Irina spent fifteen years in the kitchens of Baltimore&rsquo;s Little Italy, where she learned that good
+              cooking starts with paying attention.
+            </p>
             <ButtonLink href="/about" variant="text" className="mt-8">
               About Chef Irina
             </ButtonLink>
