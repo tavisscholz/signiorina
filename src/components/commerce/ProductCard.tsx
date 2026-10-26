@@ -7,7 +7,16 @@ import { QuickAddButton } from "@/components/commerce/QuickAddButton";
 import { Badge } from "@/components/ui/Notice";
 import { getDietaryOption } from "@/config/catalog";
 import { leadTimeLabel, priceLabel } from "@/lib/format";
+import { formatDollars } from "@/lib/money";
 import type { Product } from "@/lib/types";
+
+/** What each chip's hover explainer says after the option's name. */
+function dietaryNote(product: Product, id: string): string {
+  if (id === "gluten-conscious") {
+    return `+${formatDollars(product.glutenConsciousFee)}${product.priceUnit === "person" ? "/guest" : ""}`;
+  }
+  return "no charge";
+}
 
 export function DietaryIndicator({ product, className, dark = false }: { product: Product; className?: string; dark?: boolean }) {
   if (product.dietaryOptions.length === 0) return null;
@@ -17,14 +26,30 @@ export function DietaryIndicator({ product, className, dark = false }: { product
       {product.dietaryOptions.map((id) => {
         const option = getDietaryOption(id)!;
         return (
-          <abbr
-            key={id}
-            title={option.label}
-            className="rounded-full bg-pistachio-soft px-2 py-0.5 font-medium tracking-wide text-olive-deep no-underline"
-          >
-            <span aria-hidden="true">{option.short}</span>
-            <span className="sr-only">{option.label}</span>
-          </abbr>
+          // Hover explainer: screen readers get the full name from the sr-only text instead,
+          // and Esc hides it (see TipDismiss).
+          <span key={id} className="group/tip relative inline-flex">
+            <span className="cursor-help rounded-full bg-pistachio-soft px-2 py-0.5 font-medium tracking-wide text-olive-deep">
+              <span aria-hidden="true">{option.short}</span>
+              <span className="sr-only">{option.label}</span>
+            </span>
+            {/* pb-2 bridges the gap so the pointer can move onto the explainer without losing it. */}
+            <span
+              aria-hidden="true"
+              className="tip invisible absolute bottom-full left-0 z-20 translate-y-1 pb-2 opacity-0 transition-[opacity,transform,visibility] duration-200 ease-[var(--ease-soft)] group-hover/tip:visible group-hover/tip:translate-y-0 group-hover/tip:opacity-100"
+            >
+              <span
+                className={clsx(
+                  "relative block whitespace-nowrap rounded-full px-3 py-1 text-[0.72rem] font-medium tracking-wide shadow-[var(--shadow-card)]",
+                  dark ? "bg-cream text-espresso" : "bg-espresso text-cream",
+                )}
+              >
+                {option.label}
+                <span className={dark ? "text-espresso/70" : "text-cream/70"}> · {dietaryNote(product, id)}</span>
+                <span className={clsx("absolute left-3 top-full border-4 border-transparent", dark ? "border-t-cream" : "border-t-espresso")} />
+              </span>
+            </span>
+          </span>
         );
       })}
       <span aria-hidden="true" className="ml-0.5">options</span>

@@ -12,10 +12,14 @@ import { formatDollars } from "@/lib/money";
 export interface FaqItem {
   id: string;
   question: string;
-  /** Closing paragraph; optional when `points` say it all. */
-  answer?: string;
+  /** Paragraph shown before `points`. */
+  intro?: string;
   /** Optional list shown above `answer`: "lead: text", or with `block` the text on its own line. */
   points?: Array<{ lead: string; text: string; block?: boolean }>;
+  /** "paragraphs" sets each point as its own paragraph instead of a bullet. */
+  pointsStyle?: "bullets" | "paragraphs";
+  /** Closing paragraph; optional when `points` say it all. */
+  answer?: string;
   clientInput?: boolean;
 }
 
@@ -25,14 +29,12 @@ export interface FaqSection {
   items: FaqItem[];
 }
 
-const windowsText = deliveryWindows.map((w) => `${w.label} (${w.display})`).join(", ");
 const allergenStatement =
   "Vegetarian, pork-free, gluten-conscious and nut-free versions are available on request. Our kitchen handles milk, wheat, tree nuts, peanuts, sesame, soy, eggs and fish, and every product is assembled on shared surfaces with shared equipment. We can leave ingredients off your order, but we can't promise any product is free of allergens. If anyone in your group has a severe allergy, please contact us before you order.";
 
 export const ALLERGEN_STATEMENT = allergenStatement;
 
-const [aperitivo, gathering, hosted] = weddingPackages;
-const smallestBox = getProduct("aperitivo-box");
+const [, gathering, hosted] = weddingPackages;
 const attendant = addOns.find((a) => a.id === "event-attendant")!;
 
 export const faqSections: FaqSection[] = [
@@ -110,7 +112,8 @@ export const faqSections: FaqSection[] = [
       {
         id: "times",
         question: "What delivery times are available?",
-        answer: `Three windows a day: ${windowsText}. We'll have your order on its way during the window you pick — we can't promise an exact minute.`,
+        points: deliveryWindows.map((w) => ({ lead: w.label, text: w.display })),
+        answer: "We’ll send your order out during your selected window. Exact arrival times vary.",
       },
       {
         id: "sundays",
@@ -148,7 +151,15 @@ export const faqSections: FaqSection[] = [
       {
         id: "contents",
         question: "What comes in the boxes?",
-        answer: `Whether it's ${smallestBox ? `a ${formatDollars(smallestBox.price)} box` : "a box for one"} or a wedding for eighty, every build carries the same five signatures, so it always tastes — and looks — like us: prosciutto and a salame (finocchiona or soppressata alongside the prosciutto); parmigiano and a soft cheese (chunks of the good stuff, and something creamy beside it); focaccia or grissini (bread worth tearing, next to the crackers); antipasti (Castelvetrano olives, marinated artichoke, roasted peppers); and dolce, fruit and herbs (amaretti, biscotti or chocolate, with seasonal fruit, rosemary and basil). Each product page lists what's typically inside — fruit and a few pieces change with the season.`,
+        intro: "Five signatures shape our grazing:",
+        points: [
+          { lead: "Meats", text: "Prosciutto with finocchiona or soppressata." },
+          { lead: "Cheeses", text: "Parmigiano and a soft cheese." },
+          { lead: "Bread", text: "Focaccia or grissini, plus crackers." },
+          { lead: "Antipasti", text: "Castelvetrano olives, marinated artichokes & roasted peppers." },
+          { lead: "Finishing touches", text: "Amaretti, biscotti or chocolate, seasonal fruit, rosemary & basil." },
+        ],
+        answer: "Contents vary by product and season. See each product page for details.",
       },
       {
         id: "customize",
@@ -164,7 +175,18 @@ export const faqSections: FaqSection[] = [
       {
         id: "allergies",
         question: "Do you accommodate allergies?",
-        answer: allergenStatement,
+        pointsStyle: "paragraphs",
+        points: [
+          {
+            lead: "Dietary options",
+            text: "Vegetarian, pork-free, gluten-conscious and no-added-nuts options are available on request.",
+          },
+          {
+            lead: "Allergy notice",
+            text: "We use shared surfaces and equipment in a kitchen that handles milk, wheat, tree nuts, peanuts, sesame, soy, eggs & fish. Ingredients can be omitted, but no product is guaranteed allergen-free.",
+          },
+          { lead: "Severe allergies", text: "Contact us before ordering." },
+        ],
       },
       {
         id: "gluten",
@@ -191,7 +213,11 @@ export const faqSections: FaqSection[] = [
       {
         id: "minimum",
         question: "What is the minimum?",
-        answer: `${aperitivo.name}: ${formatDollars(aperitivo.minimumFood)} food minimum. ${gathering.name}: ${formatDollars(gathering.minimumFood)}, or ${formatDollars(gathering.peakSaturdayMinimum!)} on peak Saturdays. ${hosted.name}: ${formatDollars(hosted.minimumFood)}, or ${formatDollars(hosted.peakSaturdayMinimum!)} on peak Saturdays. Delivery and tax are added separately.`,
+        points: weddingPackages.map((p) => ({
+          lead: p.name,
+          text: `${formatDollars(p.minimumFood)}${p.peakSaturdayMinimum ? ` · ${formatDollars(p.peakSaturdayMinimum)} on peak Saturdays` : ""}.`,
+        })),
+        answer: "These are food minimums. Delivery and tax are additional.",
       },
       {
         id: "included",

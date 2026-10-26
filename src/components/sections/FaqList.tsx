@@ -25,7 +25,16 @@ export function FaqList({ items, className }: { items: FaqItem[]; className?: st
                 Awaiting owner confirmation
               </Badge>
             ) : null}
-            {item.points ? (
+            {item.intro ? <p className="mb-3">{item.intro}</p> : null}
+            {item.points && item.pointsStyle === "paragraphs" ? (
+              <div className="space-y-3">
+                {item.points.map((p) => (
+                  <p key={p.lead}>
+                    <span className="font-medium text-espresso">{p.lead}:</span> {p.text}
+                  </p>
+                ))}
+              </div>
+            ) : item.points ? (
               <ul className="mb-3 list-disc space-y-1.5 pl-5 marker:text-olive/50">
                 {item.points.map((p) => (
                   <li key={p.lead}>

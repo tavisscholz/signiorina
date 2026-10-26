@@ -135,7 +135,7 @@ export function productJsonLd(product: Product, imageUrl?: string) {
 }
 
 export function faqJsonLd(
-  items: Array<{ question: string; answer?: string; points?: Array<{ lead: string; text: string; block?: boolean }> }>,
+  items: Array<{ question: string; intro?: string; answer?: string; points?: Array<{ lead: string; text: string; block?: boolean }> }>,
 ) {
   return {
     "@context": "https://schema.org",
@@ -145,7 +145,7 @@ export function faqJsonLd(
       name: i.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: [...(i.points ?? []).map((p) => `${p.lead}${p.block ? "." : ":"} ${p.text}`), i.answer].filter(Boolean).join(" "),
+        text: [i.intro, ...(i.points ?? []).map((p) => `${p.lead}${p.block ? "." : ":"} ${p.text}`), i.answer].filter(Boolean).join(" "),
       },
     })),
   };

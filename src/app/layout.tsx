@@ -7,6 +7,7 @@ import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader, SiteHeaderView } from "@/components/layout/SiteHeader";
 import { StoreHydrator } from "@/components/providers/StoreHydrator";
+import { TipDismiss } from "@/components/ui/TipDismiss";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { indexable } from "@/config/indexing";
 import { site } from "@/config/site";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <StoreHydrator />
+        <TipDismiss />
         {/* Path-aware chrome sits in Suspense so routes with request-time params still prerender. */}
         <Suspense fallback={<SiteHeaderView pathname={null} />}>
           <SiteHeader />

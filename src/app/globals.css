@@ -442,6 +442,12 @@
   .animate-pop {
     animation: pop 0.45s var(--ease-soft);
   }
+
+  /* Esc dismisses hover explainers until the pointer moves (TipDismiss). */
+  [data-tips-hidden] .tip {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
