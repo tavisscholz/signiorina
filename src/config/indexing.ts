@@ -3,21 +3,14 @@
  * sitemap. Relative imports only: next.config.ts loads this file.
  */
 
-/** Vercel names the deployment type; off Vercel (local builds, other hosts) it's unset. */
+/** Vercel names the deployment type; off Vercel (local builds) it's unset. */
 const vercelEnv = process.env.VERCEL_ENV ?? process.env.NEXT_PUBLIC_VERCEL_ENV;
 
 /**
- * Explicit opt-out for staging copies on hosts that don't mark previews — e.g. the temporary
- * *.hostingersite.com address before the custom domain moves. Read at build time.
+ * False only on deployments Vercel marks as preview or development, never by hostname — the
+ * production site may be served from a vercel.app address. Production and local builds index.
  */
-const noindexRequested = process.env.SITE_NOINDEX === "true";
-
-/**
- * False on deployments Vercel marks as preview or development, and on builds with
- * SITE_NOINDEX=true — never by hostname, since production may be served from a platform
- * address. Production and local builds index.
- */
-export const indexable = !noindexRequested && vercelEnv !== "preview" && vercelEnv !== "development";
+export const indexable = vercelEnv !== "preview" && vercelEnv !== "development";
 
 /**
  * Reachable from normal links and crawlable (robots.txt allows them, so crawlers can read the

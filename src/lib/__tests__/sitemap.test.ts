@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import sitemap from "@/app/sitemap";
 import { activeProducts } from "@/config/catalog";
@@ -34,18 +34,5 @@ describe("robots headers", () => {
       { source: "/weddings/build", headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }] },
       { source: "/events/plan", headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }] },
     ]);
-  });
-
-  it("keeps the whole site out of search when SITE_NOINDEX=true (staging on another host)", async () => {
-    vi.stubEnv("SITE_NOINDEX", "true");
-    vi.resetModules();
-    try {
-      const staging = await import("@/config/indexing");
-      expect(staging.indexable).toBe(false);
-      expect(staging.robotsHeaders()).toEqual([{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }]);
-    } finally {
-      vi.unstubAllEnvs();
-      vi.resetModules();
-    }
   });
 });
