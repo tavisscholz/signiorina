@@ -59,6 +59,24 @@ In a production build without keys, checkout stops before payment and points cus
 
 ---
 
+## Hosting on Hostinger (move in progress)
+
+Production still runs on Vercel. The site is moving to Hostinger's Node.js hosting (Business or Cloud plan), staged first on the temporary address `steelblue-finch-648320.hostingersite.com`, then on the custom domain.
+
+| Setting | Value |
+| --- | --- |
+| Framework / Node | Next.js, Node 22 |
+| Build / start | `npm run build` / `npm start` |
+| Staging variables | `NEXT_PUBLIC_SITE_URL=https://steelblue-finch-648320.hostingersite.com`, `SITE_NOINDEX=true`, Stripe **test** keys |
+| Production variables | `NEXT_PUBLIC_SITE_URL=https://<domain>`, live Stripe keys, `STRIPE_WEBHOOK_SECRET`, `INQUIRY_WEBHOOK_URL`; no `SITE_NOINDEX` |
+
+- `NEXT_PUBLIC_SITE_URL` and `SITE_NOINDEX` are read at build time: change them, then rebuild. Off Vercel there is no automatic fallback, so without `NEXT_PUBLIC_SITE_URL` canonicals and the sitemap point at `localhost`.
+- Hostinger runs one long-lived server, so the JSON order/inquiry store keeps its data between requests. Set `DATA_DIR` to a folder outside the deployed app so a redeploy can't replace it.
+- Each host needs its own Stripe webhook endpoint (`https://<host>/api/stripe/webhook`) and signing secret; Apple Pay needs the domain verified in Stripe.
+- Cutover: create the Hostinger website on the custom domain, deploy, test it against the Hostinger IP before DNS changes, then point the domain at Hostinger, keeping every existing `MX` and `TXT` record at GoDaddy, and install SSL. Keep the Vercel project running for a few days afterwards.
+
+---
+
 ## Where to change things
 
 Every operational rule is data in `src/config/`. Presentation code reads it through small accessors, so the same records can later come from a CMS or database.
@@ -154,9 +172,9 @@ Defined in `src/app/globals.css` (`@theme`) and the brand components.
 - **Indexing policy** (`src/config/indexing.ts`):
   - The planners, `/weddings/build` and `/events/plan`, are `noindex, follow` — in their page metadata and as an `X-Robots-Tag` header — for every query-string variant. They stay linked and crawlable; robots.txt doesn't block them, so crawlers can read the directive.
   - Cart, checkout and confirmation pages are `noindex`; robots.txt also keeps crawlers out of `/api/`, `/cart` and `/checkout/`.
-  - Deployments Vercel marks as **preview** or **development** (`VERCEL_ENV`) are `noindex` site-wide. Production is decided by `VERCEL_ENV`, never by hostname.
+  - Deployments Vercel marks as **preview** or **development** (`VERCEL_ENV`) are `noindex` site-wide, and so is any build with `SITE_NOINDEX=true` (staging copies on hosts that don't mark previews, such as the temporary Hostinger address). Never decided by hostname.
 - **Sitemap** (`src/app/sitemap.ts`): landing, delivery, informational and legal pages, every active product and every active area page. Redirected routes (for the current flag state), the planners, cart, checkout, confirmation, API routes and filter or configuration URLs are left out. No `lastmod`, because there's no reliable per-page modification date.
-- **Custom domain (pending).** No custom domain is configured; production currently answers at the Vercel production address. To move to one: add the domain in Vercel, set `NEXT_PUBLIC_SITE_URL` to `https://<domain>` for Production and redeploy, then, if you want, point the Vercel address at it in Vercel's domain settings (a platform redirect keeps paths and query strings). The app adds no redirects of its own.
+- **Custom domain (pending).** No custom domain is configured; production currently answers at the Vercel production address. The domain (registered at GoDaddy) moves to Hostinger with the site — see *Hosting on Hostinger* below. The app adds no redirects of its own.
 
 ---
 
