@@ -32,10 +32,12 @@ npm run dev                  # http://localhost:3000
 | Script | What it does |
 | --- | --- |
 | `npm run dev` | Development server |
-| `npm run build` / `npm start` | Production build / serve |
+| `npm run build` / `npm start` | Production build (webpack) / serve |
 | `npm run lint` | ESLint (Next + React Compiler rules) |
 | `npm run typecheck` | TypeScript |
 | `npm test` | Unit tests for pricing, availability, holidays and the event estimator |
+
+The production build uses webpack (`next build --webpack`) and Tailwind through its standard PostCSS plugin (`postcss.config.mjs`). Turbopack runs PostCSS and webpack loaders in a pool of Node.js worker processes, and on Hostinger's build machines that step crashed the build. Development (`npm run dev`) still uses Turbopack, with the same PostCSS config.
 
 Without Stripe keys, development builds run checkout in a **clearly labelled test mode**: the order is recorded with payment marked *not collected*. No card fields are shown and nothing is simulated. Development also loads a small **demo operations calendar** (a fully booked Saturday, a sold-out midday window and an event-blocked afternoon) so the sold-out and blocked states can be seen.
 
