@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
+import { AmbientMotion } from "@/components/motion/AmbientMotion";
 import { AmbientVideo } from "@/components/motion/AmbientVideo";
 import { getMedia, type AmbientLoop as AmbientLoopConfig } from "@/config/media";
 
@@ -30,21 +31,27 @@ const MOTES: Array<[number, number, number, number]> = [
  * Full-bleed, decorative section background: the configured video loop, or — until the
  * footage exists — a 12-second placeholder (a slow pan over a still, flickering candle
  * glows and drifting bokeh). Place it first inside a `relative isolate overflow-hidden` section.
+ *
+ * `eager`: fetch the still right away instead of lazily. Use it where the section reaches into the
+ * first screen — on a phone the still is then the largest thing in view (the page's LCP), which
+ * should never be lazy-loaded.
  */
-export function AmbientLoop({ loop, className }: { loop: AmbientLoopConfig; className?: string }) {
+export function AmbientLoop({ loop, className, eager = false }: { loop: AmbientLoopConfig; className?: string; eager?: boolean }) {
+  const loading = eager ? "eager" : "lazy";
   const still = getMedia(loop.placeholder);
   const placeholder = !loop.mp4;
   return (
-    <div aria-hidden="true" className={clsx("absolute inset-0 overflow-hidden bg-espresso", className)}>
+    <AmbientMotion className={clsx("absolute inset-0 overflow-hidden bg-espresso", className)}>
       <div className={clsx("absolute", placeholder ? "ambient-pan inset-[-6%]" : "inset-0")}>
         {loop.poster ? (
-          <Image src={loop.poster} alt="" fill sizes="100vw" className="object-cover" />
+          <Image src={loop.poster} alt="" fill sizes="100vw" loading={loading} className="object-cover" />
         ) : (
           <Image
             src={still.src}
             alt=""
             fill
             sizes="100vw"
+            loading={loading}
             placeholder="blur"
             // The stand-in still is soft by design: the table glows, the room stays out of focus.
             className={clsx("object-cover", placeholder && "blur-[2px] saturate-[1.1]")}
@@ -82,6 +89,6 @@ export function AmbientLoop({ loop, className }: { loop: AmbientLoopConfig; clas
           ))}
         </>
       ) : null}
-    </div>
+    </AmbientMotion>
   );
 }

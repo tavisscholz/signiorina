@@ -89,7 +89,8 @@ export function HomeJourneys() {
 
       {/* WEDDINGS: BRAND SHOWCASE ----------------------------------- */}
       <section className="on-dark relative isolate overflow-hidden bg-espresso" aria-labelledby="wedding-showcase">
-        <AmbientLoop loop={ambientLoops.idea} />
+        {/* Eager: on a phone this section reaches into the first screen and its still is the largest thing in view. */}
+        <AmbientLoop loop={ambientLoops.idea} eager />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-espresso/72 lg:bg-transparent lg:bg-linear-to-r lg:from-espresso/90 lg:via-espresso/75 lg:to-espresso/55"

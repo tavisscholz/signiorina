@@ -427,6 +427,11 @@
     animation: mote-rise 12s linear infinite;
   }
 
+  /* Held still until the page has loaded and while off screen (AmbientMotion sets data-motion). */
+  .js [data-motion="off"] :is(.ambient-pan, .ambient-glow, .ambient-mote) {
+    animation-play-state: paused;
+  }
+
   @keyframes pop {
     0% {
       transform: scale(1);
