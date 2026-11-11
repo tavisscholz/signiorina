@@ -158,7 +158,27 @@ Defined in `src/app/globals.css` (`@theme`) and the brand components.
   - Cart, checkout and confirmation pages are `noindex`; robots.txt also keeps crawlers out of `/api/`, `/cart` and `/checkout/`.
   - Deployments Vercel marks as **preview** or **development** (`VERCEL_ENV`) are `noindex` site-wide. Production is decided by `VERCEL_ENV`, never by hostname.
 - **Sitemap** (`src/app/sitemap.ts`): landing, delivery, informational and legal pages, every active product and every active area page. Redirected routes (for the current flag state), the planners, cart, checkout, confirmation, API routes and filter or configuration URLs are left out. No `lastmod`, because there's no reliable per-page modification date.
-- **Custom domain (pending).** No custom domain is configured; production currently answers at the Vercel production address. To move to one: add the domain in Vercel, set `NEXT_PUBLIC_SITE_URL` to `https://<domain>` for Production and redeploy, then, if you want, point the Vercel address at it in Vercel's domain settings (a platform redirect keeps paths and query strings). The app adds no redirects of its own.
+- **Domain and hosting.** Production is `https://signiorina.com` on Hostinger (Business plan, Node.js app), deployed from this repository's production branch on every push; see *Hosting on Hostinger* below. The Vercel project still builds the same branch until it is retired. The app adds no redirects of its own.
+- **llms.txt** (`src/app/llms.txt/route.ts`, text from `src/lib/llms.ts`): a plain-text summary for AI assistants — services and prices, served areas and fees, ordering rules, key pages, contact. Built from the same config as the pages, prerendered at build time. Contact lines appear once `site.contact` is filled in.
+
+---
+
+## Hosting on Hostinger
+
+| Setting | Value |
+| --- | --- |
+| Website | `signiorina.com` (Node.js app; the `steelblue-finch-648320.hostingersite.com` site is the earlier staging copy) |
+| Source | GitHub, production branch, auto-deploy on push |
+| Build | Next.js, Node 22, `npm run build` (webpack — see *Quick start*), npm |
+| DNS | Hostinger nameservers; `@` and `www` point at Hostinger's CDN; Hostinger Email `MX`, SPF, DKIM and DMARC records |
+
+Environment variables are set in hPanel, in the signiorina.com website's Node.js settings — never in the repository:
+
+- `NEXT_PUBLIC_SITE_URL=https://signiorina.com` — read at build time; off Vercel there's no automatic fallback, so without it canonicals and the sitemap point at `localhost`.
+- `DATA_DIR` — outside the app folder, so orders and inquiries survive redeploys (each build is published to a new version folder).
+- `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`, and optionally `INQUIRY_WEBHOOK_URL`. `NEXT_PUBLIC_*` values are baked in at build time: change them, then redeploy.
+
+The app sends no email itself (inquiries are stored and optionally forwarded to `INQUIRY_WEBHOOK_URL`), so it needs no SMTP settings.
 
 ---
 
